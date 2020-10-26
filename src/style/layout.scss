@@ -1,0 +1,23 @@
+.layout {
+    display: flex;
+    height: 100vh;
+    &__left_panel {
+        flex: 1;
+        background-color: #f00;
+    }
+
+    &__app_main {
+        flex: 4;
+        background-color: #f0f;
+    }
+
+    &__right_panel {
+        flex: 1;
+        background-color: #00f;
+    }
+    .logo {
+        &__avatar {
+            height: 5vh;
+        }
+    }
+}
