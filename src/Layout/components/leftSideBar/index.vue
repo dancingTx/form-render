@@ -1,15 +1,16 @@
 <template>
   <div>
     <logo />
-    left side bar
+    <container/>
   </div>
 </template>
 
 <script>
 import Logo from '../logo'
+import Container from '../container'
 export default {
   name: 'leftsidebar',
-  components: { Logo }
+  components: { Logo, Container }
 }
 </script>
 
