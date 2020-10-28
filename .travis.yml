@@ -14,10 +14,10 @@ script:
     - yarn lint
     - yarn build
 after_script:
-    - cd ./list
+    - cd ./dist
     - git init
     - git config --global user.name "${USERNAME}"
     - git config --global user.email "${EMAIL}"
     - git add .
     - git commit -m "deploy(dist):Automatically update from travis-ci"
-    - git push --quiet --force "https://${GITHUB_TOKEN}@${GITHUB_STORE}" master:${BRANCH}
+    - git push --quiet --force "https://${GITHUB_TOKEN}@${GITHUB_STORE}" dev:${BRANCH}
