@@ -1,0 +1,23 @@
+language: node_js
+node_js: stable
+branches:
+    only:
+        - master
+        - dev
+cache:
+    apt: true
+    directories:
+        - node_modules
+install:
+    - yarn
+script:
+    - yarn lint
+    - yarn build
+after_script:
+    - cd ./list
+    - git init
+    - git config --global user.name "${USERNAME}"
+    - git config --global user.email "${EMAIL}"
+    - git add .
+    - git commit -m "deploy(dist):Automatically update from travis-ci"
+    - git push --quiet --force "https://${$GITHUB_TOKEN}@${$GITHUB_STORE}" master:${BRANCH}
