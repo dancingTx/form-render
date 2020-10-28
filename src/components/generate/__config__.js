@@ -65,6 +65,7 @@ const baseInputConf = {
   style: {
     width: '100%'
   },
+  placeholder: '请输入', // 输入框占位文本
   maxLength: null, // 最大输入长度
   minLength: null, // 最小输入长度
   showWordLimit: false, // 是否显示字数统计
@@ -88,7 +89,6 @@ const inputComponents = [
     __vModel__: null, // 绑定值
     name: 'text',
     type: 'text', // 类型 default:text
-    placeholder: '', // 输入框占位文本
     prefixIcon: '', // 输入框头部图标
     suffixIcon: '' // 输入框尾部图标
   },
@@ -101,7 +101,6 @@ const inputComponents = [
     __vModel__: null, // 绑定值
     name: 'textarea',
     type: 'textarea', // 类型 default:text
-    placeholder: '', // 输入框占位文本
     prefixIcon: '', // 输入框头部图标
     suffixIcon: '', // 输入框尾部图标
     autosize: {
@@ -125,7 +124,6 @@ const inputComponents = [
     __vModel__: 'password',
     name: 'password',
     type: 'password',
-    placeholder: '请输入密码', // 输入框占位文本
     prefixIcon: '', // 输入框头部图标
     suffixIcon: '' // 输入框尾部图标
   },
@@ -137,7 +135,6 @@ const inputComponents = [
     },
     __vModel__: 'number',
     name: 'number',
-    placeholder: '请输入数字',
     controlsPosition: null, // 控制按钮位置
     step: 1, // 计数器步长
     stepStrictly: false, // 是否只能输入step步数
@@ -186,8 +183,7 @@ const selectComponents = [
     name: 'select',
     isGroup: false,
     multiple: false,
-    multipleLimit: 0,
-    placeholder: ''
+    multipleLimit: 0
   },
   {
     __config__: {

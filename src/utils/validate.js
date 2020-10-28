@@ -11,6 +11,6 @@ export const isExternal = path => /^(https? | tel | mailto | ):/.test(path)
  * @param {string} type
  * @description 判断数据类型
  */
-export const typeOf = (el, type) => {
-  return Object.prototype.toString.call(el).replace(/\[object (\w+)\]/, '$1').toLowerCase() === type
-}
+export const typeOf = (el, type) => Object.prototype.toString.call(el).replace(/\[object (\w+)\]/, '$1').toLowerCase() === type
+
+export const isObject = target => typeof target === 'object'

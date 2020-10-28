@@ -1,26 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Layout from '@/Layout'
-
-import Dashboard from '@/views/index.vue'
+import routes from './routes'
+import store from '@/store'
 Vue.use(VueRouter)
-
-const routes = [
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/index',
-    children: [
-      {
-        path: '/index',
-        component: Dashboard
-      }
-    ]
-  }
-]
-
-const router = new VueRouter({
-  routes
+const router = new VueRouter({ routes })
+router.afterEach(() => {
+  store.dispatch('components/getComponents')
+  store.dispatch('components/getFormConf')
 })
-
 export default router
