@@ -1,0 +1,21 @@
+language: node_js # 设置语言
+node_js: stable
+branches:
+    only:
+        - master
+        - dev
+cache:
+    apt: true
+    directories:
+        - node_modules
+before_install:
+    - composer config --global github-oauth.github.com "$GITHUB_TOKEN"
+install:
+    - yarn
+deploy:
+    provider: pages
+    skip_cleanup: true
+    keep_history: true
+    github_token: $GITHUB_TOKEN
+    on:
+        branch: gh_pages
