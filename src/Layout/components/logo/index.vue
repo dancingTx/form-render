@@ -1,7 +1,7 @@
 <template>
-  <div class="layout__logo">
-    <svg-icon icon-class="logo" class="logo__avatar"/>
-    <h3 class="logo__title">Form Render</h3>
+  <div class="logo">
+    <img :src="require('@/assets/logo.png')" alt="" class="logo__avatar">
+    <h3 class="logo__title"> Form Render</h3>
   </div>
 </template>
 
@@ -10,7 +10,3 @@ export default {
   name: 'logo'
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

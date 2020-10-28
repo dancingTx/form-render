@@ -7,6 +7,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'normalize.css/normalize.css'
 import './style/index.scss'
 import './icons'
+import './components/generate/__config__'
 Vue.config.productionTip = false
 Vue.use(ElementUI, {
   size: 'medium'

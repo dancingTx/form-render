@@ -1,19 +1,19 @@
 <template>
   <div class="layout">
-    <left-side-bar class="layout__left_panel"/>
+    <app-header class="layout__app_header"/>
     <app-main class="layout__app_main"/>
-    <right-side-bar class="layout__right_panel"/>
+    <app-footer class="layout__app_footer"/>
   </div>
 </template>
 
 <script>
-import { leftSideBar, appMain, rightSideBar } from './components'
+import { appHeader, appMain, appFooter } from './components'
 export default {
   name: 'layout',
   components: {
-    leftSideBar,
+    appHeader,
     appMain,
-    rightSideBar
+    appFooter
   }
 }
 </script>

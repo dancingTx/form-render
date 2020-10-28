@@ -1,9 +1,13 @@
 <template>
-<div>...</div>
+  <div>btnGroup</div>
 </template>
 
 <script>
 export default {
-  name: 'container'
+  name: 'btnGroup'
 }
 </script>
+
+<style>
+
+</style>
