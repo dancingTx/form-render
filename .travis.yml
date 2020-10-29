@@ -2,7 +2,7 @@ language: node_js
 node_js: stable
 branches:
     only:
-        - dev
+        - master
 cache:
     apt: true
     directories:
@@ -19,4 +19,4 @@ after_script:
     - git config --global user.email "${EMAIL}"
     - git add .
     - git commit -m "deploy(dist):Automatically update from travis-ci"
-    - git push --quiet --force "https://${GITHUB_TOKEN}@${GITHUB_STORE}" dev:${BRANCH}
+    - git push --quiet --force "https://${GITHUB_TOKEN}@${GITHUB_STORE}" master:${BRANCH}
