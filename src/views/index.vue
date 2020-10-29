@@ -16,6 +16,7 @@
                 :group="dragGroup"
                 :clone="cloneComponents"
                 :sort="sort"
+                draggable=".components__btns"
                 @end="handleDragEnd"
               >
                 <div
@@ -36,6 +37,26 @@
     <!-- body -->
     <div class="container__main">
       <el-scrollbar class="scrollbar">
+        <el-row :gutter="formConf.gutter">
+          <el-form
+            :ref="formConf.formRef"
+            v-model="formConf.__vModel__"
+            :label-width="formConf.labelWidth | labelWidth"
+            :label-position="formConf.labelPosition"
+            :inline="formConf.inline"
+            :hide-required-asterisk="formConf.required"
+            :size="formConf.size"
+            :disabled="formConf.disabled"
+          >
+            <draggable
+              class="container__board"
+              :list="displayList"
+              :group="dragGroup.name"
+              :animation="300"
+            >
+            </draggable>
+          </el-form>
+        </el-row>
       </el-scrollbar>
     </div>
     <!-- right panel -->
@@ -63,6 +84,11 @@ export default {
     },
     directive () {
       return this.$store.getters.directive
+    }
+  },
+  filters: {
+    labelWidth (value) {
+      return typeOf(value, 'number') ? value + 'px' : value
     }
   },
   watch: {

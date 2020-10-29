@@ -10,6 +10,7 @@ export const formConf = {
   size: 'medium',
   disabled: false,
   span: 24,
+  gutter: 0,
   formBtnGroup: true
 }
 

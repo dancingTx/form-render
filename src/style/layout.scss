@@ -65,6 +65,12 @@
     flex: 3;
     border: 1px dashed $gray;
   }
+  
+  &__board {
+    background-color: $gray1;
+    min-height: 86vh;
+    overflow: hidden;
+  }
 
   &__right {
     flex: 1;
