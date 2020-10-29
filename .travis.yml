@@ -1,21 +1,22 @@
-language: node_js # 设置语言
+language: node_js
 node_js: stable
 branches:
     only:
         - master
-        - dev
 cache:
     apt: true
     directories:
         - node_modules
-before_install:
-    - composer config --global github-oauth.github.com "$GITHUB_TOKEN"
 install:
     - yarn
-deploy:
-    provider: pages
-    skip_cleanup: true
-    keep_history: true
-    github_token: $GITHUB_TOKEN
-    on:
-        branch: gh_pages
+script:
+    - yarn lint
+    - yarn build
+after_script:
+    - cd ./dist
+    - git init
+    - git config --global user.name "${USERNAME}"
+    - git config --global user.email "${EMAIL}"
+    - git add .
+    - git commit -m "deploy(dist):Automatically update from travis-ci"
+    - git push --quiet --force "https://${GITHUB_TOKEN}@${GITHUB_STORE}" master:${BRANCH}

@@ -1,0 +1,110 @@
+// custom
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  &__app_header {
+    flex: 1;
+    background: $gradient-blue;
+  }
+
+  &__app_main {
+    flex: 12;
+  }
+
+  &__app_footer {
+    flex: 1;
+    background: $gradient-light-blue;
+  }
+}
+
+.logo {
+  text-align: center;
+
+  &__avatar {
+    width: 30px;
+    height: 30px;
+    margin: 0 12px;
+    vertical-align: text-bottom;
+  }
+
+  &__title {
+    display: inline-block;
+    margin: 0;
+    line-height: 58px;
+    color: $brand;
+  }
+}
+
+.header {
+  display: flex;
+
+  &__logo {
+    flex: 1;
+  }
+
+  &__btn_group {
+    flex: 3;
+    text-align: right;
+  }
+
+  &__external_links {
+    flex: 1;
+  }
+}
+
+.container {
+  display: flex;
+
+  &__left {
+    flex: 1;
+  }
+
+  &__main {
+    flex: 3;
+    border: 1px dashed $gray;
+  }
+  
+  &__board {
+    position: relative;
+    overflow: hidden;
+    min-height: 86vh;
+    background-color: $gray1;
+  }
+
+  &__empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $brand;
+  }
+
+  &__right {
+    flex: 1;
+  }
+}
+
+.btngroup {
+  &__item {
+    display: inline-block;
+    margin: 20px;
+    cursor: pointer;
+    color: $red1;
+
+    &:hover {
+      color: $red;
+    }
+  }
+
+  &__icon {
+    margin-right: 10px;
+  }
+  
+}
+
+.scrollbar {
+  height: 86vh;
+  overflow: hidden;
+}

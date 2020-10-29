@@ -1,0 +1,54 @@
+@import './variable.scss';
+@import './layout.scss';
+@import './element.scss';
+@import './element-variables.scss';
+@import './mixin.scss';
+
+.left {
+    &__switch {
+        float: right;
+        margin-top: 20px;
+    }
+}
+.components {
+    &__title {
+        margin: 0 10px;
+
+        &_icon {
+            margin-right: 10px;
+        }
+
+        &_content {
+            display: inline-block;
+            color: $gray
+        }
+    }
+    &__body {
+        display: flex
+    }
+    &__btns {
+        flex: 1;
+        float: left;
+        margin: 5px 10px;
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        border: 1px solid $brand;
+        border-radius: 5px;
+        background-color: $blue1;
+        cursor:move;
+        &:hover {
+            border: 1px dashed $brand;
+            background-color: $blue2;
+        }
+        &_icon {
+            margin-right: 5px;
+        }
+        &_content {
+            vertical-align: top;
+            font-size: 14px;
+            color: $gray;
+        }
+    }
+}
