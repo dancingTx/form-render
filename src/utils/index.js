@@ -58,3 +58,11 @@ export const deepCopy = function (resource) {
 
   return clone
 }
+
+/**
+ *
+ * @param {string}} str
+ * @description 首字母大写
+ */
+
+export const firstUpperCase = str => str.slice(0, 1).toUpperCase() + str.slice(1)

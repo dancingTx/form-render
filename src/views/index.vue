@@ -48,7 +48,7 @@
 
 <script>
 import draggable from 'vuedraggable'
-import { deepCopy, typeOf } from '@/utils'
+import { deepCopy, typeOf, firstUpperCase } from '@/utils'
 
 let fid = 0
 export default {
@@ -60,6 +60,14 @@ export default {
     },
     formConf () {
       return this.$store.getters.formConf
+    },
+    directive () {
+      return this.$store.getters.directive
+    }
+  },
+  watch: {
+    directive (value) {
+      this.executer(value)
     }
   },
   data () {
@@ -78,7 +86,6 @@ export default {
   },
   methods: {
     handleDragEnd (event) {
-      console.log(this.displayList)
       if (event.from === event.to) return
       this.activeData = this.tempData
       this.activeId = fid
@@ -129,6 +136,15 @@ export default {
     activeFormItem (item) {
       this.activeData = item
       this.activeId = item.__config__.formId
+    },
+    executer (type) {
+      return this[`execute${firstUpperCase(type)}Func`]()
+    },
+    executeRunFunc () {
+      console.log('runnnnnn')
+    },
+    executeClearFunc () {
+      console.log('clearrrrr')
     }
   }
 }

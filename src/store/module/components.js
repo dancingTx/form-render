@@ -2,7 +2,8 @@ import { SET_COMP_INFO } from '../mutations-type'
 import { basicOptions, inputOptions, selectOptions, LayoutComponents, formConf } from '@/components/generate/__config__'
 const state = {
   components: [],
-  formConf: {}
+  formConf: {},
+  directive: ''
 }
 
 const mutations = {
@@ -33,6 +34,9 @@ const actions = {
       key: 'formConf',
       value: formConf
     })
+  },
+  executeComponentDirective ({ commit }, payload) {
+    commit(SET_COMP_INFO, payload)
   }
 }
 
