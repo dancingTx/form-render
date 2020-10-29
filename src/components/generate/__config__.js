@@ -2,7 +2,7 @@ import { mergeOptions } from '@/utils'
 // 表单配置
 export const formConf = {
   formRef: 'elForm',
-  __vModel__: 'formData',
+  __vModel__: {},
   labelWidth: 'auto',
   labelPosition: 'right',
   inline: false,
@@ -23,7 +23,10 @@ const baseBasicConf = {
     showLabel: true,
     changeTag: true,
     layout: 'colFormItem',
-    span: 24
+    span: 24, // 栅格占据的列数
+    offset: 0, // 栅格左侧的间隔格数
+    push: 0, // 栅格向右移动的格数
+    pull: 0 // 栅格向左移动的格数
   },
   disabled: false // 是否禁用
 }
@@ -58,7 +61,10 @@ const baseInputConf = {
     changeTag: true,
     defaultValue: undefined,
     layout: 'colFormItem',
-    span: 24,
+    span: 24, // 栅格占据的列数
+    offset: 0, // 栅格左侧的间隔格数
+    push: 0, // 栅格向右移动的格数
+    pull: 0, // 栅格向左移动的格数
     document: 'https://element.eleme.cn/#/zh-CN/component/input',
     // 表单校验规则
     rules: []
@@ -153,7 +159,10 @@ const baseSelectConf = {
     showLabel: true,
     changeTag: true,
     layout: 'colFormItem',
-    span: 24,
+    span: 24, // 栅格占据的列数
+    offset: 0, // 栅格左侧的间隔格数
+    push: 0, // 栅格向右移动的格数
+    pull: 0, // 栅格向左移动的格数
     // 表单校验规则
     rules: []
   },

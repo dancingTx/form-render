@@ -67,9 +67,18 @@
   }
   
   &__board {
-    background-color: $gray1;
-    min-height: 86vh;
+    position: relative;
     overflow: hidden;
+    min-height: 86vh;
+    background-color: $gray1;
+  }
+
+  &__empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $brand;
   }
 
   &__right {
@@ -92,6 +101,7 @@
   &__icon {
     margin-right: 10px;
   }
+  
 }
 
 .scrollbar {

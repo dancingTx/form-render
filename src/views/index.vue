@@ -54,7 +54,26 @@
               :group="dragGroup.name"
               :animation="300"
             >
+              <draggable-item
+                class="container__draggable_item"
+                v-for="(item, index) of displayList"
+                :key="index"
+                :currentItem="item"
+                :index="index"
+                :displayList="displayList"
+                :formConf="formConf"
+                :activeId="activeId"
+                @activeFormItem="activeFormItem"
+                @copyFormItem="copyFormItem"
+                @deleteFormItem="deleteFormItem"
+              />
             </draggable>
+            <h2
+              class="container__empty"
+              v-show="!displayList.length"
+              >
+                从左侧拖入或点击组件添加至画布
+            </h2>
           </el-form>
         </el-row>
       </el-scrollbar>
@@ -69,12 +88,13 @@
 
 <script>
 import draggable from 'vuedraggable'
-import { deepCopy, typeOf, firstUpperCase } from '@/utils'
+import { DraggableItem } from '@/components'
+import { deepCopy, typeOf, firstUpperCase, labelWidth } from '@/utils'
 
 let fid = 0
 export default {
   name: 'index',
-  components: { draggable },
+  components: { draggable, DraggableItem },
   computed: {
     componentsList () {
       return this.$store.getters.components
@@ -84,11 +104,6 @@ export default {
     },
     directive () {
       return this.$store.getters.directive
-    }
-  },
-  filters: {
-    labelWidth (value) {
-      return typeOf(value, 'number') ? value + 'px' : value
     }
   },
   watch: {
@@ -108,6 +123,11 @@ export default {
       tempData: {},
       activeData: {},
       activeId: 0
+    }
+  },
+  filters: {
+    labelWidth (value) {
+      return labelWidth(value)
     }
   },
   methods: {
@@ -159,10 +179,19 @@ export default {
       }
       return clone
     },
+
     activeFormItem (item) {
+      // actived form item
       this.activeData = item
       this.activeId = item.__config__.formId
     },
+    copyFormItem (item, index, list) {
+      // clone form item
+    },
+    deleteFormItem (item, index, list) {
+      // delete form item
+    },
+
     executer (type) {
       return this[`execute${firstUpperCase(type)}Func`]()
     },

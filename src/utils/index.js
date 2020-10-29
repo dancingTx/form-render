@@ -66,3 +66,10 @@ export const deepCopy = function (resource) {
  */
 
 export const firstUpperCase = str => str.slice(0, 1).toUpperCase() + str.slice(1)
+
+/**
+ *
+ * @param {null | string | number} value
+ * @description 返回对应 label宽度
+ */
+export const labelWidth = (value, isShow = true) => isShow ? typeOf(value, 'number') ? value + 'px' : value : '0'
