@@ -93,11 +93,19 @@ const inputComponents = [
       prepend: '', // 输入框前置内容
       append: '' // 输入框后置内容
     },
+    __methods__: {
+
+    },
     __vModel__: null, // 绑定值
     name: 'text',
     type: 'text', // 类型 default:text
     prefixIcon: '', // 输入框头部图标
-    suffixIcon: '' // 输入框尾部图标
+    suffixIcon: '', // 输入框尾部图标
+    nativeOn: {
+      focus (event) {
+        console.log(event, 'event')
+      }
+    }
   },
   {
     __config__: {

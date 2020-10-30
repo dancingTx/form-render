@@ -13,4 +13,4 @@ export const isExternal = path => /^(https? | tel | mailto | ):/.test(path)
  */
 export const typeOf = (el, type) => Object.prototype.toString.call(el).replace(/\[object (\w+)\]/, '$1').toLowerCase() === type
 
-export const isObject = target => typeof target === 'object'
+export const isPlainObject = target => typeof target === 'object'

@@ -1,4 +1,4 @@
-import { typeOf, isObject } from './validate'
+import { typeOf, isPlainObject } from './validate'
 export * from './validate'
 /**
  *
@@ -32,7 +32,7 @@ export const mergeOptions = function (customOpts, baseOpts) {
  */
 export const deepCopy = function (resource) {
   // primtive
-  if (!resource || !isObject(resource)) {
+  if (!resource || !isPlainObject(resource)) {
     return resource
   }
   // dom node
