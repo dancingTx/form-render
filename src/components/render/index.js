@@ -58,12 +58,19 @@ const emitEventMixin = function (currItem) {
     }
   })
 }
-
+const executeEventMixin = function (target, fn) {
+  if (!isPlainObject(fn)) return
+  Object.keys(fn).forEach(fnName => {
+    target.on[fnName] = fn[fnName]
+  })
+}
 const mergeJson2DataMixin = function (clone, target) {
   Object.keys(clone).forEach(key => {
     const value = clone[key]
     if (key === '__vModel__') {
       vModel.call(this, target, value)
+    } else if (key === '__methods__') {
+      executeEventMixin.call(this, target, value)
     } else {
       if (key in target) {
         if (['string', 'boolean', 'function'].some(type => typeOf(target[key], type))) {

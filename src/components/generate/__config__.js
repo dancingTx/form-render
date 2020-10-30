@@ -94,7 +94,9 @@ const inputComponents = [
       append: '' // 输入框后置内容
     },
     __methods__: {
-
+      focus (event) {
+        console.log('....0', event)
+      }
     },
     __vModel__: null, // 绑定值
     name: 'text',
