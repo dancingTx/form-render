@@ -80,6 +80,9 @@
     transform: translate(-50%, -50%);
     color: $brand;
   }
+  &__draggable_item {
+    margin-bottom: 10px;
+  }
 
   &__right {
     flex: 1;
@@ -87,6 +90,15 @@
 }
 
 .btngroup {
+  position: absolute;
+  bottom: -1px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 20px;
+  text-align: center;
+  background-color: $brand;
+  color: $white;
   &__item {
     display: inline-block;
     margin: 20px;
@@ -100,6 +112,16 @@
 
   &__icon {
     margin-right: 10px;
+  }
+
+  &__copy {
+    right: 25px;
+    border-right: 1px dashed $white;
+  }
+
+
+  &__delete {
+    right: -5px;
   }
   
 }

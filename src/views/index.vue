@@ -40,7 +40,7 @@
         <el-row :gutter="formConf.gutter">
           <el-form
             :ref="formConf.formRef"
-            v-model="formConf.__vModel__"
+            :model="formConf.__vModel__"
             :label-width="formConf.labelWidth | labelWidth"
             :label-position="formConf.labelPosition"
             :inline="formConf.inline"
@@ -187,9 +187,11 @@ export default {
     },
     copyFormItem (item, index, list) {
       // clone form item
+      console.log('clone form item')
     },
     deleteFormItem (item, index, list) {
       // delete form item
+      console.log('delete form item')
     },
 
     executer (type) {

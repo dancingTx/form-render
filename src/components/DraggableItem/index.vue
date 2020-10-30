@@ -1,9 +1,10 @@
 <script>
+/* eslint-disable no-unused-vars */
 import { labelWidth } from '@/utils'
 const btnGroup = function (h, currentItem, index, list) {
   const btns = [
-    { title: '复制', icon: 'el-icon-copy-document', className: 'btngroup__copy', event: 'copy' },
-    { title: '删除', icon: 'el-icon-delete', className: 'btngroup__delete', event: 'delete' }
+    { title: '删除', icon: 'el-icon-delete', className: 'btngroup__delete btngroup', event: 'delete' },
+    { title: '复制', icon: 'el-icon-copy-document', className: 'btngroup__copy btngroup', event: 'copy' }
   ]
   const executer = function (type) {
     return function () {
@@ -29,15 +30,14 @@ const stopPropagation = function (event, fn) {
   event.stopPropagation()
 }
 
-// eslint-disable-next-line no-unused-vars
 const layouts = {
-  colFormItem (currentItem, index, list) {
+  colFormItem (h, currentItem, index, list) {
     const { activeFormItem } = this.$listeners
     const config = currentItem.__config__
-    let className = `${config.formId === this.activeId ? 'draggable__item--active ' : ''}'draggable__item`
+    let className = `${config.formId === this.activeId ? 'draggable__item--active ' : ''}draggable__item`
     if (this.formConf.bluredComponentsBorder) className += ' draggable__item--blur'
     // 判断 form model中是否存在sub中的model
-    const vModel = currentItem.__vModel__ ? this.formConf.__vModel[currentItem.__vModel__] ? this.formConf.__vModel[currentItem.__vModel__] : null : null
+    const vModel = currentItem.__vModel__ ? this.formConf.__vModel__[currentItem.__vModel__] ? currentItem.__vModel__ : null : null
     return (
       <el-col
         span={config.span}
@@ -48,9 +48,11 @@ const layouts = {
         nativeOnClick={event => stopPropagation(event, activeFormItem, currentItem)}
       >
         <el-form-item
-          v-model={vModel}
+          prop={vModel}
+          label={config.showLabel ? config.label : ''}
           label-width={labelWidth(config.labelWidth, config.showLabel)}
-        ></el-form-item>
+        >1</el-form-item>
+        {config.formId === this.activeId ? btnGroup.apply(this, arguments) : ''}
       </el-col>
     )
   }
@@ -80,7 +82,8 @@ export default {
     }
   },
   render (h) {
-    return btnGroup.call(this, h, this.currentItem, this.index, this.displayList)
+    const layout = layouts[this.currentItem.__config__.layout]
+    return layout.call(this, h, this.currentItem, this.index, this.displayList)
   }
 }
 

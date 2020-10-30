@@ -1,0 +1,11 @@
+.draggable {
+    &__item {
+        position: relative;
+        padding: 5px;
+        &--active {
+            box-sizing: border-box;
+            background-color: $blue3;
+            border: 5px solid $brand;
+        }
+    }
+}
