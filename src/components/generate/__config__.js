@@ -491,7 +491,16 @@ const selectComponents = [
       document: 'https://element.eleme.cn/#/zh-CN/component/upload',
       label: '上传',
       tag: 'el-upload',
-      tagIcon: 'upload'
+      tagIcon: 'upload',
+      buttonText: '点击上传',
+      size: 'small',
+      type: 'primary',
+      fileSize: 2,
+      sizeUnit: 'MB',
+      showTips: '只能上传jpg/png文件，且不超过{fileSize} {sizeUnit}'
+    },
+    __slot__: {
+      listType: true
     },
     __vModel__: null,
     name: 'file',
