@@ -79,10 +79,14 @@ const mergeJson2DataMixin = function (clone, target) {
         } else if (typeOf(target[key], 'array')) {
           target[key].concat(value)
         } else if (isPlainObject(target[key])) {
-          Object.assign({}, target[key], value)
+          target[key] = Object.assign({}, target[key], value)
         }
       } else {
-        target.attrs[key] = value
+        if (key === 'compProps') {
+          target.attrs.props = value
+        } else {
+          target.attrs[key] = value
+        }
       }
     }
   })

@@ -6,21 +6,24 @@ export default {
         if (isButton) {
           return (
             <el-radio-button
-              label={option.label || ''}
+              key={option.value}
+              label={option.value || ''}
               disabled={option.disabled || false}
               name={option.name || ''}
-            />
+            >
+              {option.label}
+            </el-radio-button>
           )
         }
         return (
           <el-radio
-            label={option.label || ''}
-            value={option.value || ''}
+            key={option.value}
+            label={option.value || ''}
             disabled={option.disabled || false}
             border={option.border || false}
             name={option.name || ''}
           >
-            {option.content}
+            {option.label}
           </el-radio>
         )
       })

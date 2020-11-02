@@ -171,7 +171,7 @@ export default {
             config.children ? typeOf(config.children, 'array') ? config.children : [config.children] : []
           break
         default:
-          clone.__vModel__ = clone.__vModel__ || `fields${fid}`
+          clone.__vModel__ = clone.__vModel__ === 0 ? 0 : clone.__vModel__ ? clone.__vModel__ : `fields${fid}`
           break
       }
       if (typeOf(config.children, 'array')) {
