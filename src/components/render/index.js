@@ -1,4 +1,5 @@
 import { deepCopy, typeOf, isPlainObject } from '@/utils'
+const group = ['el-radio', 'el-checkbox']
 // 导入__slot__文件 key: tag, value: fn
 const slotFiles = require.context('./__slot__', false, /\.js$/)
 const components = slotFiles.keys().reduce((store, curr) => {
@@ -111,6 +112,9 @@ export default {
     emitEventMixin.call(this, clone)
     // json 属性混入data中
     mergeJson2DataMixin.call(this, clone, data)
+    if (group.some(item => clone.__config__.tag.indexOf(item) > -1) && !clone.__config__.isGroup) {
+      return h('div', children)
+    }
     return h(clone.__config__.tag, data, children)
   }
 }

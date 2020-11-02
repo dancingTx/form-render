@@ -7,18 +7,18 @@ export default {
     return currItem.__slot__[key]
   },
   options (h, currItem, key) {
-    const genChildOption = function (children) {
-      return children.map(item => {
+    const genChildOption = function (options) {
+      return options.map(option => {
         return (
           <el-option
-            label={item.label || ''}
-            value={item.value || ''}
-            disabled={item.disabled || false}
+            label={option.label || ''}
+            value={option.value || ''}
+            disabled={option.disabled || false}
           />
         )
       })
     }
-    const isGroup = currItem.isGroup || false
+    const isGroup = currItem.__config__.isGroup || false
     let optionsSlot = currItem.__slot__[key]
     if (!optionsSlot) return null
     optionsSlot =

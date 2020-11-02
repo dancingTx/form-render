@@ -186,7 +186,8 @@ const selectComponents = [
       document: 'https://element.eleme.cn/#/zh-CN/component/input',
       label: '下拉选择',
       tag: 'el-select',
-      tagIcon: 'select'
+      tagIcon: 'select',
+      isGroup: true
     },
     __slot__: {
       prefix: '',
@@ -220,32 +221,32 @@ const selectComponents = [
     },
     __vModel__: null,
     name: 'select',
-    isGroup: true,
     multiple: false,
     multipleLimit: 0
   },
   {
     __config__: {
       document: 'https://element.eleme.cn/#/zh-CN/component/radio',
-      label: '单选框组',
+      label: '单选框(组)',
       tag: 'el-radio-group',
       tagIcon: 'radio',
-      isGroup: true
+      isGroup: true,
+      isButton: true
     },
     __slot__: {
       options: [
-        { label: '选项一', name: 'radio1', value: 1, disabled: false, border: false },
-        { label: '选项二', name: 'radio1', value: 2, disabled: true, border: false }
+        { content: '备选项', label: '1', name: 'radio1', value: '1', disabled: false, border: true },
+        { content: '备选项', label: '2', name: 'radio1', value: '1', disabled: false, border: false }
       ]
     },
-    __vModel__: null,
-    textColor: '#ffffff',
-    fill: '#409EFF'
+    __vModel__: '1',
+    textColor: '',
+    fill: ''
   },
   {
     __config__: {
       document: 'https://element.eleme.cn/#/zh-CN/component/checkbox',
-      label: '多选框组',
+      label: '多选框(组)',
       tag: 'el-checkbox-group',
       tagIcon: 'checkbox',
       isGroup: true
