@@ -88,26 +88,23 @@ const inputComponents = [
       tagIcon: 'input'
     },
     __slot__: {
-      prefix: '', // 输入框头部内容
-      suffix: '', // 输入框尾部内容
+      prefix: {
+        className: 'el-icon-edit',
+        on: {
+          click: function () { }
+        }
+      }, // 输入框头部内容
+      suffix: 'el-icon-edit', // 输入框尾部内容
       prepend: '', // 输入框前置内容
       append: '' // 输入框后置内容
     },
-    __methods__: {
-      focus (event) {
-        console.log('....0', event)
-      }
-    },
+    __methods__: {},
     __vModel__: null, // 绑定值
     name: 'text',
     type: 'text', // 类型 default:text
     prefixIcon: '', // 输入框头部图标
     suffixIcon: '', // 输入框尾部图标
-    nativeOn: {
-      focus (event) {
-        console.log(event, 'event')
-      }
-    }
+    nativeOn: {}
   },
   {
     __config__: {
@@ -194,14 +191,36 @@ const selectComponents = [
     __slot__: {
       prefix: '',
       empty: '',
-      options: [
-        { label: '选项一', value: 1, disabled: false },
-        { label: '选项二', value: 2, disabled: true }
-      ]
+      options: [{
+        label: '热门城市',
+        options: [{
+          value: 'Shanghai',
+          label: '上海'
+        }, {
+          value: 'Beijing',
+          label: '北京'
+        }]
+      }, {
+        label: '城市名',
+        disabled: true,
+        options: [{
+          value: 'Chengdu',
+          label: '成都'
+        }, {
+          value: 'Shenzhen',
+          label: '深圳'
+        }, {
+          value: 'Guangzhou',
+          label: '广州'
+        }, {
+          value: 'Dalian',
+          label: '大连'
+        }]
+      }]
     },
     __vModel__: null,
     name: 'select',
-    isGroup: false,
+    isGroup: true,
     multiple: false,
     multipleLimit: 0
   },
