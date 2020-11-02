@@ -497,10 +497,11 @@ const selectComponents = [
       type: 'primary',
       fileSize: 2,
       sizeUnit: 'MB',
-      showTips: '只能上传jpg/png文件，且不超过{fileSize} {sizeUnit}'
+      showTips: true
     },
     __slot__: {
-      listType: true
+      listType: true,
+      tip: '只能上传jpg/png文件，且不超过{fileSize}{sizeUnit}'
     },
     __vModel__: null,
     name: 'file',
