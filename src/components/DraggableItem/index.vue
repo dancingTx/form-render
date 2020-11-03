@@ -2,6 +2,10 @@
 import render from '../render'
 import draggable from 'vuedraggable'
 import { labelWidth, typeOf } from '@/utils'
+const stopPropagation = function (event, fn) {
+  fn(...Array.from(arguments).slice(2))
+  event.stopPropagation()
+}
 const btnGroup = function (h, currentItem, index, list) {
   const btns = [
     {
@@ -23,13 +27,13 @@ const btnGroup = function (h, currentItem, index, list) {
     }
   }
   const createComponentItem = item => {
-    const event = executer(item.event)
+    const fn = executer(item.event)
     return (
       <span
         class={item.className}
         title={item.title}
-        onClick={() =>
-          event.apply(this.$listeners, Array.from(arguments).slice(1))
+        onClick={event =>
+          stopPropagation(event, fn.bind(this.$listeners), ...Array.from(arguments).slice(1))
         }
       >
         <i class={item.icon} />
@@ -37,10 +41,6 @@ const btnGroup = function (h, currentItem, index, list) {
     )
   }
   return <div>{btns.map(createComponentItem)}</div>
-}
-const stopPropagation = function (event, fn) {
-  fn(...Array.from(arguments).slice(2))
-  event.stopPropagation()
 }
 const renderChildren = function (h, children) {
   if (!children) return <div />

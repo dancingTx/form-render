@@ -187,11 +187,19 @@ export default {
     },
     copyFormItem (item, index, list) {
       // clone form item
-      console.log('clone form item')
+      const clone = this.cloneComponents(item)
+      this.activeFormItem(clone)
+      list.push(clone)
     },
     deleteFormItem (item, index, list) {
       // delete form item
-      console.log('delete form item')
+      list.splice(index, 1)
+      this.$nextTick(() => {
+        const length = list.length
+        if (length) {
+          this.activeFormItem(list[length - 1])
+        }
+      })
     },
 
     executer (type) {
