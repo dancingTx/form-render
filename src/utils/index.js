@@ -8,7 +8,7 @@ export * from './validate'
  */
 export const mergeOptions = function (customOpts, baseOpts) {
   const options = {}
-  const keys = [...Object.keys(customOpts), ...Object.keys(baseOpts)]
+  const keys = Object.keys(baseOpts).concat(Object.keys(customOpts))
   keys.forEach(item => {
     if (item in customOpts && item in baseOpts) {
       if (typeOf(customOpts[item], 'object')) {

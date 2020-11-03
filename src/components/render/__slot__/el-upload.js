@@ -1,14 +1,14 @@
+const genTips = function (h, currItem, key) {
+  const tip =
+    currItem.__slot__[key] &&
+    currItem.__slot__[key].replace(/{(\w+)}/g, (_, value) => currItem.__config__[value])
+  return (
+    <div slot={key} class="el-upload__tip">{tip}</div>
+  )
+}
+
 export default {
   listType (h, currItem, key) {
-    const genTips = function (h, currItem, key) {
-      const tip =
-      currItem.__slot__[key] &&
-      currItem.__slot__[key].replace(/{(\w+)}/g, (_, value) => currItem.__config__[value])
-      return (
-        <div slot={key} class="el-upload__tip">{tip}</div>
-      )
-    }
-
     const config = currItem.__config__
     const res = []
     if (currItem.listType === 'picture-card') {
