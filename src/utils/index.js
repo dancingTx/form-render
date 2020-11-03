@@ -66,7 +66,12 @@ export const deepCopy = function (resource) {
  */
 
 export const firstUpperCase = str => str.slice(0, 1).toUpperCase() + str.slice(1)
-
+/**
+ *
+ * @param {string} str
+ * @description 小驼峰转中划线
+ */
+export const caseCamel = str => str.replace(/([A-Z])/g, '-$1').toLowerCase()
 /**
  *
  * @param {null | string | number} value

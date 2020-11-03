@@ -65,6 +65,13 @@ const executeEventMixin = function (target, fn) {
     target.on[fnName] = fn[fnName]
   })
 }
+
+const slotConflictAttrs = function (target, props) {
+  Object.keys(props).forEach(compKey => {
+    const value = typeOf(props[compKey], 'function') ? props[compKey]() : props[compKey]
+    target.attrs[compKey] = value
+  })
+}
 const mergeJson2DataMixin = function (clone, target) {
   Object.keys(clone).forEach(key => {
     const value = clone[key]
@@ -72,6 +79,8 @@ const mergeJson2DataMixin = function (clone, target) {
       vModel.call(this, target, value)
     } else if (key === '__methods__') {
       executeEventMixin.call(this, target, value)
+    } else if (key === '__attrs__') {
+      slotConflictAttrs.call(this, target, value)
     } else {
       if (key in target) {
         if (['string', 'boolean', 'function'].some(type => typeOf(target[key], type))) {
@@ -82,11 +91,7 @@ const mergeJson2DataMixin = function (clone, target) {
           target[key] = Object.assign({}, target[key], value)
         }
       } else {
-        if (key === 'compProps') {
-          target.attrs.props = value
-        } else {
-          target.attrs[key] = value
-        }
+        target.attrs[key] = value
       }
     }
   })
@@ -95,7 +100,7 @@ const mergeJson2DataMixin = function (clone, target) {
 }
 
 const clearNoneAttrs = function (target) {
-  ['__slot__', '__config__', '__methods__'].forEach(attr => {
+  ['__slot__', '__config__'].forEach(attr => {
     this.$delete(target.attrs, attr)
   })
 }
@@ -116,6 +121,7 @@ export default {
     emitEventMixin.call(this, clone)
     // json 属性混入data中
     mergeJson2DataMixin.call(this, clone, data)
+
     if (group.some(item => clone.__config__.tag.indexOf(item) > -1) && !clone.__config__.isGroup) {
       return h('div', children)
     }

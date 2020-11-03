@@ -275,6 +275,17 @@ const selectComponents = [
     },
     __vModel__: [],
     __methods__: {},
+    __attrs__: {
+      props: {
+        expandTrigger: 'hover',
+        multiple: false,
+        value: 'value',
+        label: 'label',
+        children: 'children',
+        disabled: 'disabled',
+        leaf: 'leaf'
+      }
+    },
     name: 'cascader',
     options: [{
       value: 'zhinan',
@@ -475,16 +486,7 @@ const selectComponents = [
     showAllLevels: true,
     collapseTags: false,
     filterable: false,
-    separator: '/',
-    compProps: {
-      expandTrigger: 'hover',
-      multiple: false,
-      value: 'value',
-      label: 'label',
-      children: 'children',
-      disabled: 'disabled',
-      leaf: 'leaf'
-    }
+    separator: '/'
   },
   {
     __config__: {
@@ -517,6 +519,39 @@ const selectComponents = [
     autoUpload: true,
     fileList: [],
     limit: null
+  },
+  {
+    __config__: {
+      document: 'https://element.eleme.cn/#/zh-CN/component/transfer',
+      label: '穿梭框',
+      tag: 'el-transfer',
+      tagIcon: 'transfer'
+    },
+    __vModel__: [],
+    __slot__: {},
+    __attrs__: {
+      data () {
+        const data = []
+        const cities = ['上海', '北京', '广州', '深圳', '南京', '西安', '成都']
+        const pinyin = ['shanghai', 'beijing', 'guangzhou', 'shenzhen', 'nanjing', 'xian', 'chengdu']
+        cities.forEach((city, index) => {
+          data.push({
+            label: city,
+            key: index,
+            pinyin: pinyin[index],
+            disabled: index % 4 === 0
+          })
+        })
+        return data
+      }
+    },
+    filterable: false,
+    filterPlaceholder: '请输入搜索内容',
+    titles: ['列表一', '列表二'],
+    buttonTexts: [],
+    props: null,
+    leftDefaultChecked: [],
+    rightDefaultChecked: []
   },
   {
     __config__: {
