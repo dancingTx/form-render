@@ -1,18 +1,19 @@
 <script>
 import render from '../render'
+import draggable from 'vuedraggable'
 import { labelWidth, typeOf } from '@/utils'
 const btnGroup = function (h, currentItem, index, list) {
   const btns = [
     {
       title: '删除',
       icon: 'el-icon-delete',
-      className: 'btngroup__delete btngroup',
+      className: 'btns__delete btns',
       event: 'delete'
     },
     {
       title: '复制',
       icon: 'el-icon-copy-document',
-      className: 'btngroup__copy btngroup',
+      className: 'btns__copy btns',
       event: 'copy'
     }
   ]
@@ -95,7 +96,41 @@ const layouts = {
             {child}
           </render>
         </el-form-item>
-        {config.formId === this.activeId ? btnGroup.apply(this, arguments) : ''}
+        {btnGroup.apply(this, arguments)}
+      </el-col>
+    )
+  },
+  rowFormItem (h, currentItem, index, list) {
+    const { activeFormItem } = this.$listeners
+    const config = currentItem.__config__
+    const child = renderChildren.call(this, h, config.children)
+    const className = `${
+      config.formId === this.activeId ? 'draggable-row__item--active ' : ''
+    }draggable-row__item`
+
+    return (
+      <el-col span={config.span}>
+        <el-row
+          class={className}
+          nativeOnClick={event =>
+            stopPropagation(event, activeFormItem, currentItem)
+          }
+          gutter={config.gutter || 0}
+          type={config.type || 'default'}
+          justify={config.type === 'flex' ? config.justify : ''}
+          align={config.type === 'flex' ? config.type : ''}
+          tag={config.tag || 'div'}
+        >
+          <span class="draggable-row__title">{config.componentName}</span>
+          <draggable
+            group="components"
+            animation={300}
+            list={config.children || []}
+          >
+            {child}
+          </draggable>
+          {btnGroup.apply(this, arguments)}
+        </el-row>
       </el-col>
     )
   },
@@ -128,6 +163,7 @@ export default {
     }
   },
   components: {
+    draggable,
     render
   },
   render (h) {

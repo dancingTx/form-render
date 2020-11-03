@@ -605,6 +605,19 @@ const selectComponents = [
     showScore: false,
     textColor: '#1F2D3D',
     texts: ['极差', '失望', '一般', '满意', '惊喜']
+  },
+  {
+    __config__: {
+      document: 'https://element.eleme.cn/#/zh-CN/component/color-picker',
+      label: '颜色选择器',
+      tag: 'el-color-picker',
+      tagIcon: 'color'
+    },
+    __vModel__: '',
+    showAlpha: false,
+    colorFormat: 'hex',
+    poperClass: '',
+    predefine: []
   }
 ]
 
@@ -622,7 +635,8 @@ export const LayoutComponents = [
       tag: 'el-row',
       tagIcon: 'row',
       layout: 'rowFormItem',
-      document: 'https://element.eleme.cn/#/zh-CN/component/layout'
+      document: 'https://element.eleme.cn/#/zh-CN/component/layout',
+      span: 24
     },
     type: 'default',
     gutter: 0,
