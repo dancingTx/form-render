@@ -5,3 +5,17 @@
 .el-form-item__label-wrap {
     margin-left: 0 !important;
 }
+
+.el-tabs__header {
+    margin: 0 !important;
+    border-bottom-color:$editorBgColor !important;
+}
+
+.el-tabs__item,.el-tabs__nav {
+    border-color: $editorBgColor !important;
+    background-color: $editorBgColor1;
+}
+
+.el-tabs__item.is-active {
+    background-color: $editorBgColor;
+}

@@ -78,3 +78,17 @@ export const caseCamel = str => str.replace(/([A-Z])/g, '-$1').toLowerCase()
  * @description 返回对应 label宽度
  */
 export const labelWidth = (value, isShow = true) => isShow ? typeOf(value, 'number') ? value + 'px' : value : '0'
+
+/**
+ *
+ * @param {number} length
+ * @description 随机字符串
+ */
+export const randomStr = (length = 16) => {
+  let crypto = ''
+  const count = 256
+  while (length--) {
+    crypto += String.fromCharCode(~~(Math.random() * count))
+  }
+  return crypto
+}

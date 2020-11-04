@@ -3,3 +3,46 @@
         width: 100%;
     }
 }
+
+.preview {
+    display: flex;
+
+    &__editor {
+        flex: 1;
+    }
+
+    &__display {
+        flex: 1;
+    }
+}
+
+.editor {
+    &__tabs {
+        background-color: $editorBgColor;
+    }
+
+    &__content {
+        height: 100vh;
+    }
+}
+
+.tabs {
+    &__icon {
+        color: $brown;
+    }
+    &__label {
+        margin-left: 10px;
+        color: $gray;
+    }
+}
+
+.el-tabs__item.is-active {
+    .tabs{
+        &__icon {
+            color: $green;
+        }
+        &__label {
+            color: $white;
+        }
+    }
+}
