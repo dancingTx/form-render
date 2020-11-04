@@ -20,62 +20,47 @@
             </span>
           </el-tab-pane>
         </el-tabs>
-        <div
+        <monaco
           class="editor__content"
-          v-for="tab of tabs"
-          :key="tab.name"
-          :ref="tab.label"
-          v-show="activeName === tab.name"
+          :code="code"
+          :activeName="activeName"
+          :change.sync="editorValue"
         />
       </div>
     </div>
     <div class="preview__display">
-      <display :code="code"/>
+      <display :code="code" />
     </div>
   </div>
 </template>
 
 <script>
-import * as monaco from 'monaco-editor'
-import display from './display.vue'
+
+import display from './display'
+import monaco from './monaco'
 import { template } from './testTemplate'
+
 export default {
   name: 'Preview',
   components: {
-    display
+    display,
+    monaco
+  },
+  watch: {
+    editorValue (value) {
+    }
   },
   data () {
     return {
       code: template,
-      editor: {
-        template: null,
-        style: null,
-        script: null
-      },
       activeName: 'html',
       tabs: [
         { label: 'template', name: 'html' },
         { label: 'style', name: 'css' },
         { label: 'script', name: 'javascript' }
-      ]
+      ],
+      editorValue: ''
     }
-  },
-  methods: {
-    createAndUpdateEditorValue (ref, type, code) {
-      if (this.editor[ref]) {
-        this.editor[ref].setValue(code)
-        return
-      }
-      this.editor[ref] = monaco.editor.create(this.$refs[ref][0], {
-        value: code,
-        language: type,
-        theme: 'vs-dark',
-        automaticLayout: true
-      })
-    }
-  },
-  mounted () {
-    this.createAndUpdateEditorValue('script', 'javascript', this.code)
   }
 }
 </script>
