@@ -35,8 +35,7 @@ const renderCode = function (code) {
     const strParse2fn = (new Function(script))()
     strParse2fn.template = template
     const Ctor = Vue.extend(strParse2fn)
-    component = (new Ctor()).$mount()
-    this.$refs.display.appendChild(component.$el)
+    component = (new Ctor()).$mount(this.$refs.display)
   }
 
   if (style) {
