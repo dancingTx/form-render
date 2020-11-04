@@ -82,12 +82,13 @@
     transform: translate(-50%, -50%);
     color: $brand;
   }
-  &__draggable_item {
-    margin-bottom: 10px;
-  }
 
   &__right {
     flex: 1;
+  }
+
+  &__drawer {
+    // width: 100%;
   }
 }
 

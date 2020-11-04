@@ -1,8 +1,9 @@
 .draggable {
     &__item {
         position: relative;
-        box-sizing: border-box;
+        margin-bottom: 10px;
         padding: 10px 5px;
+        box-sizing: border-box;
         border-radius: 10px;
         cursor: move;
         &--active, &:hover {

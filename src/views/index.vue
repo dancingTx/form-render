@@ -55,7 +55,7 @@
               :animation="300"
             >
               <draggable-item
-                class="container__draggable_item"
+                class="draggable__item"
                 v-for="(item, index) of displayList"
                 :key="index"
                 :currentItem="item"
@@ -83,18 +83,31 @@
       <el-scrollbar class="scrollbar">
       </el-scrollbar>
     </div>
+    <div class="container__drawer">
+      <el-drawer
+        class="drawer__wrapper"
+        size="100%"
+        :visible.sync="isShowing"
+        direction="rtl"
+        @opened="handleDrawerOpened"
+        append-to-body
+        :withHeader="false"
+        @closed="handleDrawerClosed"
+        >
+        <preview/>
+      </el-drawer>
+    </div>
   </div>
 </template>
 
 <script>
 import draggable from 'vuedraggable'
-import { DraggableItem } from '@/components'
+import { DraggableItem, Preview } from '@/components'
 import { deepCopy, typeOf, firstUpperCase, labelWidth } from '@/utils'
-
 let fid = 0
 export default {
   name: 'index',
-  components: { draggable, DraggableItem },
+  components: { draggable, DraggableItem, Preview },
   computed: {
     componentsList () {
       return this.$store.getters.components
@@ -114,6 +127,7 @@ export default {
   data () {
     return {
       sort: false,
+      isShowing: true, // for test
       dragGroup: {
         name: 'components',
         pull: 'clone',
@@ -203,13 +217,23 @@ export default {
     },
 
     executer (type) {
-      return this[`execute${firstUpperCase(type)}Func`]()
+      return type && this[`execute${firstUpperCase(type)}Func`]()
     },
     executeRunFunc () {
-      console.log('runnnnnn')
+      this.isShowing = true
     },
     executeClearFunc () {
       console.log('clearrrrr')
+    },
+    handleDrawerOpened () {
+      // generate code
+    },
+    handleDrawerClosed () {
+      // reset exec
+      this.$store.dispatch('components/executeComponentDirective', {
+        key: 'directive',
+        value: ''
+      })
     }
   }
 }
