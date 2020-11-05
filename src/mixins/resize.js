@@ -1,15 +1,13 @@
+import { throttle } from '@/utils'
+import { edit } from '@/components/Preview/monaco'
 export default {
   methods: {
     $_resize () {
-      // TODO: 节流
-      this.$store.dispatch('drawer/processResizeHandler', {
-        key: 'resize',
-        value: Date.now()
-      })
+      edit && edit.layout()
     }
   },
   mounted () {
-    window.addEventListener('resize', this.$_resize, false)
+    window.addEventListener('resize', throttle(this.$_resize, 300), false)
   },
   destroy () {
     window.removeEventListener('resize', this.$_resize, false)

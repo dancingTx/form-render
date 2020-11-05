@@ -92,10 +92,8 @@
         @opened="handleDrawerOpened"
         append-to-body
         :withHeader="false"
-        @closed="handleDrawerClosed"
         >
-        <el-button @click="isShowing=false">x</el-button>
-        <preview/>
+        <preview @exec="executer"/>
       </el-drawer>
     </div>
   </div>
@@ -128,7 +126,7 @@ export default {
   data () {
     return {
       sort: false,
-      isShowing: false, // for test
+      isShowing: true, // for test
       dragGroup: {
         name: 'components',
         pull: 'clone',
@@ -222,23 +220,26 @@ export default {
       this.resetDirective()
     },
     executeRunFunc () {
+      // display drawer
       this.isShowing = true
+
+      // run code
+    },
+    executeClosedFunc () {
+      this.isShowing = false
     },
     executeClearFunc () {
       console.log('clearrrrr')
     },
     resetDirective () {
       // reset exec
-      this.$store.dispatch('components/executeComponentDirective', {
+      this.$store.dispatch('executeComponentDirective', {
         key: 'directive',
         value: ''
       })
     },
     handleDrawerOpened () {
       // generate code
-    },
-    handleDrawerClosed () {
-
     }
   }
 }

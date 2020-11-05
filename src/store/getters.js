@@ -1,6 +1,6 @@
 export default {
-  components: state => state.components.components,
-  formConf: state => state.components.formConf,
-  directive: state => state.components.directive,
-  resize: state => state.drawer.resize
+  components: state => state.components,
+  formConf: state => state.formConf,
+  directive: state => state.directive,
+  resize: state => state.resize
 }

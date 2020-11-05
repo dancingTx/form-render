@@ -54,7 +54,8 @@ const renderCode = function (code) {
 export default {
   name: 'display',
   props: {
-    code: String
+    code: String,
+    code1: String
   },
   mounted () {
     renderCode.call(this, this.code)

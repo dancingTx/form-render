@@ -29,6 +29,17 @@
       </div>
     </div>
     <div class="preview__display">
+      <div class="display__btns">
+        <div
+          class="btngroup__item"
+          v-for="btn of btns"
+          :key="btn.icon"
+          @click="handleClick(btn.directive)"
+        >
+          <i :class="['btngroup__icon', btn.icon]" />
+          <span class='btngroup__content'>{{btn.label}}</span>
+        </div>
+      </div>
       <display :code="code" />
     </div>
   </div>
@@ -48,6 +59,7 @@ export default {
   },
   watch: {
     editorValue (value) {
+      // watch content change via monaco editor
     }
   },
   data () {
@@ -59,7 +71,16 @@ export default {
         { label: 'style', name: 'css' },
         { label: 'script', name: 'javascript' }
       ],
-      editorValue: ''
+      editorValue: '',
+      btns: [
+        { label: '运行', icon: 'el-icon-video-play', directive: 'run' },
+        { label: '关闭', icon: 'el-icon-close', directive: 'closed' }
+      ]
+    }
+  },
+  methods: {
+    handleClick (directive) {
+      this.$emit('exec', directive)
     }
   }
 }

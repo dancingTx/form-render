@@ -7,7 +7,7 @@ export default {
       { icon: 'el-icon-delete', directive: 'clear', content: '清空' }
     ]
     const handleClick = type => {
-      this.$store.dispatch('components/executeComponentDirective', {
+      this.$store.dispatch('executeComponentDirective', {
         key: 'directive',
         value: type
       })

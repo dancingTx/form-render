@@ -1,8 +1,8 @@
 <script>
-import * as monaco from 'monaco-editor'
+import { editor } from 'monaco-editor'
 import resize from '@/mixins/resize'
-let globalEditorInstance = monaco.editor
-let editor = null
+let globalEditorInstance = editor
+export let edit = null
 const map = {
   html: '<div>111</div>',
   css: 'div {color: #ff0}',
@@ -13,19 +13,19 @@ const setMonacoLanguage = function (language) {
   globalEditorInstance.setModelLanguage(model, language)
 }
 const createAndUpdateEditorValue = function (code, options = {}) {
-  if (editor) {
-    editor.setValue(code)
+  if (edit) {
+    edit.setValue(code)
     setMonacoLanguage(options.type)
   } else {
     const model = globalEditorInstance.createModel(code, options.type || 'template')
-    editor = globalEditorInstance.create(this.$refs.editor, {
+    edit = globalEditorInstance.create(this.$refs.editor, {
       theme: options.theme || 'vs-dark'
     })
-    editor.setModel(model)
+    edit.setModel(model)
   }
   // 监听编辑内容变化
-  editor.onDidChangeModelContent(() => {
-    this.$emit('update:change', editor.getValue())
+  edit.onDidChangeModelContent(() => {
+    this.$emit('update:change', edit.getValue())
   })
 
   // 销毁组件
@@ -34,9 +34,9 @@ const createAndUpdateEditorValue = function (code, options = {}) {
 
 const destoryMonacoInstance = function () {
   this.$once('hook: beforeDestroy', () => {
-    if (editor) {
-      editor.dispose()
-      editor = null
+    if (edit) {
+      edit.dispose()
+      edit = null
       globalEditorInstance = null
     }
   })
@@ -55,7 +55,7 @@ export default {
       })
     },
     resize (value) {
-      editor && editor.layout()
+      edit && edit.layout()
     }
   },
   computed: {

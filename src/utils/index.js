@@ -1,5 +1,6 @@
 import { typeOf, isPlainObject } from './validate'
 export * from './validate'
+
 /**
  *
  * @param {object} customOpts
@@ -25,6 +26,7 @@ export const mergeOptions = function (customOpts, baseOpts) {
   })
   return options
 }
+
 /**
  *
  * @param {object} resource
@@ -64,14 +66,15 @@ export const deepCopy = function (resource) {
  * @param {string}} str
  * @description 首字母大写
  */
-
 export const firstUpperCase = str => str.slice(0, 1).toUpperCase() + str.slice(1)
+
 /**
  *
  * @param {string} str
  * @description 小驼峰转中划线
  */
 export const caseCamel = str => str.replace(/([A-Z])/g, '-$1').toLowerCase()
+
 /**
  *
  * @param {null | string | number} value
@@ -91,4 +94,50 @@ export const randomStr = (length = 16) => {
     crypto += String.fromCharCode(~~(Math.random() * count))
   }
   return crypto
+}
+
+/**
+ *
+ * @param {function} func
+ * @param {number} delay
+ * @description 节流
+ */
+export const throttle = (func, delay) => {
+  let timer = null
+  let result = null
+  let context = null
+  let args = null
+  let previous = 0
+  const later = function () {
+    previous = Date.now()
+    func.apply(context, args)
+    clearTimeout(timer)
+    timer = null
+  }
+  const throttled = function () {
+    const now = Date.now()
+    const remaining = delay - (now - previous)
+    context = this
+    args = arguments
+
+    if (remaining <= 0 || remaining > delay) {
+      if (timer) {
+        clearTimeout(timer)
+        timer = null
+      }
+      result = func.apply(context, args)
+      previous = now
+    } else if (!timer) {
+      timer = setTimeout(later, remaining)
+    }
+    return result
+  }
+
+  throttled.cancel = function () {
+    clearTimeout(timer)
+    timer = null
+    previous = 0
+  }
+
+  return throttled
 }
