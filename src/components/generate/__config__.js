@@ -254,11 +254,11 @@ const selectComponents = [
         { label: '选项三', name: 'checkbox1', value: 3, disabled: false, border: false, checked: false }
       ]
     },
-    __vModel__: [1, 3],
+    __vModel__: [],
     textColor: '#ffffff',
     fill: '#409EFF',
-    min: null,
-    max: null
+    min: -Infinity,
+    max: Infinity
   },
   {
     __config__: {
