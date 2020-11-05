@@ -1,5 +1,5 @@
 import { SET_INFO } from './mutations-type'
-import { basicOptions, inputOptions, selectOptions, LayoutComponents, formConf } from '@/components/generate/__config__'
+import { basicOptions, inputOptions, selectOptions, layoutOptions, formConf } from '@/components/generate/__config__'
 const state = {
   components: [],
   formConf: {},
@@ -23,7 +23,7 @@ const actions = {
       { title: '基础组件', type: 'basic', list: basicOptions },
       { title: '输入型组件', type: 'input', list: inputOptions },
       { title: '选择型组件', type: 'select', list: selectOptions },
-      { title: '布局型组件', type: 'layout', list: LayoutComponents }
+      { title: '布局型组件', type: 'layout', list: layoutOptions }
     ]
     commit(SET_INFO, {
       key: 'components',

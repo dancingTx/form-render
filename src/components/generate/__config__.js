@@ -18,6 +18,7 @@ export const formConf = {
 // 基础组件
 const baseBasicConf = {
   __config__: {
+    componentType: 'basic',
     labelWidth: 'auto',
     required: true,
     showLabel: true,
@@ -46,6 +47,7 @@ const basicComponents = [
     plain: false,
     round: false,
     circle: false,
+    loading: false,
     autofocus: false,
     icon: '',
     nativeType: 'button'
@@ -55,6 +57,7 @@ export const basicOptions = basicComponents.map(item => mergeOptions(item, baseB
 // 输入型组件
 const baseInputConf = {
   __config__: {
+    componentType: 'input',
     labelWidth: 'auto',
     required: true,
     showLabel: true,
@@ -94,7 +97,7 @@ const inputComponents = [
       append: '' // 输入框后置内容
     },
     __methods__: {},
-    __vModel__: null, // 绑定值
+    __vModel__: '', // 绑定值
     name: 'text',
     type: 'text', // 类型 default:text
     prefixIcon: '', // 输入框头部图标
@@ -107,7 +110,7 @@ const inputComponents = [
       tag: 'el-input',
       tagIcon: 'textarea'
     },
-    __vModel__: null, // 绑定值
+    __vModel__: '', // 绑定值
     name: 'textarea',
     type: 'textarea', // 类型 default:text
     prefixIcon: '', // 输入框头部图标
@@ -156,6 +159,7 @@ export const inputOptions = inputComponents.map(item => mergeOptions(item, baseI
 // 选择型组件
 const baseSelectConf = {
   __config__: {
+    componentType: 'select',
     labelWidth: 'auto',
     required: true,
     showLabel: true,
@@ -619,11 +623,13 @@ const selectComponents = [
 export const selectOptions = selectComponents.map(item => mergeOptions(item, baseSelectConf))
 
 // 布局型组件
-// const baseLayoutConf = {
+const baseLayoutConf = {
+  __config__: {
+    componentType: 'layout'
+  }
+}
 
-// }
-
-export const LayoutComponents = [
+const LayoutComponents = [
   {
     __config__: {
       label: '行容器',
@@ -640,3 +646,5 @@ export const LayoutComponents = [
     tag: 'div'
   }
 ]
+
+export const layoutOptions = LayoutComponents.map(item => mergeOptions(item, baseLayoutConf))

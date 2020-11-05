@@ -19,6 +19,7 @@
     </el-tooltip>
     <el-scrollbar class="scrollbar">
       <component
+        class="right__attrs"
         v-for="tab of tabs"
         :key="tab.name"
         :is="tab.name + 'Attrs'"

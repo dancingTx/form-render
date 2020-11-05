@@ -35,16 +35,16 @@
   display: flex;
 
   &__logo {
-    flex: 1;
+    flex: 2;
   }
 
   &__btn_group {
-    flex: 4;
+    flex: 8;
     text-align: right;
   }
 
   &__external_links {
-    flex: 1;
+    flex: 3;
   }
 }
 
@@ -52,21 +52,31 @@
   display: flex;
 
   &__left {
-    flex: 1;
+    flex: 2;
+
     .scrollbar {
       height: calc(100vh - 50px);
     }
   }
 
   &__main {
-    flex: 4;
+    flex: 8;
     border: 1px dashed $gray;
     background-color: $gray1;
+
     .scrollbar {
       height: calc(100vh - 50px);
     }
   }
-  
+
+  &__right {
+    flex: 3;
+
+    .el-tabs--top {
+      height: 40px;
+    }
+  }
+
   &__board {
     position: relative;
     min-height: calc(100vh - 50px);
@@ -80,13 +90,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: $brand;
-  }
-
-  &__right {
-    flex: 1;
-    .el-tabs--top {
-      height: 40px;
-    }
   }
 
 }
@@ -108,5 +111,5 @@
   &__icon {
     margin-right: 10px;
   }
-  
+
 }
