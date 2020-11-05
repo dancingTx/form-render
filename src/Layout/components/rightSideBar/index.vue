@@ -18,13 +18,16 @@
       </a>
     </el-tooltip>
     <el-scrollbar class="scrollbar">
-      <component
+      <component-attrs
         class="right__attrs"
-        v-for="tab of tabs"
-        :key="tab.name"
-        :is="tab.name + 'Attrs'"
-        :conf="tab.list"
-        v-show="activeName === tab.name"
+        v-if="activeName === 'component'"
+        :conf="activeData"
+        :is-empty="isEmpty"
+      />
+      <form-attrs
+        class="right_attrs"
+        v-else-if="activeName === 'form'"
+        :conf="formConf"
       />
     </el-scrollbar>
   </div>
@@ -42,7 +45,8 @@ export default {
   },
   props: {
     formConf: Object,
-    activeData: Object
+    activeData: Object,
+    isEmpty: Boolean
   },
   computed: {
     docLink () {
@@ -52,18 +56,10 @@ export default {
   data () {
     return {
       tabs: [
-        { label: '组件属性', name: 'component', list: this.activeData },
-        { label: '表单属性', name: 'form', list: this.formConf }
+        { label: '组件属性', name: 'component' },
+        { label: '表单属性', name: 'form' }
       ],
       activeName: 'component'
-    }
-  },
-  watch: {
-    activeData (value) {
-      this.tabs[0].list = value
-    },
-    formConf (value) {
-      this.tabs[1].list = value
     }
   }
 }

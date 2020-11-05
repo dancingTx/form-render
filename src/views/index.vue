@@ -83,7 +83,11 @@
     </div>
     <!-- right panel -->
     <div class="container__right">
-      <right-side-bar :active-data="activeData" :form-conf="formConf"/>
+      <right-side-bar
+        :active-data="activeData"
+        :form-conf="formConf"
+        :is-empty="!displayList.length"
+      />
     </div>
     <div class="container__drawer">
       <el-drawer
