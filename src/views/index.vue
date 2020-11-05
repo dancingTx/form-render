@@ -83,8 +83,7 @@
     </div>
     <!-- right panel -->
     <div class="container__right">
-      <el-scrollbar class="scrollbar">
-      </el-scrollbar>
+      <right-side-bar :active-data="activeData" :form-conf="formConf"/>
     </div>
     <div class="container__drawer">
       <el-drawer
@@ -104,12 +103,13 @@
 
 <script>
 import draggable from 'vuedraggable'
+import rightSideBar from '@/Layout/components/rightSideBar'
 import { DraggableItem, Preview } from '@/components'
 import { deepCopy, typeOf, firstUpperCase, labelWidth } from '@/utils'
 let fid = 0
 export default {
   name: 'index',
-  components: { draggable, DraggableItem, Preview },
+  components: { draggable, DraggableItem, Preview, rightSideBar },
   computed: {
     componentsList () {
       return this.$store.getters.components

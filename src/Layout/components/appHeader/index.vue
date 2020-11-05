@@ -15,6 +15,7 @@ export default {
   components: {
     Logo,
     btnGroup,
+    // eslint-disable-next-line vue/no-unused-components
     externalLinks
   }
 }

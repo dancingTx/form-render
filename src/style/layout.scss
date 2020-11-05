@@ -1,22 +1,16 @@
 // custom
 .layout {
-  display: flex;
-  flex-direction: column;
   height: 100vh;
 
   &__app_header {
-    flex: 1;
+    height: 48px;
     background: $gradient-blue;
   }
 
   &__app_main {
-    flex: 12;
+    height: calc(100vh - 50px);
   }
 
-  &__app_footer {
-    flex: 1;
-    background: $gradient-light-blue;
-  }
 }
 
 .logo {
@@ -32,7 +26,7 @@
   &__title {
     display: inline-block;
     margin: 0;
-    line-height: 58px;
+    line-height: 48px;
     color: $brand;
   }
 }
@@ -45,7 +39,7 @@
   }
 
   &__btn_group {
-    flex: 3;
+    flex: 4;
     text-align: right;
   }
 
@@ -59,20 +53,25 @@
 
   &__left {
     flex: 1;
+    .scrollbar {
+      height: calc(100vh - 50px);
+    }
   }
 
   &__main {
-    flex: 3;
+    flex: 4;
     border: 1px dashed $gray;
+    background-color: $gray1;
+    .scrollbar {
+      height: calc(100vh - 50px);
+    }
   }
   
   &__board {
     position: relative;
-    overflow: hidden;
-    min-height: 86vh;
+    min-height: calc(100vh - 50px);
     padding: 10px;
     box-sizing: border-box;
-    background-color: $gray1;
   }
 
   &__empty {
@@ -85,6 +84,9 @@
 
   &__right {
     flex: 1;
+    .el-tabs--top {
+      height: 40px;
+    }
   }
 
 }
@@ -92,14 +94,13 @@
 .btngroup {
   &__item {
     display: inline-block;
-    margin: 10px;
-    padding: 10px;
+    padding: 15px 10px;
     cursor: pointer;
     color: $red;
 
     &:hover {
       border: 1px dashed $red1;
-      padding: 9px;
+      padding: 14px 9px;
       color: $red1;
     }
   }
@@ -108,9 +109,4 @@
     margin-right: 10px;
   }
   
-}
-
-.scrollbar {
-  height: 86vh;
-  overflow: hidden;
 }
