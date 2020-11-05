@@ -88,13 +88,8 @@ const inputComponents = [
       tagIcon: 'input'
     },
     __slot__: {
-      prefix: {
-        className: 'el-icon-edit',
-        on: {
-          click: function () { }
-        }
-      }, // 输入框头部内容
-      suffix: 'el-icon-edit', // 输入框尾部内容
+      prefix: '', // 输入框头部内容
+      suffix: '', // 输入框尾部内容
       prepend: '', // 输入框前置内容
       append: '' // 输入框后置内容
     },
@@ -147,14 +142,14 @@ const inputComponents = [
       tag: 'el-input-number',
       tagIcon: 'number'
     },
-    __vModel__: 'number',
+    __vModel__: 0,
     name: 'number',
     controlsPosition: null, // 控制按钮位置
     step: 1, // 计数器步长
     stepStrictly: false, // 是否只能输入step步数
     precision: null, // 数值精度
-    max: null, // 最大数字
-    min: null // 最小数字
+    max: Infinity, // 最大数字
+    min: -Infinity // 最小数字
   }
 ]
 export const inputOptions = inputComponents.map(item => mergeOptions(item, baseInputConf))

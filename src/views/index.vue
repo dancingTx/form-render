@@ -3,9 +3,12 @@
     <!-- left panel -->
     <div class="container__left">
       <el-scrollbar class="scrollbar">
-        <el-switch v-model="sort" active-text="可排序" class="left__switch"/>
         <div class="components__list">
-          <div class="components__item" v-for="({title, type, list}) of componentsList" :key="type">
+          <div
+            class="components__item"
+            v-for="({title, type, list}) of componentsList"
+            :key="type"
+          >
             <div class="components__title">
               <svg-icon icon-class="component" class="components__title_icon"/>
               <h4 class="components__title_content">{{title}}</h4>
@@ -15,7 +18,7 @@
                 :list="list"
                 :group="dragGroup"
                 :clone="cloneComponents"
-                :sort="sort"
+                :sort="false"
                 draggable=".components__btns"
                 @end="handleDragEnd"
               >
@@ -125,8 +128,7 @@ export default {
   },
   data () {
     return {
-      sort: false,
-      isShowing: true, // for test
+      isShowing: false, // for test
       dragGroup: {
         name: 'components',
         pull: 'clone',
