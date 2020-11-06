@@ -184,37 +184,47 @@ const selectComponents = [
       tag: 'el-select',
       tagIcon: 'select',
       type: 'select',
-      isGroup: true
+      isGroup: false
     },
     __slot__: {
       prefix: '',
       empty: null,
-      options: [{
-        label: '热门城市',
-        options: [{
-          value: 'Shanghai',
-          label: '上海'
-        }, {
-          value: 'Beijing',
-          label: '北京'
-        }]
-      }, {
-        label: '城市名',
-        disabled: true,
-        options: [{
-          value: 'Chengdu',
-          label: '成都'
-        }, {
-          value: 'Shenzhen',
-          label: '深圳'
-        }, {
-          value: 'Guangzhou',
-          label: '广州'
-        }, {
-          value: 'Dalian',
-          label: '大连'
-        }]
-      }]
+      options: [
+        {
+          label: '选项一',
+          value: 1
+        },
+        {
+          label: '选项二',
+          value: 2
+        }
+      ]
+      // options: [{
+      //   label: '热门城市',
+      //   options: [{
+      //     value: 'Shanghai',
+      //     label: '上海'
+      //   }, {
+      //     value: 'Beijing',
+      //     label: '北京'
+      //   }]
+      // }, {
+      //   label: '城市名',
+      //   disabled: true,
+      //   options: [{
+      //     value: 'Chengdu',
+      //     label: '成都'
+      //   }, {
+      //     value: 'Shenzhen',
+      //     label: '深圳'
+      //   }, {
+      //     value: 'Guangzhou',
+      //     label: '广州'
+      //   }, {
+      //     value: 'Dalian',
+      //     label: '大连'
+      //   }]
+      // }]
     },
     __vModel__: null,
     name: 'select',

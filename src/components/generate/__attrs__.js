@@ -110,8 +110,12 @@ export const select = {
     { label: '是否分组', model: 'isGroup', type: 'switch' }
   ],
   __slot__: [
-    { label: '组件头部内容', model: 'prefix', type: 'input' },
-    { label: '组件列表', model: 'options', type: 'input' }
+    { label: '组件头部内容', model: 'prefix', type: 'input' }
+    // { label: '组件列表', model: 'options', type: 'input' }
+  ],
+  __options__: [
+    { label: 'label', model: 'label', type: 'input' },
+    { label: 'value', model: 'value', type: 'input' }
   ],
   __native__: [
     // TODO: 暂不支持多选

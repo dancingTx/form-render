@@ -60,6 +60,7 @@ const formItem = {
     )
   }
 }
+
 const switchFormItemType = function (h, item, key, currItem) {
   return (formItem[item.type || 'input'] || formItem.input).call(this, h, item, key, currItem)
 }
@@ -69,6 +70,7 @@ const genFormItem = function (h, currItem, type) {
   Object.keys(type).forEach(key => {
     const attr = type[key]
     attrs.push(...attr.map(item => {
+      if (key === '__options__') return
       if (key === '__native__') {
         if (typeOf(currItem[item.model], 'undefined')) return null
         return (
@@ -77,11 +79,8 @@ const genFormItem = function (h, currItem, type) {
           </el-form-item>
         )
       }
-      if (typeOf(currItem[key][item.model], 'undefined')) return null
-      // 子列表渲染
-      if (key === '__options__') {
 
-      }
+      if (typeOf(currItem[key][item.model], 'undefined')) return null
       return (
         <el-form-item label={item.label}>
           {switchFormItemType.call(this, h, item, key, currItem)}
@@ -89,7 +88,40 @@ const genFormItem = function (h, currItem, type) {
       )
     }))
   })
+  if ('__options__' in type) {
+    attrs.push(
+      (
+        <div>
+          <el-divider>options选项</el-divider>
+          {currItem.__slot__.options.map(opt => (
+            <div>
+              <i class="el-icon-s-operation" />
+              {type.__options__.map(item => {
+                return (
+                  <el-input
+                    onInput={value => { opt[item.model] = value }}
+                    value={opt[item.model]}
+                    placeholder={item.label}
+                    style={{ width: '120px', margin: '5px' }}
+                  />
+                )
+              })}
+              <i class="el-icon-remove-outline" style={{ color: '#f00' }} />
+            </div>
+          ))}
+          <el-divider/>
+        </div>
+      )
+    )
+  }
+
   return attrs
+
+  // function optTemp (h, item, currItem) {
+  //   return (
+
+  //   )
+  // }
 }
 
 const components = {
