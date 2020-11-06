@@ -35,16 +35,16 @@
   display: flex;
 
   &__logo {
-    flex: 3;
+    flex: 4;
   }
 
   &__btn_group {
-    flex: 11;
+    flex: 12;
     text-align: right;
   }
 
   &__external_links {
-    flex: 4;
+    flex: 5;
   }
 }
 
@@ -52,7 +52,7 @@
   display: flex;
 
   &__left {
-    flex: 3;
+    flex: 4;
 
     .scrollbar {
       height: calc(100vh - 50px);
@@ -60,7 +60,7 @@
   }
 
   &__main {
-    flex: 11;
+    flex: 12;
     border: 1px dashed $gray;
     background-color: $gray1;
 
@@ -70,7 +70,7 @@
   }
 
   &__right {
-    flex: 4;
+    flex: 5;
     .scrollbar {
       height: calc(100vh - 88px);
     }

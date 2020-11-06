@@ -49,6 +49,50 @@ const formItem = {
       </el-radio-group>
     )
   },
+  options (h, type, currItem) {
+    const addOption = function (target) {
+      target.__slot__.options.push({
+        label: '',
+        value: ''
+      })
+    }
+    const removeOption = function (target, index) {
+      target.__slot__.options.splice(index, 1)
+    }
+    return (
+      <div style={{ 'text-align': 'center' }}>
+        <el-divider>options选项</el-divider>
+        {currItem.__slot__.options.map((opt, index) => (
+          <div>
+            <i class="el-icon-s-operation" />
+            {type.__options__.map(item => {
+              return (
+                <el-input
+                  onInput={value => { opt[item.model] = value }}
+                  value={opt[item.model]}
+                  placeholder={item.label}
+                  style={{ width: '120px', margin: '5px' }}
+                />
+              )
+            })}
+            <i
+              class="el-icon-remove-outline"
+              style={{ color: '#f00' }}
+              onClick={() => removeOption(currItem, index)}
+            />
+          </div>
+        ))}
+        <el-button
+          icon="el-icon-circle-plus-outline"
+          type="text"
+          onClick={ () => addOption(currItem)}
+        >
+          添加选项
+        </el-button>
+        <el-divider/>
+      </div>
+    )
+  },
   input (h, item, key, currItem) {
     return (
       <el-input
@@ -89,39 +133,10 @@ const genFormItem = function (h, currItem, type) {
     }))
   })
   if ('__options__' in type) {
-    attrs.push(
-      (
-        <div>
-          <el-divider>options选项</el-divider>
-          {currItem.__slot__.options.map(opt => (
-            <div>
-              <i class="el-icon-s-operation" />
-              {type.__options__.map(item => {
-                return (
-                  <el-input
-                    onInput={value => { opt[item.model] = value }}
-                    value={opt[item.model]}
-                    placeholder={item.label}
-                    style={{ width: '120px', margin: '5px' }}
-                  />
-                )
-              })}
-              <i class="el-icon-remove-outline" style={{ color: '#f00' }} />
-            </div>
-          ))}
-          <el-divider/>
-        </div>
-      )
-    )
+    attrs.push(formItem.options.call(this, h, type, currItem))
   }
 
   return attrs
-
-  // function optTemp (h, item, currItem) {
-  //   return (
-
-  //   )
-  // }
 }
 
 const components = {
