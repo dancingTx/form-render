@@ -20,7 +20,7 @@ const baseBasicConf = {
   __config__: {
     componentType: 'basic',
     labelWidth: 'auto',
-    required: true,
+    required: false,
     showLabel: true,
     changeTag: true,
     layout: 'colFormItem',
@@ -62,7 +62,6 @@ const baseInputConf = {
     required: true,
     showLabel: true,
     changeTag: true,
-    defaultValue: undefined,
     layout: 'colFormItem',
     span: 24, // 栅格占据的列数
     offset: 0, // 栅格左侧的间隔格数
@@ -76,12 +75,13 @@ const baseInputConf = {
     width: '100%'
   },
   placeholder: '请输入', // 输入框占位文本
-  maxLength: null, // 最大输入长度
-  minLength: null, // 最小输入长度
+  maxLength: Infinity, // 最大输入长度
+  minLength: 0, // 最小输入长度
   showWordLimit: false, // 是否显示字数统计
   clearable: false, // 是否显示清空
   disabled: false, // 是否禁用
-  readonly: false // 是否只读
+  readonly: false, // 是否只读
+  showPassword: false
 }
 const inputComponents = [
   {
@@ -147,6 +147,7 @@ const inputComponents = [
     },
     __vModel__: 0,
     name: 'number',
+    type: 'number',
     controlsPosition: null, // 控制按钮位置
     step: 1, // 计数器步长
     stepStrictly: false, // 是否只能输入step步数

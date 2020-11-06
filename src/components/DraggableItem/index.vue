@@ -85,6 +85,7 @@ const layouts = {
           prop={vModel}
           label={config.showLabel ? config.label : ''}
           label-width={labelWidth(config.labelWidth, config.showLabel)}
+          required={config.required || false}
         >
           <render
             key={config.renderKey}

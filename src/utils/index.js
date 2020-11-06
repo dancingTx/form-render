@@ -12,7 +12,10 @@ export const mergeOptions = function (customOpts, baseOpts) {
   const keys = Object.keys(baseOpts).concat(Object.keys(customOpts))
   keys.forEach(item => {
     if (item in customOpts && item in baseOpts) {
-      if (typeOf(customOpts[item], 'object')) {
+      if (typeOf(customOpts[item], 'array') && typeOf(baseOpts[item], 'array')) {
+        //  both array to merge
+        options[item] = customOpts[item].concat(baseOpts[item])
+      } else if (isPlainObject(customOpts[item])) {
         // recursive
         options[item] = mergeOptions(customOpts[item], baseOpts[item])
       } else {

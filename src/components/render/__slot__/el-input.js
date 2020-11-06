@@ -14,13 +14,16 @@ export default {
         />
       )
     } else if (typeOf(prefixSlot, 'string')) {
-      console.log(1)
-      template = (
-        <i
-          slot={key}
-          class={prefixSlot || ''}
-        />
-      )
+      if (prefixSlot.indexOf('el-icon-') !== -1) {
+        template = (
+          <i
+            slot={key}
+            class={prefixSlot || ''}
+          />
+        )
+      } else {
+        template = (<span slot={key}>{prefixSlot}</span>)
+      }
     }
 
     return template
@@ -39,12 +42,16 @@ export default {
         />
       )
     } else if (typeOf(suffixSlot, 'string')) {
-      template = (
-        <i
-          slot={key}
-          class={suffixSlot || ''}
-        />
-      )
+      if (suffixSlot.indexOf('el-icon-') !== -1) {
+        template = (
+          <i
+            slot={key}
+            class={suffixSlot || ''}
+          />
+        )
+      } else {
+        template = (<span slot={key}>{suffixSlot}</span>)
+      }
     }
 
     return template
