@@ -1,6 +1,10 @@
 <script>
 import { typeOf, mergeOptions } from '@/utils'
-import { basic, input, text, textarea, password, number } from '@/components/generate/__attrs__'
+import {
+  basic,
+  input, text, textarea, password, number,
+  bSelect, select
+} from '@/components/generate/__attrs__'
 const formItem = {
   select (h, item, key, currItem) {
     return (
@@ -74,6 +78,10 @@ const genFormItem = function (h, currItem, type) {
         )
       }
       if (typeOf(currItem[key][item.model], 'undefined')) return null
+      // 子列表渲染
+      if (key === '__options__') {
+
+      }
       return (
         <el-form-item label={item.label}>
           {switchFormItemType.call(this, h, item, key, currItem)}
@@ -99,6 +107,17 @@ const components = {
     return type && store[type]
       ? genFormItem.call(this, h, currItem, mergeOptions(store[type], input))
       : genFormItem.call(this, h, currItem, input)
+  },
+  selectType (h, currItem) {
+    const type = currItem.__config__.type
+    const store = {
+      bSelect,
+      select
+    }
+
+    return type && store[type]
+      ? genFormItem.call(this, h, currItem, mergeOptions(store[type], bSelect))
+      : genFormItem.call(this, h, currItem, bSelect)
   }
 }
 

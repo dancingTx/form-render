@@ -151,12 +151,12 @@ export const throttle = (func, delay) => {
  * @param {string} keyStr
  * @description 多节点属性递归查找对应值
  */
-export const searchMutliData = (target, keyStr) => {
+export const searchMultiData = (target, keyStr) => {
   if (!typeOf(keyStr, 'string')) return ''
   const arr = keyStr.split('.')
   let res = target[arr[0]]
   for (let i = 1; i < arr.length; i++) {
-    res = searchMutliData(res, arr[i])
+    res = searchMultiData(res, arr[i])
   }
   return res
 }

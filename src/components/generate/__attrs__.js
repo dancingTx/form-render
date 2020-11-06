@@ -2,7 +2,6 @@
  * 原生input 类型
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types
  */
-
 // 'textarea'
 const nativeInputType = [
   'text', 'button', 'checkbox', 'color', 'date', 'datetime-local', 'email', 'file', 'hidden', 'image', 'month', 'number', 'password', 'radio', 'range', 'reset', 'search', 'submit', 'tel', 'time', 'url', 'week'
@@ -27,6 +26,19 @@ export const basic = {
     { label: '原生type属性', model: 'nativeType', placeholder: '请选择原生属性', type: 'select', options: ['button', 'submit', 'reset'] }
   ]
 }
+
+export const input = {
+  __config__: [
+    { label: '标题', model: 'label', placeholder: '请输入标题', type: 'input' },
+    { label: '是否显示标题', model: 'showLabel', type: 'switch' },
+    { label: '是否必填', model: 'required', type: 'switch' }
+  ],
+  __native__: [
+    { label: '原生name', model: 'name', placeholder: '请输入原生name', type: 'input' },
+    { label: '是否禁用', model: 'disabled', type: 'switch' }
+  ]
+}
+
 export const text = {
   __slot__: [
     { label: '头部内容', model: 'prefix', placeholder: '请输入input头部内容', type: 'input' },
@@ -46,6 +58,7 @@ export const text = {
     { label: '是否只读', model: 'readonly', type: 'switch' }
   ]
 }
+
 export const textarea = {
   __native__: [
     { label: '最大输入长度', model: 'maxLength', placeholder: '请输入最大长度', type: 'number' },
@@ -65,6 +78,7 @@ export const password = {
     { label: '是否只读', model: 'readonly', type: 'switch' }
   ]
 }
+
 export const number = {
   __native__: [
     { label: '计数器最小值', model: 'min', type: 'number' },
@@ -77,14 +91,35 @@ export const number = {
     { label: '计数器尺寸', model: 'size', type: 'radio', options: ['large', 'medium', 'small'] }
   ]
 }
-export const input = {
+
+export const bSelect = {
   __config__: [
     { label: '标题', model: 'label', placeholder: '请输入标题', type: 'input' },
     { label: '是否显示标题', model: 'showLabel', type: 'switch' },
-    { label: '是否必填', model: 'required', type: 'switch' }
+    { label: '是否必选', model: 'required', type: 'switch' }
   ],
   __native__: [
     { label: '原生name', model: 'name', placeholder: '请输入原生name', type: 'input' },
-    { label: '是否禁用', model: 'disabled', type: 'switch' }
+    { label: '是否禁用', model: 'disabled', type: 'switch' },
+    { label: '是否清空选项', model: 'clearable', type: 'switch' }
+  ]
+}
+
+export const select = {
+  __config__: [
+    { label: '是否分组', model: 'isGroup', type: 'switch' }
+  ],
+  __slot__: [
+    { label: '组件头部内容', model: 'prefix', type: 'input' },
+    { label: '组件列表', model: 'options', type: 'input' }
+  ],
+  __native__: [
+    // TODO: 暂不支持多选
+    // { label: '是否多选', model: 'multiple', type: 'switch' },
+    // { label: '多选限制', model: 'multipleLimit', type: 'number' },
+    { label: '是否可搜索', model: 'filterable', type: 'switch' },
+    { label: '允许创建条目', model: 'allowCreate', type: 'switch' },
+    { label: '输入框尺寸', model: 'size', type: 'radio', options: ['medium', 'small', 'mini'] },
+    { label: '输入框占位符', model: 'placeholder', type: 'input' }
   ]
 }

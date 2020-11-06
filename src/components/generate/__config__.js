@@ -88,7 +88,8 @@ const inputComponents = [
     __config__: {
       label: '单行文本',
       tag: 'el-input',
-      tagIcon: 'input'
+      tagIcon: 'input',
+      type: 'text'
     },
     __slot__: {
       prefix: '', // 输入框头部内容
@@ -108,7 +109,8 @@ const inputComponents = [
     __config__: {
       label: '多行文本',
       tag: 'el-input',
-      tagIcon: 'textarea'
+      tagIcon: 'textarea',
+      type: 'textarea'
     },
     __vModel__: '', // 绑定值
     name: 'textarea',
@@ -120,7 +122,8 @@ const inputComponents = [
     __config__: {
       label: '密码',
       tag: 'el-input',
-      tagIcon: 'password'
+      tagIcon: 'password',
+      type: 'password'
     },
     __vModel__: 'password',
     name: 'password',
@@ -132,7 +135,9 @@ const inputComponents = [
     __config__: {
       label: '计数器',
       tag: 'el-input-number',
-      tagIcon: 'number'
+      tagIcon: 'number',
+      type: 'number',
+      document: 'https://element.eleme.cn/#/zh-CN/component/input-number'
     },
     __vModel__: 0,
     name: 'number',
@@ -178,11 +183,12 @@ const selectComponents = [
       label: '下拉选择',
       tag: 'el-select',
       tagIcon: 'select',
+      type: 'select',
       isGroup: true
     },
     __slot__: {
       prefix: '',
-      empty: '',
+      empty: null,
       options: [{
         label: '热门城市',
         options: [{
@@ -212,8 +218,12 @@ const selectComponents = [
     },
     __vModel__: null,
     name: 'select',
-    multiple: false,
-    multipleLimit: 0
+    // multiple: false,
+    // multipleLimit: 0,
+    size: 'medium',
+    placeholder: '请选择',
+    filterable: false,
+    allowCreate: false
   },
   {
     __config__: {
