@@ -1,38 +1,54 @@
 <script>
 import { typeOf, mergeOptions } from '@/utils'
-import { basic, input, inputSlot } from '@/components/generate/__attrs__'
+import { basic, input, text, textarea, password, number } from '@/components/generate/__attrs__'
 const formItem = {
   select (h, item, key, currItem) {
     return (
       <el-select
-        onInput={value => { key ? currItem[key][item.model] = value : currItem[item.model] = value }}
+        onInput={value => { key ? currItem[key][item.model] = value || '' : currItem[item.model] = value || '' }}
         value={key ? currItem[key][item.model] : currItem[item.model]}
         placeholder={item.placeholder || ''}
         style={{ width: '200px' }}
       >
-        {item.options.map(i => (
-          <el-option
-            value={i}
-          />))}
+        {item.options.map(i => (<el-option value={i} />))}
       </el-select>
     )
   },
   switch (h, item, key, currItem) {
     return (
       <el-switch
-        onInput={value => { key ? currItem[key][item.model] = value : currItem[item.model] = value }}
+        onInput={value => { key ? currItem[key][item.model] = value || false : currItem[item.model] = value || false }}
         value={key ? currItem[key][item.model] : currItem[item.model]}
-        style={{ width: '200px' }}
+        style={{ width: '40px' }}
       />
     )
   },
-  // number (h, item, key, currItem) {
-
-  // },
+  number (h, item, key, currItem) {
+    return (
+      <el-input-number
+        placeholder={item.placeholder}
+        onInput={value => { key ? currItem[key][item.model] = value || 0 : currItem[item.model] = value || 0 }}
+        value={key ? currItem[key][item.model] : currItem[item.model]}
+        style={{ width: '200px' }}
+        min={0}
+      />
+    )
+  },
+  radio (h, item, key, currItem) {
+    return (
+      <el-radio-group
+        onInput={value => { key ? currItem[key][item.model] = value || 0 : currItem[item.model] = value || 0 }}
+        value={key ? currItem[key][item.model] : currItem[item.model]}
+        size="small"
+      >
+        {item.options.map(item => (<el-radio-button label={item}/>))}
+      </el-radio-group>
+    )
+  },
   input (h, item, key, currItem) {
     return (
       <el-input
-        onInput={value => { key ? currItem[key][item.model] = value : currItem[item.model] = value }}
+        onInput={value => { key ? currItem[key][item.model] = value || '' : currItem[item.model] = value || '' }}
         value={key ? currItem[key][item.model] : currItem[item.model]}
         placeholder={item.placeholder || ''}
         style={{ width: '200px' }}
@@ -74,10 +90,15 @@ const components = {
   },
   inputType (h, currItem) {
     const type = currItem.type
-    if (type === 'text') {
-      return genFormItem.call(this, h, currItem, mergeOptions(inputSlot, input))
+    const store = {
+      text,
+      textarea,
+      password,
+      number
     }
-    return genFormItem.call(this, h, currItem, input)
+    return type && store[type]
+      ? genFormItem.call(this, h, currItem, mergeOptions(store[type], input))
+      : genFormItem.call(this, h, currItem, input)
   }
 }
 
