@@ -1,3 +1,4 @@
+import { mergeOptions } from '@/utils'
 /**
  * 原生input 类型
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types
@@ -9,8 +10,12 @@ const nativeInputType = [
 export const basic = {
   __config__: [
     { label: '标题', model: 'label', placeholder: '请输入标题', type: 'input' },
-    { label: '是否显示标题', model: 'showLabel', type: 'switch' }
-  ],
+    { label: '是否显示标题', model: 'showLabel', type: 'switch' },
+    { label: '表单栅格', model: 'span', type: 'slider' }
+  ]
+}
+
+const button = {
   __slot__: [
     { label: '按钮文字', model: 'default', placeholder: '请输入按钮文字', type: 'input' }
   ],
@@ -27,6 +32,8 @@ export const basic = {
   ]
 }
 
+export const buttonOptions = mergeOptions(button, basic)
+
 export const input = {
   __config__: [
     { label: '标题', model: 'label', placeholder: '请输入标题', type: 'input' },
@@ -39,7 +46,7 @@ export const input = {
   ]
 }
 
-export const text = {
+const text = {
   __slot__: [
     { label: '头部内容', model: 'prefix', placeholder: '请输入input头部内容', type: 'input' },
     { label: '尾部内容', model: 'suffix', placeholder: '请输入input尾部内容', type: 'input' },
@@ -59,7 +66,9 @@ export const text = {
   ]
 }
 
-export const textarea = {
+export const textOptions = mergeOptions(text, input)
+
+const textarea = {
   __native__: [
     { label: '最大输入长度', model: 'maxLength', placeholder: '请输入最大长度', type: 'number' },
     { label: '最小输入长度', model: 'minLength', placeholder: '请输入最小长度', type: 'number' },
@@ -69,7 +78,9 @@ export const textarea = {
   ]
 }
 
-export const password = {
+export const textareaOptions = mergeOptions(textarea, input)
+
+const password = {
   __native__: [
     { label: '最大输入长度', model: 'maxLength', placeholder: '请输入最大长度', type: 'number' },
     { label: '最小输入长度', model: 'minLength', placeholder: '请输入最小长度', type: 'number' },
@@ -79,7 +90,9 @@ export const password = {
   ]
 }
 
-export const number = {
+export const passwordOptions = mergeOptions(password, input)
+
+const number = {
   __native__: [
     { label: '计数器最小值', model: 'min', type: 'number' },
     { label: '计数器最大值', model: 'max', type: 'number' },
@@ -92,7 +105,9 @@ export const number = {
   ]
 }
 
-export const bSelect = {
+export const numberOptions = mergeOptions(number, input)
+
+export const select = {
   __config__: [
     { label: '标题', model: 'label', placeholder: '请输入标题', type: 'input' },
     { label: '是否显示标题', model: 'showLabel', type: 'switch' },
@@ -105,13 +120,13 @@ export const bSelect = {
   ]
 }
 
-export const select = {
+const singleSelect = {
   __config__: [
-    { label: '是否分组', model: 'isGroup', type: 'switch' }
+    // TODO: 暂不支持分组
+    // { label: '是否分组', model: 'isGroup', type: 'switch' }
   ],
   __slot__: [
     { label: '组件头部内容', model: 'prefix', type: 'input' }
-    // { label: '组件列表', model: 'options', type: 'input' }
   ],
   __options__: [
     { label: 'label', model: 'label', type: 'input' },
@@ -127,3 +142,5 @@ export const select = {
     { label: '输入框占位符', model: 'placeholder', type: 'input' }
   ]
 }
+
+export const selectOptions = mergeOptions(singleSelect, select)

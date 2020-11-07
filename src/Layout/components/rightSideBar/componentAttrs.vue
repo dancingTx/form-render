@@ -1,9 +1,9 @@
 <script>
-import { typeOf, mergeOptions } from '@/utils'
+import { typeOf } from '@/utils'
 import {
-  basic,
-  input, text, textarea, password, number,
-  bSelect, select
+  basic, buttonOptions,
+  input, textOptions, textareaOptions, passwordOptions, numberOptions,
+  select, selectOptions
 } from '@/components/generate/__attrs__'
 const formItem = {
   select (h, item, key, currItem) {
@@ -58,6 +58,10 @@ const formItem = {
     }
     const removeOption = function (target, index) {
       target.__slot__.options.splice(index, 1)
+    }
+    if (currItem.__config__.isGroup) {
+      // TODO: 如果分组，需要定义组名
+
     }
     return (
       <div style={{ 'text-align': 'center' }}>
@@ -138,33 +142,33 @@ const genFormItem = function (h, currItem, type) {
 
   return attrs
 }
-
+const returnFormItem = function (h, store, currItem, defaultOpts) {
+  const type = currItem.__config__.type
+  return type && store[`${type}Options`]
+    ? genFormItem.call(this, h, currItem, store[`${type}Options`])
+    : genFormItem.call(this, h, currItem, defaultOpts)
+}
 const components = {
   basicType (h, currItem) {
-    return genFormItem.call(this, h, currItem, basic)
+    const store = {
+      buttonOptions
+    }
+    return returnFormItem.call(this, h, store, currItem, basic)
   },
   inputType (h, currItem) {
-    const type = currItem.type
     const store = {
-      text,
-      textarea,
-      password,
-      number
+      textOptions,
+      textareaOptions,
+      passwordOptions,
+      numberOptions
     }
-    return type && store[type]
-      ? genFormItem.call(this, h, currItem, mergeOptions(store[type], input))
-      : genFormItem.call(this, h, currItem, input)
+    return returnFormItem.call(this, h, store, currItem, input)
   },
   selectType (h, currItem) {
-    const type = currItem.__config__.type
     const store = {
-      bSelect,
-      select
+      selectOptions
     }
-
-    return type && store[type]
-      ? genFormItem.call(this, h, currItem, mergeOptions(store[type], bSelect))
-      : genFormItem.call(this, h, currItem, bSelect)
+    return returnFormItem.call(this, h, store, currItem, select)
   }
 }
 

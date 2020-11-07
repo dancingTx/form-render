@@ -36,6 +36,7 @@ const basicComponents = [
   {
     __config__: {
       label: '按钮',
+      type: 'button',
       tag: 'el-button',
       tagIcon: 'button',
       document: 'https://element.eleme.cn/#/zh-CN/component/button'
@@ -637,7 +638,11 @@ export const selectOptions = selectComponents.map(item => mergeOptions(item, bas
 // 布局型组件
 const baseLayoutConf = {
   __config__: {
-    componentType: 'layout'
+    componentType: 'layout',
+    span: 24, // 栅格占据的列数
+    offset: 0, // 栅格左侧的间隔格数
+    push: 0, // 栅格向右移动的格数
+    pull: 0 // 栅格向左移动的格数
   }
 }
 
@@ -648,8 +653,7 @@ const LayoutComponents = [
       tag: 'el-row',
       tagIcon: 'row',
       layout: 'rowFormItem',
-      document: 'https://element.eleme.cn/#/zh-CN/component/layout',
-      span: 24
+      document: 'https://element.eleme.cn/#/zh-CN/component/layout'
     },
     type: 'default',
     gutter: 0,
