@@ -108,7 +108,7 @@
 
 <script>
 import draggable from 'vuedraggable'
-import { logo, btnGroup, rightSideBar } from '@/Layout/components'
+import { logo, btnGroup, rightSideBar } from '@/layout'
 import { DraggableItem, Preview } from '@/components'
 import { deepCopy, typeOf, firstUpperCase, labelWidth } from '@/utils'
 let fid = 0

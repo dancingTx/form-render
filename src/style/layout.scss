@@ -1,10 +1,6 @@
 $headerHeight: 40px;
 $bodyHeight: calc(100vh - 40px);
 // custom
-.layout {
-  height: 100vh;
-}
-
 .container {
   display: flex;
   .scrollbar {

@@ -1,4 +1,5 @@
 <script>
+import draggable from 'vuedraggable'
 import { typeOf } from '@/utils'
 import {
   basic, buttonOptions,
@@ -76,26 +77,32 @@ const formItem = {
     return (
       <div style={{ 'text-align': 'center' }}>
         <el-divider>options选项</el-divider>
-        {currItem.__slot__.options.map((opt, index) => (
-          <div>
-            <i class="el-icon-s-operation" />
-            {type.__options__.map(item => {
-              return (
-                <el-input
-                  onInput={value => { opt[item.model] = value }}
-                  value={opt[item.model]}
-                  placeholder={item.label}
-                  style={{ width: '120px', margin: '5px' }}
-                />
-              )
-            })}
-            <i
-              class="el-icon-remove-outline"
-              style={{ color: '#f00' }}
-              onClick={() => removeOption(currItem, index)}
-            />
-          </div>
-        ))}
+        <draggable
+          class="drag__option"
+          list={currItem.__slot__.options}
+          handle=".drag__icon"
+          animation={300}
+        >
+          {currItem.__slot__.options.map((opt, index) => (
+            <div class="drag__item">
+              <i class="el-icon-s-operation drag__icon" />
+              {type.__options__.map(item => {
+                return (
+                  <el-input
+                    onInput={value => { opt[item.model] = value }}
+                    value={opt[item.model]}
+                    placeholder={item.label}
+                    style={{ width: '120px', margin: '5px' }}
+                  />
+                )
+              })}
+              <i
+                class="el-icon-remove-outline drag__remove"
+                onClick={() => removeOption(currItem, index)}
+              />
+            </div>
+          ))}
+        </draggable>
         <el-button
           icon="el-icon-circle-plus-outline"
           type="text"
@@ -192,6 +199,9 @@ const layout = function (h, currItem) {
 }
 export default {
   name: 'componentAttrs',
+  components: {
+    draggable
+  },
   props: {
     conf: Object,
     isEmpty: Boolean

@@ -1,6 +1,23 @@
 .item {
     width: 200px
 }
+
+.drag {
+    &__option {
+        cursor: move;
+    }
+    
+    &__item {
+        &.sortable-chosen {
+            border: 1px dashed $brand;
+        }
+    }
+
+    &__remove {
+        color: $red;
+    }
+}
+
 .right {
     &__link {
         position: absolute;
