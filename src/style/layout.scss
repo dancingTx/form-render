@@ -2,21 +2,13 @@ $headerHeight: 40px;
 $bodyHeight: calc(100vh - 40px);
 // custom
 .container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 18% auto 24%;
   .scrollbar {
     height: $bodyHeight;
   }
 
-  &__left {
-    flex: 4;
-  }
-
-  &__main {
-    flex: 12;
-  }
-
   &__right {
-    flex: 5;
     .el-tabs--top {
       height: 40px;
     }
