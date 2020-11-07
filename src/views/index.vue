@@ -2,10 +2,10 @@
   <div class="container">
     <!-- left panel -->
     <div class="container__left">
+      <logo/>
       <el-scrollbar class="scrollbar">
         <div class="components__list">
-          <div
-            class="components__item"
+          <div class="components__item"
             v-for="({title, type, list}) of componentsList"
             :key="type"
           >
@@ -39,6 +39,7 @@
     </div>
     <!-- body -->
     <div class="container__main">
+      <btn-group/>
       <el-scrollbar class="scrollbar">
         <el-row :gutter="formConf.gutter">
           <el-form
@@ -52,7 +53,7 @@
             :disabled="formConf.disabled"
           >
             <draggable
-              class="container__board"
+              class="canvas__block"
               :list="displayList"
               :group="dragGroup.name"
               :animation="300"
@@ -72,7 +73,7 @@
               />
             </draggable>
             <h2
-              class="container__empty"
+              class="canvas__empty"
               v-show="!displayList.length"
               >
                 从左侧拖入或点击组件添加至画布
@@ -107,13 +108,13 @@
 
 <script>
 import draggable from 'vuedraggable'
-import rightSideBar from '@/Layout/components/rightSideBar'
+import { logo, btnGroup, rightSideBar } from '@/Layout/components'
 import { DraggableItem, Preview } from '@/components'
 import { deepCopy, typeOf, firstUpperCase, labelWidth } from '@/utils'
 let fid = 0
 export default {
   name: 'index',
-  components: { draggable, DraggableItem, Preview, rightSideBar },
+  components: { draggable, DraggableItem, Preview, rightSideBar, logo, btnGroup },
   computed: {
     componentsList () {
       return this.$store.getters.components

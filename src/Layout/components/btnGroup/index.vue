@@ -24,7 +24,9 @@ export default {
       )
     }
     return (
-      <div>{ btnGroup.map(createBtnItem) }</div>
+      <div class="btngroup">
+        <div class="btngroup__inner">{ btnGroup.map(createBtnItem) }</div>
+      </div>
     )
   }
 }

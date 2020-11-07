@@ -1,89 +1,62 @@
+$headerHeight: 40px;
+$bodyHeight: calc(100vh - 40px);
 // custom
 .layout {
   height: 100vh;
-
-  &__app_header {
-    height: 48px;
-    background: $gradient-blue;
-  }
-
-  &__app_main {
-    height: calc(100vh - 50px);
-  }
-
-}
-
-.logo {
-  text-align: center;
-
-  &__avatar {
-    width: 30px;
-    height: 30px;
-    margin: 0 12px;
-    vertical-align: text-bottom;
-  }
-
-  &__title {
-    display: inline-block;
-    margin: 0;
-    line-height: 48px;
-    color: $brand;
-  }
-}
-
-.header {
-  display: flex;
-
-  &__logo {
-    flex: 4;
-  }
-
-  &__btn_group {
-    flex: 12;
-    text-align: right;
-  }
-
-  &__external_links {
-    flex: 5;
-  }
 }
 
 .container {
   display: flex;
+  .scrollbar {
+    height: $bodyHeight;
+  }
 
   &__left {
     flex: 4;
-
-    .scrollbar {
-      height: calc(100vh - 50px);
-    }
   }
 
   &__main {
     flex: 12;
-    border: 1px dashed $gray;
-    background-color: $gray1;
-
-    .scrollbar {
-      height: calc(100vh - 50px);
-    }
   }
 
   &__right {
     flex: 5;
-    .scrollbar {
-      height: calc(100vh - 88px);
-    }
     .el-tabs--top {
       height: 40px;
     }
   }
 
-  &__board {
+}
+
+.logo {
+  height: $headerHeight;
+  line-height: $headerHeight;
+  text-align: center;
+  white-space: nowrap;
+  padding: 5px;
+  box-sizing: border-box;
+  &__avatar {
+    width: 30px;
+    height: 30px;
+    margin: 0 12px;
+    vertical-align: sub; ;
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: $brand;
+  }
+}
+
+.canvas {
+  &__block {
     position: relative;
-    min-height: calc(100vh - 50px);
+    min-height: $bodyHeight;
     padding: 10px;
     box-sizing: border-box;
+    border: 1px dashed $gray;
+    background-color: $gray1;
   }
 
   &__empty {
@@ -93,25 +66,28 @@
     transform: translate(-50%, -50%);
     color: $brand;
   }
-
 }
 
-.btngroup {
-  &__item {
-    display: inline-block;
-    padding: 15px 10px;
-    cursor: pointer;
-    color: $red;
 
+.btngroup {
+  height: $headerHeight;
+  border-right: 1px dashed $gray;
+  &__inner {
+    float: right;
+  }
+  &__item {
+    float: left;
+    padding: 0 10px;
+    cursor: pointer;
+    line-height: $headerHeight;
+    color: $red;
     &:hover {
-      border: 1px dashed $red1;
-      padding: 14px 9px;
       color: $red1;
     }
   }
 
   &__icon {
-    margin-right: 10px;
+    margin-right: 5px;
   }
 
 }

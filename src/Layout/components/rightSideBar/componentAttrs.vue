@@ -9,10 +9,10 @@ const formItem = {
   select (h, item, key, currItem) {
     return (
       <el-select
+        class="item"
         onInput={value => { key ? currItem[key][item.model] = value || '' : currItem[item.model] = value || '' }}
         value={key ? currItem[key][item.model] : currItem[item.model]}
         placeholder={item.placeholder || ''}
-        style={{ width: '200px' }}
       >
         {item.options.map(i => (<el-option value={i} />))}
       </el-select>
@@ -23,17 +23,16 @@ const formItem = {
       <el-switch
         onInput={value => { key ? currItem[key][item.model] = value || false : currItem[item.model] = value || false }}
         value={key ? currItem[key][item.model] : currItem[item.model]}
-        style={{ width: '40px' }}
       />
     )
   },
   number (h, item, key, currItem) {
     return (
       <el-input-number
+        class="item"
         placeholder={item.placeholder}
         onInput={value => { key ? currItem[key][item.model] = value || 0 : currItem[item.model] = value || 0 }}
         value={key ? currItem[key][item.model] : currItem[item.model]}
-        style={{ width: '200px' }}
         min={0}
       />
     )
@@ -47,6 +46,17 @@ const formItem = {
       >
         {item.options.map(item => (<el-radio-button label={item}/>))}
       </el-radio-group>
+    )
+  },
+  slider (h, item, key, currItem) {
+    return (
+      <el-slider
+        class="item"
+        onInput={value => { key ? currItem[key][item.model] = value || 0 : currItem[item.model] = value || 0 }}
+        value={key ? currItem[key][item.model] : currItem[item.model]}
+        min={0}
+        max={24}
+      />
     )
   },
   options (h, type, currItem) {
@@ -100,10 +110,10 @@ const formItem = {
   input (h, item, key, currItem) {
     return (
       <el-input
+        class="item"
         onInput={value => { key ? currItem[key][item.model] = value || '' : currItem[item.model] = value || '' }}
         value={key ? currItem[key][item.model] : currItem[item.model]}
         placeholder={item.placeholder || ''}
-        style={{ width: '200px' }}
       />
     )
   }

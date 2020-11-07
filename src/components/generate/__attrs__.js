@@ -38,7 +38,8 @@ export const input = {
   __config__: [
     { label: '标题', model: 'label', placeholder: '请输入标题', type: 'input' },
     { label: '是否显示标题', model: 'showLabel', type: 'switch' },
-    { label: '是否必填', model: 'required', type: 'switch' }
+    { label: '是否必填', model: 'required', type: 'switch' },
+    { label: '表单栅格', model: 'span', type: 'slider' }
   ],
   __native__: [
     { label: '原生name', model: 'name', placeholder: '请输入原生name', type: 'input' },
@@ -111,7 +112,8 @@ export const select = {
   __config__: [
     { label: '标题', model: 'label', placeholder: '请输入标题', type: 'input' },
     { label: '是否显示标题', model: 'showLabel', type: 'switch' },
-    { label: '是否必选', model: 'required', type: 'switch' }
+    { label: '是否必选', model: 'required', type: 'switch' },
+    { label: '表单栅格', model: 'span', type: 'slider' }
   ],
   __native__: [
     { label: '原生name', model: 'name', placeholder: '请输入原生name', type: 'input' },
