@@ -10,16 +10,17 @@
             :key="type"
           >
             <div class="components__title">
-              <svg-icon icon-class="component" class="title__icon"/>
+              <svg-icon class="title__icon" icon-class="component" />
               <h4 class="title__content">{{title}}</h4>
             </div>
             <div class="components__body">
               <draggable
                 :list="list"
                 :group="dragGroup"
-                :clone="cloneComponents"
                 :sort="false"
+                :clone="cloneComponents"
                 draggable=".components__btns"
+                :animation="300"
                 @end="handleDragEnd"
               >
                 <div
@@ -28,7 +29,7 @@
                   :key="index"
                   @click="addComponent(component)"
                 >
-                  <svg-icon :icon-class="component.__config__.tagIcon" class="btns__icon"/>
+                  <svg-icon class="btns__icon" :icon-class="component.__config__.tagIcon" />
                   <span class="btns__content">{{component.__config__.label}}</span>
                 </div>
               </draggable>

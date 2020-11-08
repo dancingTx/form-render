@@ -1,25 +1,10 @@
-.sortable-ghost {
-    display: block;
-    position: relative;
-    overflow: hidden;
-    &::before {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1;
-        content: '';
-        height: 3px;
-        background-color: $brand;
-    }
-}
 .components {
     &__title {
         margin: 0 10px;
     }
 
     &__body {
-        display: flex
+        display: flex;
     }
 
     &__btns {
@@ -40,7 +25,7 @@
             background-color: $blue2;
         }
 
-        &.sortable-ghost {
+        & .sortable-ghost {
             width: calc(100% - 10px);
             height: 60px;
             border: none;

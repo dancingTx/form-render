@@ -45,6 +45,29 @@ $bodyHeight: calc(100vh - 40px);
     box-sizing: border-box;
     border: 1px dashed $gray;
     background-color: $gray1;
+
+    .sortable-ghost {
+      display: block;
+      position: relative;
+      overflow: hidden;
+      &::before {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 2;
+          content: ' ';
+          height: 3px;
+          background-color: $brand;
+      }
+  }
+
+  & .sortable-ghost {
+    width: calc(100% - 10px);
+    height: 60px;
+    border: none;
+    background-color: $blue1;
+    }
   }
 
   &__empty {
