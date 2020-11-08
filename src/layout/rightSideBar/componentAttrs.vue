@@ -4,7 +4,7 @@ import { typeOf } from '@/utils'
 import {
   basic, buttonOptions,
   input, textOptions, textareaOptions, passwordOptions, numberOptions,
-  select, selectOptions
+  select, selectOptions, radioOptions
 } from '@/components/generate/__attrs__'
 const formItem = {
   select (h, item, key, currItem) {
@@ -43,10 +43,63 @@ const formItem = {
       <el-radio-group
         onInput={value => { key ? currItem[key][item.model] = value || 0 : currItem[item.model] = value || 0 }}
         value={key ? currItem[key][item.model] : currItem[item.model]}
-        size="small"
+        size="mini"
       >
         {item.options.map(item => (<el-radio-button label={item}/>))}
       </el-radio-group>
+    )
+  },
+  radioGroup (h, type, currItem, config) {
+    return (
+      <div>
+        <el-divider>属性</el-divider>
+        <el-form-item label='选项样式'>
+          <el-radio-group
+            onInput={value => { config.isButton = value }}
+            value={config.isButton}
+          >
+            {
+              [
+                { label: '默认', value: false },
+                { label: '按钮', value: true }
+              ].map(item => (
+                <el-radio-button label={item.value}>
+                  {item.label}
+                </el-radio-button>
+              ))
+            }
+          </el-radio-group>
+        </el-form-item>
+        {
+          !config.isButton && (
+            <el-form-item label="是否显示边框">
+              <el-switch
+                onInput={value => { config.isBorder = value }}
+                value={ config.isBorder }
+              />
+            </el-form-item>
+          )
+        }
+        {
+          type.__native__.map(item => {
+            if (
+              select.__native__.includes(item) ||
+              (item.model === 'size' && config.isBorder)
+            ) {
+              return (
+                <el-form-item label={item.label}>
+                  {switchFormItemType.call(this, h, item, null, currItem)}
+                </el-form-item>
+              )
+            }
+            return config.isButton && (
+              <el-form-item label={item.label}>
+                {switchFormItemType.call(this, h, item, null, currItem)}
+              </el-form-item>
+            )
+          })
+        }
+      </div>
     )
   },
   slider (h, item, key, currItem) {
@@ -57,6 +110,15 @@ const formItem = {
         value={key ? currItem[key][item.model] : currItem[item.model]}
         min={0}
         max={24}
+        marks={{ 12: '' }}
+      />
+    )
+  },
+  color (h, item, key, currItem) {
+    return (
+      <el-color-picker
+        onInput={value => { key ? currItem[key][item.model] = value || 0 : currItem[item.model] = value || 0 }}
+        value={key ? currItem[key][item.model] : currItem[item.model]}
       />
     )
   },
@@ -76,7 +138,7 @@ const formItem = {
     }
     return (
       <div style={{ 'text-align': 'center' }}>
-        <el-divider>options选项</el-divider>
+        <el-divider>选项</el-divider>
         <draggable
           class="drag__option"
           list={currItem.__slot__.options}
@@ -110,7 +172,6 @@ const formItem = {
         >
           添加选项
         </el-button>
-        <el-divider/>
       </div>
     )
   },
@@ -129,15 +190,18 @@ const formItem = {
 const switchFormItemType = function (h, item, key, currItem) {
   return (formItem[item.type || 'input'] || formItem.input).call(this, h, item, key, currItem)
 }
-
 const genFormItem = function (h, currItem, type) {
   const attrs = []
+  const config = currItem.__config__
+  let temp = null
   Object.keys(type).forEach(key => {
     const attr = type[key]
     attrs.push(...attr.map(item => {
       if (key === '__options__') return
       if (key === '__native__') {
         if (typeOf(currItem[item.model], 'undefined')) return null
+        if (config.type === 'radio') return
+
         return (
           <el-form-item label={item.label}>
             {switchFormItemType.call(this, h, item, null, currItem)}
@@ -153,9 +217,21 @@ const genFormItem = function (h, currItem, type) {
       )
     }))
   })
+
   if ('__options__' in type) {
     attrs.push(formItem.options.call(this, h, type, currItem))
   }
+
+  switch (config.type) {
+    case 'radio':
+      temp = formItem.radioGroup.call(this, h, type, currItem, config)
+      break
+    default:
+      temp = <div/>
+      break
+  }
+
+  attrs.push(temp)
 
   return attrs
 }
@@ -183,7 +259,8 @@ const components = {
   },
   selectType (h, currItem) {
     const store = {
-      selectOptions
+      selectOptions,
+      radioOptions
     }
     return returnFormItem.call(this, h, store, currItem, select)
   }

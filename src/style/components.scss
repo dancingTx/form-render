@@ -1,22 +1,21 @@
-.left {
-    &__switch {
-        float: right;
-        margin-top: 20px;
+.sortable-ghost {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        content: '';
+        height: 3px;
+        background-color: $brand;
     }
 }
-
 .components {
     &__title {
         margin: 0 10px;
-
-        &_icon {
-            margin-right: 10px;
-        }
-
-        &_content {
-            display: inline-block;
-            color: $gray
-        }
     }
 
     &__body {
@@ -41,14 +40,24 @@
             background-color: $blue2;
         }
 
-        &_icon {
-            margin-right: 5px;
+        &.sortable-ghost {
+            width: calc(100% - 10px);
+            height: 60px;
+            border: none;
+            background-color: $blue1;
+            
         }
 
-        &_content {
-            vertical-align: top;
-            font-size: 14px;
-            color: $gray;
-        }
+    }
+}
+
+.title {
+    &__icon {
+        margin-right: 10px;
+    }
+
+    &__content {
+        display: inline-block;
+        color: $gray
     }
 }

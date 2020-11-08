@@ -10,8 +10,8 @@
             :key="type"
           >
             <div class="components__title">
-              <svg-icon icon-class="component" class="components__title_icon"/>
-              <h4 class="components__title_content">{{title}}</h4>
+              <svg-icon icon-class="component" class="title__icon"/>
+              <h4 class="title__content">{{title}}</h4>
             </div>
             <div class="components__body">
               <draggable
@@ -28,8 +28,8 @@
                   :key="index"
                   @click="addComponent(component)"
                 >
-                  <svg-icon :icon-class="component.__config__.tagIcon" class="components__btns_icon"/>
-                  <span class="components__btns_content">{{component.__config__.label}}</span>
+                  <svg-icon :icon-class="component.__config__.tagIcon" class="btns__icon"/>
+                  <span class="btns__content">{{component.__config__.label}}</span>
                 </div>
               </draggable>
             </div>
@@ -135,7 +135,7 @@ export default {
     return {
       isShowing: false, // for test
       dragGroup: {
-        name: 'components',
+        name: 'componentGroup',
         pull: 'clone',
         put: false
       },

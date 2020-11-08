@@ -242,18 +242,21 @@ const selectComponents = [
       label: '单选框(组)',
       tag: 'el-radio-group',
       tagIcon: 'radio',
+      type: 'radio',
       isGroup: true,
-      isButton: false
+      isButton: false,
+      isBorder: false
     },
     __slot__: {
       options: [
-        { label: '备选项', name: 'radio1', value: '1', disabled: false, border: false },
-        { label: '备选项', name: 'radio1', value: '2', disabled: false, border: false }
+        { label: '备选项', value: '1' },
+        { label: '备选项', value: '2' }
       ]
     },
     __vModel__: '1',
-    textColor: '',
-    fill: ''
+    textColor: '#ffffff',
+    fill: '#409EFF',
+    size: 'medium'
   },
   {
     __config__: {

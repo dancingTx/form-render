@@ -117,8 +117,7 @@ export const select = {
   ],
   __native__: [
     { label: '原生name', model: 'name', placeholder: '请输入原生name', type: 'input' },
-    { label: '是否禁用', model: 'disabled', type: 'switch' },
-    { label: '是否清空选项', model: 'clearable', type: 'switch' }
+    { label: '是否禁用', model: 'disabled', type: 'switch' }
   ]
 }
 
@@ -138,6 +137,7 @@ const singleSelect = {
     // TODO: 暂不支持多选
     // { label: '是否多选', model: 'multiple', type: 'switch' },
     // { label: '多选限制', model: 'multipleLimit', type: 'number' },
+    { label: '是否清空选项', model: 'clearable', type: 'switch' },
     { label: '是否可搜索', model: 'filterable', type: 'switch' },
     { label: '允许创建条目', model: 'allowCreate', type: 'switch' },
     { label: '输入框尺寸', model: 'size', type: 'radio', options: ['medium', 'small', 'mini'] },
@@ -146,3 +146,17 @@ const singleSelect = {
 }
 
 export const selectOptions = mergeOptions(singleSelect, select)
+
+const radio = {
+  __native__: [
+    { label: '单选框尺寸', model: 'size', type: 'radio', options: ['medium', 'small', 'mini'] },
+    { label: '文本颜色', model: 'textColor', type: 'color' },
+    { label: '填充颜色', model: 'fill', type: 'color' }
+  ],
+  __options__: [
+    { label: 'label', model: 'label', type: 'input' },
+    { label: 'value', model: 'value', type: 'input' }
+  ]
+}
+
+export const radioOptions = mergeOptions(radio, select)

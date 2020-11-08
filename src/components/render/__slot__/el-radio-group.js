@@ -1,14 +1,14 @@
 import { typeOf, isPlainObject } from '@/utils'
 export default {
   options (h, currItem, key) {
-    const genOptionsChildren = function (options, isButton = false) {
+    const genOptionsChildren = function (options, defaultOpts) {
+      const { isBorder, isButton } = defaultOpts
       return options.map(option => {
         if (isButton) {
           return (
             <el-radio-button
               key={option.value}
               label={option.value || ''}
-              disabled={option.disabled || false}
               name={option.name || ''}
             >
               {option.label}
@@ -19,8 +19,7 @@ export default {
           <el-radio
             key={option.value}
             label={option.value || ''}
-            disabled={option.disabled || false}
-            border={option.border || false}
+            border={isBorder || false}
             name={option.name || ''}
           >
             {option.label}
@@ -30,6 +29,7 @@ export default {
     }
     const isGroup = currItem.__config__.isGroup || false
     const isButton = currItem.__config__.isButton || false
+    const isBorder = currItem.__config__.isBorder || false
     let optionsSlot = currItem.__slot__[key]
     if (!optionsSlot) return null
     optionsSlot = typeOf(optionsSlot, 'array')
@@ -37,6 +37,12 @@ export default {
       : isPlainObject(optionsSlot)
         ? [optionsSlot]
         : []
-    return isGroup ? genOptionsChildren(optionsSlot, isButton) : genOptionsChildren(optionsSlot)
+    return isGroup
+      ? genOptionsChildren(optionsSlot, {
+        isBorder, isButton
+      })
+      : genOptionsChildren(optionsSlot, {
+        isBorder
+      })
   }
 }
