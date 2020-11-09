@@ -1,6 +1,6 @@
 <script>
 import draggable from 'vuedraggable'
-import { typeOf } from '@/utils'
+import { typeOf, isPlainObject } from '@/utils'
 import {
   basic,
   buttonOptions,
@@ -12,8 +12,26 @@ import {
   select,
   selectOptions,
   radioOptions,
-  checkboxOptions
+  checkboxOptions,
+  cascaderOptions
 } from '@/components/generate/__attrs__'
+// const nid = 1
+let visible = false
+const dialog = function (h) {
+  return (
+    <el-dialog
+      title="提示"
+      width="30%"
+      visible={visible}
+      on={{ 'update:visible': value => { console.log(value); visible = value } }}
+    >
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" >确 定</el-button>
+        <el-button>取 消</el-button>
+      </span>
+    </el-dialog>
+  )
+}
 const formItem = {
   select (h, item, key, currItem) {
     return (
@@ -156,59 +174,111 @@ const formItem = {
       />
     )
   },
+  tree (h, item, opts) {
+    const renderChildren = function (h, { node, data, store }) {
+      const addTreeNode = function (data) {
+      }
+      const removeTreeNode = function (node, data) {
+        const parent = node.parent
+        const children = parent.data.children || parent.data
+        const index = children.findIndex(d => d.id === data.id)
+        children.splice(index, 1)
+      }
+      return (
+        <div class="custom-tree-node">
+          <span>{node.label}</span>
+          <span class="drag__btns">
+            <i
+              class="el-icon-circle-plus-outline"
+              onClick={() => addTreeNode.call(this, data)}
+            />
+            <i
+              class="el-icon-remove-outline"
+              onClick={() => removeTreeNode(node, data)}
+            />
+          </span>
+        </div>
+      )
+    }
+    return (
+      <el-tree
+        data={opts}
+        node-key='id'
+        expand-on-click-node={false}
+        render-content={renderChildren}
+      />
+    )
+  },
   options (h, type, currItem) {
     const addOption = function (target) {
-      target.__slot__.options.push({
+      target.push({
         label: '',
         value: ''
       })
     }
     const removeOption = function (target, index) {
-      target.__slot__.options.splice(index, 1)
+      if (target.length) {
+        target.splice(index, 1)
+      }
     }
     if (currItem.__config__.isGroup) {
       // TODO: 如果分组，需要定义组名
     }
-    return (
-      <div style={{ 'text-align': 'center' }}>
-        <el-divider>选项</el-divider>
-        <draggable
-          class="drag__option"
-          list={currItem.__slot__.options}
-          handle=".drag__icon"
-          animation={300}
-        >
-          {currItem.__slot__.options.map((opt, index) => (
-            <div class="drag__item">
-              <i class="el-icon-s-operation drag__icon" />
-              {type.__options__.map(item => {
-                return (
-                  <el-input
-                    onInput={value => {
-                      opt[item.model] = value
-                    }}
-                    value={opt[item.model]}
-                    placeholder={item.label}
-                    style={{ width: '120px', margin: '5px' }}
-                  />
-                )
-              })}
-              <i
-                class="el-icon-remove-outline drag__remove"
-                onClick={() => removeOption(currItem, index)}
-              />
-            </div>
-          ))}
-        </draggable>
-        <el-button
-          icon="el-icon-circle-plus-outline"
-          type="text"
-          onClick={() => addOption(currItem)}
-        >
+    let opts = currItem.__slot__?.options
+    if (opts && typeOf(opts, 'array')) {
+      // radio group, checkbox group
+      return (
+        <div style={{ 'text-align': 'center' }}>
+          <el-divider>选项</el-divider>
+          <draggable
+            class="drag__option"
+            list={opts}
+            handle=".drag__icon"
+            animation={300}
+          >
+            {opts.map((opt, index) => (
+              <div class="drag__item">
+                <i class="el-icon-s-operation drag__icon" />
+                {type.map(item => {
+                  return (
+                    <el-input
+                      onInput={value => {
+                        opt[item.model] = value
+                      }}
+                      value={opt[item.model]}
+                      placeholder={item.label}
+                      style={{ width: '120px', margin: '5px' }}
+                    />
+                  )
+                })}
+                <i
+                  class="el-icon-remove-outline drag__remove"
+                  onClick={() => removeOption(opts, index)}
+                />
+              </div>
+            ))}
+          </draggable>
+          <el-button
+            icon="el-icon-circle-plus-outline"
+            type="text"
+            onClick={() => addOption(opts)}
+          >
           添加选项
-        </el-button>
-      </div>
-    )
+          </el-button>
+        </div>
+      )
+    } else {
+      // cascader
+      opts = currItem[type.model]
+      return (
+        <div>
+          <el-divider>选项</el-divider>
+          <el-form-item label={type.label}>
+            {switchFormItemType.call(this, h, type, opts)}
+          </el-form-item>
+        </div>
+      )
+    }
   },
   input (h, item, key, currItem) {
     return (
@@ -227,6 +297,10 @@ const formItem = {
 }
 
 const switchFormItemType = function (h, item, key, currItem) {
+  if (isPlainObject(key)) {
+    currItem = key
+    key = null
+  }
   return (formItem[item.type || 'input'] || formItem.input).call(
     this,
     h,
@@ -242,16 +316,27 @@ const genFormItem = function (h, currItem, type) {
   let temp = null
   Object.keys(type).forEach(key => {
     const attr = type[key]
+    // 对于options类型数据进行特殊处理
+    if (key === '__options__') return
+    // vmodel 类型为对象类型，无需循环，直接传入即可
+    if (key === '__vModel__') {
+      attrs.push(
+        (
+          <el-form-item label={attr.label}>
+            {switchFormItemType.call(this, h, attr, currItem)}
+          </el-form-item>
+        )
+      )
+      return
+    }
     attrs.push(
       ...attr.map(item => {
-        if (key === '__options__') return
         if (key === '__native__') {
           if (typeOf(currItem[item.model], 'undefined')) return null
           if (group.includes(config.type)) return
-
           return (
             <el-form-item label={item.label}>
-              {switchFormItemType.call(this, h, item, null, currItem)}
+              {switchFormItemType.call(this, h, item, currItem)}
             </el-form-item>
           )
         }
@@ -267,7 +352,7 @@ const genFormItem = function (h, currItem, type) {
   })
 
   if ('__options__' in type) {
-    attrs.push(formItem.options.call(this, h, type, currItem))
+    attrs.push(formItem.options.call(this, h, type.__options__, currItem))
   }
 
   switch (config.type) {
@@ -310,7 +395,8 @@ const components = {
     const store = {
       selectOptions,
       radioOptions,
-      checkboxOptions
+      checkboxOptions,
+      cascaderOptions
     }
     return returnFormItem.call(this, h, store, currItem, select)
   }
@@ -333,7 +419,13 @@ export default {
     conf: Object,
     isEmpty: Boolean
   },
+  data () {
+    return {
+      visible: false
+    }
+  },
   render (h) {
+    dialog.call(this, h)
     const hasData = Object.keys(this.conf).length
     return !this.isEmpty && hasData ? layout.call(this, h, this.conf) : <div />
   }

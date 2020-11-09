@@ -1,7 +1,9 @@
 .item {
     width: 90%
 }
-
+.custom-tree-node {
+    width: 100%;
+}
 .drag {
     &__option {
         font-size: 20px;
@@ -18,6 +20,24 @@
         font-size: 20px;
         color: $red;
         cursor: pointer;
+    }
+
+    &__btns {
+        font-size: 18px;
+        float: right;
+        &> i:first-child {
+            margin-right: 10px;
+            color: $green;
+            &:hover {
+                color: $green1;
+            }
+        }
+        &> i:last-child {
+            color: $red;
+            &:hover {
+                color: $red1;
+            }
+        }
     }
 }
 

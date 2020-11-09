@@ -20,4 +20,4 @@ export const typeOf = (el, type) => Object.prototype.toString.call(el).replace(/
  * @returns {boolean}
  * @description 判断是否为对象
  */
-export const isPlainObject = target => typeof target === 'object'
+export const isPlainObject = target => typeof target === 'object' && typeOf(target, 'object')

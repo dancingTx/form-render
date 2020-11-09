@@ -35,6 +35,7 @@ const button = {
 export const buttonOptions = mergeOptions(button, basic)
 
 export const input = {
+  __vModel__: { label: '绑定值', model: '__vModel__', placeholder: '请输入绑定值', type: 'input' },
   __config__: [
     { label: '标题', model: 'label', placeholder: '请输入标题', type: 'input' },
     { label: '是否显示标题', model: 'showLabel', type: 'switch' },
@@ -94,6 +95,7 @@ const password = {
 export const passwordOptions = mergeOptions(password, input)
 
 const number = {
+  __vModel__: { label: '绑定值', model: '__vModel__', placeholder: '请输入绑定值', type: 'number' },
   __native__: [
     { label: '计数器最小值', model: 'min', type: 'number' },
     { label: '计数器最大值', model: 'max', type: 'number' },
@@ -122,6 +124,7 @@ export const select = {
 }
 
 const singleSelect = {
+  __vModel__: { label: '绑定值', model: '__vModel__', placeholder: '请输入绑定值', type: 'input' },
   __config__: [
     // TODO: 暂不支持分组
     // { label: '是否分组', model: 'isGroup', type: 'switch' }
@@ -148,6 +151,7 @@ const singleSelect = {
 export const selectOptions = mergeOptions(singleSelect, select)
 
 const radio = {
+  __vModel__: { label: '绑定值', model: '__vModel__', placeholder: '请输入绑定值', type: 'input' },
   __native__: [
     { label: '单选框尺寸', model: 'size', type: 'radio', options: ['medium', 'small', 'mini'] },
     { label: '文本颜色', model: 'textColor', type: 'color' },
@@ -174,3 +178,21 @@ const checkbox = {
 }
 
 export const checkboxOptions = mergeOptions(checkbox, select)
+
+const cascader = {
+  __native__: [
+    { label: '选择器占位符', model: 'placeholder', type: 'input' },
+    { label: '显示完整路径', model: 'showAllLevels', type: 'switch' },
+    { label: '是否折叠Tag', model: 'collapseTags', type: 'switch' },
+    { label: '是否可搜索', model: 'filterable', type: 'switch' },
+    { label: '选项分割符', model: 'separator', type: 'input' }
+  ],
+  // __attrs__: [
+  //   { label: '菜单展开方式', model: 'props.expandTrigger', type: 'radio', options: ['click', 'hover'] },
+  //   { label: '是否多选', model: 'props.multiple', type: 'switch' },
+  //   { label: '任选层级', model: 'props.checkStrictly', type: 'switch' }
+  // ],
+  __options__: { label: '静态数据', model: 'options', type: 'tree' }
+}
+
+export const cascaderOptions = mergeOptions(cascader, select)
