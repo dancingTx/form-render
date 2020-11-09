@@ -15,23 +15,7 @@ import {
   checkboxOptions,
   cascaderOptions
 } from '@/components/generate/__attrs__'
-// const nid = 1
-let visible = false
-const dialog = function (h) {
-  return (
-    <el-dialog
-      title="提示"
-      width="30%"
-      visible={visible}
-      on={{ 'update:visible': value => { console.log(value); visible = value } }}
-    >
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" >确 定</el-button>
-        <el-button>取 消</el-button>
-      </span>
-    </el-dialog>
-  )
-}
+let nid = 1000
 const formItem = {
   select (h, item, key, currItem) {
     return (
@@ -177,6 +161,11 @@ const formItem = {
   tree (h, item, opts) {
     const renderChildren = function (h, { node, data, store }) {
       const addTreeNode = function (data) {
+        const newChild = { id: nid++, label: '选项', children: [] }
+        if (!data.children) {
+          this.$set(data, 'children', [])
+        }
+        data.children.push(newChild)
       }
       const removeTreeNode = function (node, data) {
         const parent = node.parent
@@ -210,11 +199,20 @@ const formItem = {
     )
   },
   options (h, type, currItem) {
-    const addOption = function (target) {
-      target.push({
-        label: '',
-        value: ''
-      })
+    const addOption = function (target, type) {
+      if (type === 'cascader') {
+        target.push({
+          id: nid++,
+          label: '选项',
+          value: '',
+          children: []
+        })
+      } else {
+        target.push({
+          label: '',
+          value: ''
+        })
+      }
     }
     const removeOption = function (target, index) {
       if (target.length) {
@@ -261,7 +259,7 @@ const formItem = {
           <el-button
             icon="el-icon-circle-plus-outline"
             type="text"
-            onClick={() => addOption(opts)}
+            onClick={() => addOption(opts, 'radio')}
           >
           添加选项
           </el-button>
@@ -271,11 +269,18 @@ const formItem = {
       // cascader
       opts = currItem[type.model]
       return (
-        <div>
+        <div style={{ textAlign: 'center' }}>
           <el-divider>选项</el-divider>
           <el-form-item label={type.label}>
             {switchFormItemType.call(this, h, type, opts)}
           </el-form-item>
+          <el-button
+            icon="el-icon-circle-plus-outline"
+            type="text"
+            onClick={() => addOption(opts, 'cascader')}
+          >
+            添加选项
+          </el-button>
         </div>
       )
     }
@@ -405,9 +410,11 @@ const components = {
 const layout = function (h, currItem) {
   const type = `${currItem.__config__.componentType || ''}Type`
   return (
-    <el-form size="small" label-width="100px">
-      {components[type].call(this, h, currItem)}
-    </el-form>
+    <div>
+      <el-form size="small" label-width="100px">
+        {components[type].call(this, h, currItem)}
+      </el-form>
+    </div>
   )
 }
 export default {
@@ -419,15 +426,11 @@ export default {
     conf: Object,
     isEmpty: Boolean
   },
-  data () {
-    return {
-      visible: false
-    }
-  },
   render (h) {
-    dialog.call(this, h)
     const hasData = Object.keys(this.conf).length
-    return !this.isEmpty && hasData ? layout.call(this, h, this.conf) : <div />
+    return !this.isEmpty && hasData
+      ? layout.call(this, h, this.conf)
+      : <div />
   }
 }
 </script>
