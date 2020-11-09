@@ -2,27 +2,45 @@
 import draggable from 'vuedraggable'
 import { typeOf } from '@/utils'
 import {
-  basic, buttonOptions,
-  input, textOptions, textareaOptions, passwordOptions, numberOptions,
-  select, selectOptions, radioOptions
+  basic,
+  buttonOptions,
+  input,
+  textOptions,
+  textareaOptions,
+  passwordOptions,
+  numberOptions,
+  select,
+  selectOptions,
+  radioOptions,
+  checkboxOptions
 } from '@/components/generate/__attrs__'
 const formItem = {
   select (h, item, key, currItem) {
     return (
       <el-select
         class="item"
-        onInput={value => { key ? currItem[key][item.model] = value || '' : currItem[item.model] = value || '' }}
+        onInput={value => {
+          key
+            ? (currItem[key][item.model] = value || '')
+            : (currItem[item.model] = value || '')
+        }}
         value={key ? currItem[key][item.model] : currItem[item.model]}
         placeholder={item.placeholder || ''}
       >
-        {item.options.map(i => (<el-option value={i} />))}
+        {item.options.map(i => (
+          <el-option value={i} />
+        ))}
       </el-select>
     )
   },
   switch (h, item, key, currItem) {
     return (
       <el-switch
-        onInput={value => { key ? currItem[key][item.model] = value || false : currItem[item.model] = value || false }}
+        onInput={value => {
+          key
+            ? (currItem[key][item.model] = value || false)
+            : (currItem[item.model] = value || false)
+        }}
         value={key ? currItem[key][item.model] : currItem[item.model]}
       />
     )
@@ -32,7 +50,11 @@ const formItem = {
       <el-input-number
         class="item"
         placeholder={item.placeholder}
-        onInput={value => { key ? currItem[key][item.model] = value || 0 : currItem[item.model] = value || 0 }}
+        onInput={value => {
+          key
+            ? (currItem[key][item.model] = value || 0)
+            : (currItem[item.model] = value || 0)
+        }}
         value={key ? currItem[key][item.model] : currItem[item.model]}
         min={0}
       />
@@ -41,64 +63,68 @@ const formItem = {
   radio (h, item, key, currItem) {
     return (
       <el-radio-group
-        onInput={value => { key ? currItem[key][item.model] = value || 0 : currItem[item.model] = value || 0 }}
+        onInput={value => {
+          key
+            ? (currItem[key][item.model] = value || 0)
+            : (currItem[item.model] = value || 0)
+        }}
         value={key ? currItem[key][item.model] : currItem[item.model]}
         size="mini"
       >
-        {item.options.map(item => (<el-radio-button label={item}/>))}
+        {item.options.map(item => (
+          <el-radio-button label={item} />
+        ))}
       </el-radio-group>
     )
   },
-  radioGroup (h, type, currItem, config) {
+  radioAndCheckboxGroup (h, type, currItem, config) {
     return (
       <div>
         <el-divider>属性</el-divider>
-        <el-form-item label='选项样式'>
+        <el-form-item label="选项样式">
           <el-radio-group
-            onInput={value => { config.isButton = value }}
+            onInput={value => {
+              config.isButton = value
+            }}
             value={config.isButton}
           >
-            {
-              [
-                { label: '默认', value: false },
-                { label: '按钮', value: true }
-              ].map(item => (
-                <el-radio-button label={item.value}>
-                  {item.label}
-                </el-radio-button>
-              ))
-            }
+            {[
+              { label: '默认', value: false },
+              { label: '按钮', value: true }
+            ].map(item => (
+              <el-radio-button label={item.value}>{item.label}</el-radio-button>
+            ))}
           </el-radio-group>
         </el-form-item>
-        {
-          !config.isButton && (
-            <el-form-item label="是否显示边框">
-              <el-switch
-                onInput={value => { config.isBorder = value }}
-                value={ config.isBorder }
-              />
-            </el-form-item>
-          )
-        }
-        {
-          type.__native__.map(item => {
-            if (
-              select.__native__.includes(item) ||
-              (item.model === 'size' && config.isBorder)
-            ) {
-              return (
-                <el-form-item label={item.label}>
-                  {switchFormItemType.call(this, h, item, null, currItem)}
-                </el-form-item>
-              )
-            }
-            return config.isButton && (
+        {!config.isButton && (
+          <el-form-item label="是否显示边框">
+            <el-switch
+              onInput={value => {
+                config.isBorder = value
+              }}
+              value={config.isBorder}
+            />
+          </el-form-item>
+        )}
+        {type.__native__.map(item => {
+          if (
+            select.__native__.includes(item) ||
+            (item.model === 'size' && config.isBorder)
+          ) {
+            return (
               <el-form-item label={item.label}>
                 {switchFormItemType.call(this, h, item, null, currItem)}
               </el-form-item>
             )
-          })
-        }
+          }
+          return (
+            config.isButton && (
+              <el-form-item label={item.label}>
+                {switchFormItemType.call(this, h, item, null, currItem)}
+              </el-form-item>
+            )
+          )
+        })}
       </div>
     )
   },
@@ -106,7 +132,11 @@ const formItem = {
     return (
       <el-slider
         class="item"
-        onInput={value => { key ? currItem[key][item.model] = value || 0 : currItem[item.model] = value || 0 }}
+        onInput={value => {
+          key
+            ? (currItem[key][item.model] = value || 0)
+            : (currItem[item.model] = value || 0)
+        }}
         value={key ? currItem[key][item.model] : currItem[item.model]}
         min={0}
         max={24}
@@ -117,7 +147,11 @@ const formItem = {
   color (h, item, key, currItem) {
     return (
       <el-color-picker
-        onInput={value => { key ? currItem[key][item.model] = value || 0 : currItem[item.model] = value || 0 }}
+        onInput={value => {
+          key
+            ? (currItem[key][item.model] = value || 0)
+            : (currItem[item.model] = value || 0)
+        }}
         value={key ? currItem[key][item.model] : currItem[item.model]}
       />
     )
@@ -134,7 +168,6 @@ const formItem = {
     }
     if (currItem.__config__.isGroup) {
       // TODO: 如果分组，需要定义组名
-
     }
     return (
       <div style={{ 'text-align': 'center' }}>
@@ -151,7 +184,9 @@ const formItem = {
               {type.__options__.map(item => {
                 return (
                   <el-input
-                    onInput={value => { opt[item.model] = value }}
+                    onInput={value => {
+                      opt[item.model] = value
+                    }}
                     value={opt[item.model]}
                     placeholder={item.label}
                     style={{ width: '120px', margin: '5px' }}
@@ -168,7 +203,7 @@ const formItem = {
         <el-button
           icon="el-icon-circle-plus-outline"
           type="text"
-          onClick={ () => addOption(currItem)}
+          onClick={() => addOption(currItem)}
         >
           添加选项
         </el-button>
@@ -179,7 +214,11 @@ const formItem = {
     return (
       <el-input
         class="item"
-        onInput={value => { key ? currItem[key][item.model] = value || '' : currItem[item.model] = value || '' }}
+        onInput={value => {
+          key
+            ? (currItem[key][item.model] = value || '')
+            : (currItem[item.model] = value || '')
+        }}
         value={key ? currItem[key][item.model] : currItem[item.model]}
         placeholder={item.placeholder || ''}
       />
@@ -188,34 +227,43 @@ const formItem = {
 }
 
 const switchFormItemType = function (h, item, key, currItem) {
-  return (formItem[item.type || 'input'] || formItem.input).call(this, h, item, key, currItem)
+  return (formItem[item.type || 'input'] || formItem.input).call(
+    this,
+    h,
+    item,
+    key,
+    currItem
+  )
 }
 const genFormItem = function (h, currItem, type) {
   const attrs = []
   const config = currItem.__config__
+  const group = ['radio', 'checkbox']
   let temp = null
   Object.keys(type).forEach(key => {
     const attr = type[key]
-    attrs.push(...attr.map(item => {
-      if (key === '__options__') return
-      if (key === '__native__') {
-        if (typeOf(currItem[item.model], 'undefined')) return null
-        if (config.type === 'radio') return
+    attrs.push(
+      ...attr.map(item => {
+        if (key === '__options__') return
+        if (key === '__native__') {
+          if (typeOf(currItem[item.model], 'undefined')) return null
+          if (group.includes(config.type)) return
 
+          return (
+            <el-form-item label={item.label}>
+              {switchFormItemType.call(this, h, item, null, currItem)}
+            </el-form-item>
+          )
+        }
+
+        if (typeOf(currItem[key][item.model], 'undefined')) return null
         return (
           <el-form-item label={item.label}>
-            {switchFormItemType.call(this, h, item, null, currItem)}
+            {switchFormItemType.call(this, h, item, key, currItem)}
           </el-form-item>
         )
-      }
-
-      if (typeOf(currItem[key][item.model], 'undefined')) return null
-      return (
-        <el-form-item label={item.label}>
-          {switchFormItemType.call(this, h, item, key, currItem)}
-        </el-form-item>
-      )
-    }))
+      })
+    )
   })
 
   if ('__options__' in type) {
@@ -224,10 +272,11 @@ const genFormItem = function (h, currItem, type) {
 
   switch (config.type) {
     case 'radio':
-      temp = formItem.radioGroup.call(this, h, type, currItem, config)
+    case 'checkbox':
+      temp = formItem.radioAndCheckboxGroup.call(this, h, type, currItem, config)
       break
     default:
-      temp = <div/>
+      temp = <div />
       break
   }
 
@@ -260,7 +309,8 @@ const components = {
   selectType (h, currItem) {
     const store = {
       selectOptions,
-      radioOptions
+      radioOptions,
+      checkboxOptions
     }
     return returnFormItem.call(this, h, store, currItem, select)
   }
@@ -269,7 +319,7 @@ const components = {
 const layout = function (h, currItem) {
   const type = `${currItem.__config__.componentType || ''}Type`
   return (
-    <el-form size='small' label-width="100px">
+    <el-form size="small" label-width="100px">
       {components[type].call(this, h, currItem)}
     </el-form>
   )
@@ -285,7 +335,7 @@ export default {
   },
   render (h) {
     const hasData = Object.keys(this.conf).length
-    return (!this.isEmpty && hasData) ? layout.call(this, h, this.conf) : <div/>
+    return !this.isEmpty && hasData ? layout.call(this, h, this.conf) : <div />
   }
 }
 </script>

@@ -1,12 +1,11 @@
 import { typeOf, isPlainObject } from '@/utils'
 export default {
   options (h, currItem, key) {
-    const genOptionsChildren = function (options, isButton) {
+    const genOptionsChildren = function (options, config) {
       return options.map(option => {
-        if (isButton) {
+        if (config.isButton) {
           return (
             <el-checkbox-button
-              key={option.value}
               label={option.value || ''}
               disabled={option.disabled || false}
               name={option.name || ''}
@@ -18,10 +17,9 @@ export default {
         }
         return (
           <el-checkbox
-            key={option.value}
             label={option.value || ''}
             disabled={option.disabled || false}
-            border={option.border || false}
+            border={config.isBorder || false}
             name={option.name || ''}
             checked={option.checked || false}
           >
@@ -32,6 +30,7 @@ export default {
     }
     const isGroup = currItem.__config__.isGroup || false
     const isButton = currItem.__config__.isButton || false
+    const isBorder = currItem.__config__.isBorder || false
     let optionsSlot = currItem.__slot__[key]
     if (!optionsSlot) return null
     optionsSlot =
@@ -40,6 +39,12 @@ export default {
         : isPlainObject(optionsSlot)
           ? [optionsSlot]
           : []
-    return isGroup ? genOptionsChildren(optionsSlot, isButton) : genOptionsChildren(optionsSlot)
+    return isGroup
+      ? genOptionsChildren(optionsSlot, {
+        isBorder, isButton
+      })
+      : genOptionsChildren(optionsSlot, {
+        isBorder
+      })
   }
 }

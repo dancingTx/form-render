@@ -264,19 +264,22 @@ const selectComponents = [
       label: '多选框(组)',
       tag: 'el-checkbox-group',
       tagIcon: 'checkbox',
+      type: 'checkbox',
       isGroup: true,
-      isButton: false
+      isButton: false,
+      isBorder: false
     },
     __slot__: {
       options: [
-        { label: '选项一', name: 'checkbox1', value: 1, disabled: false, border: false, checked: false },
-        { label: '选项二', name: 'checkbox1', value: 2, disabled: false, border: false, checked: false },
-        { label: '选项三', name: 'checkbox1', value: 3, disabled: false, border: false, checked: false }
+        { label: '选项一', value: 1 },
+        { label: '选项二', value: 2 },
+        { label: '选项三', value: 3 }
       ]
     },
-    __vModel__: [],
+    __vModel__: [1, 3],
     textColor: '#ffffff',
     fill: '#409EFF',
+    size: 'medium',
     min: -Infinity,
     max: Infinity
   },

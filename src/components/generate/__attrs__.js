@@ -160,3 +160,17 @@ const radio = {
 }
 
 export const radioOptions = mergeOptions(radio, select)
+
+const checkbox = {
+  __native__: [
+    { label: '单选框尺寸', model: 'size', type: 'radio', options: ['medium', 'small', 'mini'] },
+    { label: '文本颜色', model: 'textColor', type: 'color' },
+    { label: '填充颜色', model: 'fill', type: 'color' }
+  ],
+  __options__: [
+    { label: 'label', model: 'label', type: 'input' },
+    { label: 'value', model: 'value', type: 'input' }
+  ]
+}
+
+export const checkboxOptions = mergeOptions(checkbox, select)

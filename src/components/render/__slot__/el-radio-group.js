@@ -7,7 +7,6 @@ export default {
         if (isButton) {
           return (
             <el-radio-button
-              key={option.value}
               label={option.value || ''}
               name={option.name || ''}
             >
@@ -17,7 +16,6 @@ export default {
         }
         return (
           <el-radio
-            key={option.value}
             label={option.value || ''}
             border={isBorder || false}
             name={option.name || ''}

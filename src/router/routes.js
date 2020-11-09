@@ -1,7 +1,7 @@
 import Dashboard from '@/views/index.vue'
 const routes = [
   {
-    path: '/index',
+    path: '/',
     component: Dashboard
   }
 ]

@@ -4,6 +4,7 @@
 
 .drag {
     &__option {
+        font-size: 20px;
         cursor: move;
     }
     
@@ -14,7 +15,9 @@
     }
 
     &__remove {
+        font-size: 20px;
         color: $red;
+        cursor: pointer;
     }
 }
 
