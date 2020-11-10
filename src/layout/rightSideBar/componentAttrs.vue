@@ -16,8 +16,7 @@ import {
   cascaderOptions
 } from '@/components/generate/__attrs__'
 // const nid = 1
-let visible = false
-const dialog = function (h) {
+const dialog = function (h, visible) {
   return (
     <el-dialog
       title="提示"
@@ -421,11 +420,11 @@ export default {
   },
   data () {
     return {
-      visible: false
+      visible: true
     }
   },
   render (h) {
-    dialog.call(this, h)
+    dialog.call(this, h, this.visible)
     const hasData = Object.keys(this.conf).length
     return !this.isEmpty && hasData ? layout.call(this, h, this.conf) : <div />
   }
