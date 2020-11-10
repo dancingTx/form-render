@@ -1,5 +1,6 @@
 <script>
 import draggable from 'vuedraggable'
+import processCascader from './module/processCascader'
 import { typeOf, isPlainObject } from '@/utils'
 import {
   basic,
@@ -158,16 +159,17 @@ const formItem = {
       />
     )
   },
-  tree (h, item, opts) {
+  tree (h, item, opts, currItem) {
     const renderChildren = function (h, { node, data, store }) {
       const addTreeNode = function (data) {
-        const newChild = { id: nid++, label: '选项', children: [] }
+        const newChild = { id: nid++, label: '选项', value: '' }
         if (!data.children) {
           this.$set(data, 'children', [])
         }
         data.children.push(newChild)
       }
       const removeTreeNode = function (node, data) {
+        currItem.__vModel__ = []
         const parent = node.parent
         const children = parent.data.children || parent.data
         const index = children.findIndex(d => d.id === data.id)
@@ -200,19 +202,10 @@ const formItem = {
   },
   options (h, type, currItem) {
     const addOption = function (target, type) {
-      if (type === 'cascader') {
-        target.push({
-          id: nid++,
-          label: '选项',
-          value: '',
-          children: []
-        })
-      } else {
-        target.push({
-          label: '',
-          value: ''
-        })
-      }
+      target.push({
+        label: '',
+        value: ''
+      })
     }
     const removeOption = function (target, index) {
       if (target.length) {
@@ -222,7 +215,7 @@ const formItem = {
     if (currItem.__config__.isGroup) {
       // TODO: 如果分组，需要定义组名
     }
-    let opts = currItem.__slot__?.options
+    const opts = currItem.__slot__?.options
     if (opts && typeOf(opts, 'array')) {
       // radio group, checkbox group
       return (
@@ -259,7 +252,7 @@ const formItem = {
           <el-button
             icon="el-icon-circle-plus-outline"
             type="text"
-            onClick={() => addOption(opts, 'radio')}
+            onClick={() => addOption(opts)}
           >
           添加选项
           </el-button>
@@ -267,21 +260,11 @@ const formItem = {
       )
     } else {
       // cascader
-      opts = currItem[type.model]
       return (
-        <div style={{ textAlign: 'center' }}>
-          <el-divider>选项</el-divider>
-          <el-form-item label={type.label}>
-            {switchFormItemType.call(this, h, type, opts)}
-          </el-form-item>
-          <el-button
-            icon="el-icon-circle-plus-outline"
-            type="text"
-            onClick={() => addOption(opts, 'cascader')}
-          >
-            添加选项
-          </el-button>
-        </div>
+        <process-cascader
+          conf={currItem}
+          type={type}
+        />
       )
     }
   },
@@ -420,7 +403,8 @@ const layout = function (h, currItem) {
 export default {
   name: 'componentAttrs',
   components: {
-    draggable
+    draggable,
+    processCascader
   },
   props: {
     conf: Object,

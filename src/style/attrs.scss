@@ -3,6 +3,7 @@
 }
 .custom-tree-node {
     width: 100%;
+    text-align: left;
 }
 .drag {
     &__option {
@@ -60,5 +61,11 @@
         margin: 10px 5px;
         padding: 10px;
         box-sizing: border-box;
+    }
+}
+
+.cascader {
+    &__block {
+        text-align: center;
     }
 }
