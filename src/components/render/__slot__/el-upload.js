@@ -1,23 +1,23 @@
+import { replaceEle } from '@/utils'
 const genTips = function (h, currItem, key) {
-  const tip =
-    currItem.__slot__[key] &&
-    currItem.__slot__[key].replace(/{(\w+)}/g, (_, value) => currItem.__config__[value])
-  return (
-    <div slot={key} class="el-upload__tip">{tip}</div>
-  )
+  const tip = currItem.__slot__[key] && replaceEle(currItem.__slot__[key], currItem.__config__)
+  return (<div slot={key} class="el-upload__tip">{tip}</div>)
 }
 
 export default {
   listType (h, currItem, key) {
     const config = currItem.__config__
     const res = []
-    if (currItem.listType === 'picture-card') {
-      res.push((
-        <i slot="default" class="el-icon-plus"></i>
-      ))
+    if (currItem.listType === 'picture-card' || currItem.drag) {
+      res.push((<i slot="default" class="el-icon-plus" />))
     } else {
       res.push((
-        <el-button size={config.size} type={config.type}>{config.buttonText}</el-button>
+        <el-button
+          size={config.btnSize || 'medium'}
+          type={config.btnType || 'primary'}
+        >
+          {config.btnText || ''}
+        </el-button>
       ))
     }
 

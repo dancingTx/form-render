@@ -1,6 +1,21 @@
 .item {
     width: 90%
 }
+.append {
+    &.el-input-group {
+        width: 90%;
+    }
+    .item {
+        width: 80px;
+    }
+}
+.el-upload-dragger {
+    line-height: 200px;
+    i {
+        font-size: 40px;
+    }
+}
+
 .custom-tree-node {
     width: 100%;
     text-align: left;

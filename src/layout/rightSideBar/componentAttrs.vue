@@ -14,8 +14,10 @@ import {
   selectOptions,
   radioOptions,
   checkboxOptions,
-  cascaderOptions
+  cascaderOptions,
+  uploadOptions
 } from '@/components/generate/__attrs__'
+import { template } from '../../components/Preview/testTemplate'
 const formItem = {
   select (h, item, key, currItem) {
     const target = key ? currItem[key] : currItem
@@ -26,9 +28,12 @@ const formItem = {
         value={searchMultiData(target, item.model)}
         placeholder={item.placeholder || ''}
       >
-        {item.options.map(i => (
-          <el-option value={i} />
-        ))}
+        {item.options.map(i => {
+          if (isPlainObject(i)) {
+            return <el-option label={i.label || ''} value={i.value || ''} />
+          }
+          return <el-option label={i} value={i} />
+        })}
       </el-select>
     )
   },
@@ -206,6 +211,24 @@ const formItem = {
       )
     }
   },
+  append (h, item, key, currItem) {
+    const target = key ? currItem[key] : currItem
+    const { children } = item
+    return (
+      <el-input
+        class="append"
+        onInput={value => searchMultiData(target, item.model, value || '')}
+        value={searchMultiData(target, item.model)}
+        placeholder={item.placeholder}
+        type="number"
+        min={0}
+      >
+        <template slot="append">
+          {formItem.select.call(this, h, children, key, currItem)}
+        </template>
+      </el-input>
+    )
+  },
   input (h, item, key, currItem) {
     const target = key ? currItem[key] : currItem
     return (
@@ -318,7 +341,8 @@ const components = {
       selectOptions,
       radioOptions,
       checkboxOptions,
-      cascaderOptions
+      cascaderOptions,
+      uploadOptions
     }
     return returnFormItem.call(this, h, store, currItem, select)
   }

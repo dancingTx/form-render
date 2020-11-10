@@ -196,3 +196,39 @@ const cascader = {
 }
 
 export const cascaderOptions = mergeOptions(cascader, select)
+
+const upload = {
+  __config__: [
+    { label: '按钮文字', model: 'btnText', type: 'input', placeholder: '请输入按钮文字' },
+    { label: '按钮尺寸', model: 'btnSize', type: 'radio', options: ['medium', 'small', 'mini'] },
+    { label: '按钮类型', model: 'btnType', type: 'select', options: ['default', 'primary', 'success', 'info', 'warning', 'danger'] },
+    { label: '显示tip', model: 'showTips', type: 'switch' },
+    { label: '文件大小', model: 'fileSize', type: 'append', placeholder: '请输入文件大小', children: { model: 'sizeUnit', type: 'select', options: ['KB', 'MB', 'GB'] } }
+  ],
+  __native__: [
+    { label: '上传地址', model: 'action', type: 'input', placeholder: '请输入上传地址' },
+    { label: '是否多选文件', model: 'multiple', type: 'switch' },
+    { label: '是否携带Cookie', model: 'withCredentials', type: 'switch' },
+    { label: '显示上传列表', model: 'showFileList', type: 'switch' },
+    { label: '允许拖拽上传', model: 'drag', type: 'switch' },
+    { label: '自动上传', model: 'autoUpload', type: 'switch' },
+    { label: '文件列表类型', model: 'listType', type: 'radio', options: ['text', 'picture', 'picture-card'] },
+    { label: '最大上传数', model: 'limit', type: 'number' },
+    {
+      label: '上传类型',
+      model: 'accept',
+      type: 'select',
+      options: [
+        { label: '图片', value: 'image/*' },
+        { label: '视频', value: 'video/*' },
+        { label: '音频', value: 'audio/*' },
+        { label: 'word', value: '.doc,.docx' },
+        { label: 'excel', value: '.xls,.xlsx' },
+        { label: 'ppt', value: '.ppt,.pptx' },
+        { label: 'pdf', value: '.pdf,.odf' }
+      ]
+    }
+  ]
+}
+
+export const uploadOptions = mergeOptions(upload, select)

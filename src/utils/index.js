@@ -14,7 +14,7 @@ export const mergeOptions = function (customOpts, baseOpts) {
     if (item in customOpts && item in baseOpts) {
       if (typeOf(customOpts[item], 'array') && typeOf(baseOpts[item], 'array')) {
         //  both array to merge
-        options[item] = customOpts[item].concat(baseOpts[item])
+        options[item] = baseOpts[item].concat(customOpts[item])
       } else if (isPlainObject(customOpts[item])) {
         // recursive
         options[item] = mergeOptions(customOpts[item], baseOpts[item])
@@ -165,4 +165,21 @@ export const searchMultiData = (target, keyStr, value) => {
   }
   !typeOf(value, 'undefined') && (target[prop] = value)
   return res
+}
+
+/**
+ *
+ * @param {string} template
+ * @param {object} replaceObj
+ * @description 替换指定模板中得值
+ * eg.
+ * template: my name is {name}, i am {age} years old.
+ * replaceObj:{name: 'liming', age: 10}
+ * output -> my name is liming, i am 10 years old.
+ */
+
+export const replaceEle = (template, replaceObj) => {
+  if (!template || !typeOf(template, 'string')) return
+  const regObj = /{\s*?(\w+)\s*?}/g
+  return template.replace(regObj, (_, value) => replaceObj[value] || '')
 }
