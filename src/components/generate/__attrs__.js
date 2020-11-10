@@ -187,11 +187,11 @@ const cascader = {
     { label: '是否可搜索', model: 'filterable', type: 'switch' },
     { label: '选项分割符', model: 'separator', type: 'input' }
   ],
-  // __attrs__: [
-  //   { label: '菜单展开方式', model: 'props.expandTrigger', type: 'radio', options: ['click', 'hover'] },
-  //   { label: '是否多选', model: 'props.multiple', type: 'switch' },
-  //   { label: '任选层级', model: 'props.checkStrictly', type: 'switch' }
-  // ],
+  __attrs__: [
+    { label: '菜单展开方式', model: 'props.expandTrigger', type: 'radio', options: ['click', 'hover'] },
+    { label: '是否多选', model: 'props.multiple', type: 'switch' },
+    { label: '任选层级', model: 'props.checkStrictly', type: 'switch' }
+  ],
   __options__: { label: '静态数据', model: 'options', type: 'tree' }
 }
 

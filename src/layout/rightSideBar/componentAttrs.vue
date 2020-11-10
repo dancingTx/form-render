@@ -1,7 +1,7 @@
 <script>
 import draggable from 'vuedraggable'
 import processCascader from './module/processCascader'
-import { typeOf, isPlainObject } from '@/utils'
+import { typeOf, isPlainObject, searchMultiData } from '@/utils'
 import {
   basic,
   buttonOptions,
@@ -16,18 +16,14 @@ import {
   checkboxOptions,
   cascaderOptions
 } from '@/components/generate/__attrs__'
-let nid = 1000
 const formItem = {
   select (h, item, key, currItem) {
+    const target = key ? currItem[key] : currItem
     return (
       <el-select
         class="item"
-        onInput={value => {
-          key
-            ? (currItem[key][item.model] = value || '')
-            : (currItem[item.model] = value || '')
-        }}
-        value={key ? currItem[key][item.model] : currItem[item.model]}
+        onInput={value => { searchMultiData(target, item.model, value || '') }}
+        value={searchMultiData(target, item.model)}
         placeholder={item.placeholder || ''}
       >
         {item.options.map(i => (
@@ -37,41 +33,32 @@ const formItem = {
     )
   },
   switch (h, item, key, currItem) {
+    const target = key ? currItem[key] : currItem
     return (
       <el-switch
-        onInput={value => {
-          key
-            ? (currItem[key][item.model] = value || false)
-            : (currItem[item.model] = value || false)
-        }}
-        value={key ? currItem[key][item.model] : currItem[item.model]}
+        onInput={value => { searchMultiData(target, item.model, value || false) }}
+        value={searchMultiData(target, item.model)}
       />
     )
   },
   number (h, item, key, currItem) {
+    const target = key ? currItem[key] : currItem
     return (
       <el-input-number
         class="item"
         placeholder={item.placeholder}
-        onInput={value => {
-          key
-            ? (currItem[key][item.model] = value || 0)
-            : (currItem[item.model] = value || 0)
-        }}
-        value={key ? currItem[key][item.model] : currItem[item.model]}
+        onInput={value => { searchMultiData(target, item.model, value || 0) }}
+        value={searchMultiData(target, item.model)}
         min={0}
       />
     )
   },
   radio (h, item, key, currItem) {
+    const target = key ? currItem[key] : currItem
     return (
       <el-radio-group
-        onInput={value => {
-          key
-            ? (currItem[key][item.model] = value || 0)
-            : (currItem[item.model] = value || 0)
-        }}
-        value={key ? currItem[key][item.model] : currItem[item.model]}
+        onInput={value => { searchMultiData(target, item.model, value || 0) }}
+        value={searchMultiData(target, item.model) }
         size="mini"
       >
         {item.options.map(item => (
@@ -132,15 +119,12 @@ const formItem = {
     )
   },
   slider (h, item, key, currItem) {
+    const target = key ? currItem[key] : currItem
     return (
       <el-slider
         class="item"
-        onInput={value => {
-          key
-            ? (currItem[key][item.model] = value || 0)
-            : (currItem[item.model] = value || 0)
-        }}
-        value={key ? currItem[key][item.model] : currItem[item.model]}
+        onInput={value => { searchMultiData(target, item.model, value || 0) }}
+        value={searchMultiData(target, item.model)}
         min={0}
         max={24}
         marks={{ 12: '' }}
@@ -148,55 +132,11 @@ const formItem = {
     )
   },
   color (h, item, key, currItem) {
+    const target = key ? currItem[key] : currItem
     return (
       <el-color-picker
-        onInput={value => {
-          key
-            ? (currItem[key][item.model] = value || 0)
-            : (currItem[item.model] = value || 0)
-        }}
-        value={key ? currItem[key][item.model] : currItem[item.model]}
-      />
-    )
-  },
-  tree (h, item, opts, currItem) {
-    const renderChildren = function (h, { node, data, store }) {
-      const addTreeNode = function (data) {
-        const newChild = { id: nid++, label: '选项', value: '' }
-        if (!data.children) {
-          this.$set(data, 'children', [])
-        }
-        data.children.push(newChild)
-      }
-      const removeTreeNode = function (node, data) {
-        currItem.__vModel__ = []
-        const parent = node.parent
-        const children = parent.data.children || parent.data
-        const index = children.findIndex(d => d.id === data.id)
-        children.splice(index, 1)
-      }
-      return (
-        <div class="custom-tree-node">
-          <span>{node.label}</span>
-          <span class="drag__btns">
-            <i
-              class="el-icon-circle-plus-outline"
-              onClick={() => addTreeNode.call(this, data)}
-            />
-            <i
-              class="el-icon-remove-outline"
-              onClick={() => removeTreeNode(node, data)}
-            />
-          </span>
-        </div>
-      )
-    }
-    return (
-      <el-tree
-        data={opts}
-        node-key='id'
-        expand-on-click-node={false}
-        render-content={renderChildren}
+        onInput={value => { searchMultiData(target, item.model, value || '#ffffff') }}
+        value={searchMultiData(target, item.model)}
       />
     )
   },
@@ -233,10 +173,8 @@ const formItem = {
                 {type.map(item => {
                   return (
                     <el-input
-                      onInput={value => {
-                        opt[item.model] = value
-                      }}
-                      value={opt[item.model]}
+                      onInput={value => { searchMultiData(opt, item.model, value || '') }}
+                      value={searchMultiData(opt, item.model)}
                       placeholder={item.label}
                       style={{ width: '120px', margin: '5px' }}
                     />
@@ -254,7 +192,7 @@ const formItem = {
             type="text"
             onClick={() => addOption(opts)}
           >
-          添加选项
+            添加选项
           </el-button>
         </div>
       )
@@ -269,15 +207,12 @@ const formItem = {
     }
   },
   input (h, item, key, currItem) {
+    const target = key ? currItem[key] : currItem
     return (
       <el-input
         class="item"
-        onInput={value => {
-          key
-            ? (currItem[key][item.model] = value || '')
-            : (currItem[item.model] = value || '')
-        }}
-        value={key ? currItem[key][item.model] : currItem[item.model]}
+        onInput={value => { target[item.model] = value }}
+        value={target[item.model]}
         placeholder={item.placeholder || ''}
       />
     )
@@ -328,8 +263,7 @@ const genFormItem = function (h, currItem, type) {
             </el-form-item>
           )
         }
-
-        if (typeOf(currItem[key][item.model], 'undefined')) return null
+        if (typeOf(searchMultiData(currItem[key], item.model), 'undefined')) return null
         return (
           <el-form-item label={item.label}>
             {switchFormItemType.call(this, h, item, key, currItem)}
