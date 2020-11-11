@@ -1,6 +1,7 @@
 <script>
 import draggable from 'vuedraggable'
 import processCascader from './module/processCascader'
+import processIcons from './module/processIcons'
 import { typeOf, isPlainObject, searchMultiData } from '@/utils'
 import {
   basic,
@@ -19,7 +20,9 @@ import {
   switchOptions,
   sliderOptions,
   rateOptions,
-  colorOptions
+  colorOptions,
+  timePickerOptions,
+  timeSelectOptions
 } from '@/components/generate/__attrs__'
 import { template } from '../../components/Preview/testTemplate'
 const formItem = {
@@ -229,20 +232,23 @@ const formItem = {
   append (h, item, key, currItem) {
     const target = key ? currItem[key] : currItem
     const { children } = item
-    return (
-      <el-input
-        class="append"
-        onInput={value => searchMultiData(target, item.model, value || '')}
-        value={searchMultiData(target, item.model)}
-        placeholder={item.placeholder}
-        type="number"
-        min={0}
-      >
-        <template slot="append">
-          {formItem.select.call(this, h, children, key, currItem)}
-        </template>
-      </el-input>
-    )
+    if (children) {
+      return (
+        <el-input
+          class="append"
+          onInput={value => searchMultiData(target, item.model, value || '')}
+          value={searchMultiData(target, item.model)}
+          placeholder={item.placeholder}
+          type="number"
+          min={0}
+        >
+          <template slot="append">
+            {formItem.select.call(this, h, children, key, currItem)}
+          </template>
+        </el-input>
+      )
+    }
+    return <process-icons conf={target} option={item} />
   },
   input (h, item, key, currItem) {
     const target = key ? currItem[key] : currItem
@@ -260,8 +266,8 @@ const formItem = {
     return (
       <el-input
         class="item"
-        onInput={value => { target[item.model] = value }}
-        value={target[item.model]}
+        onInput={value => { searchMultiData(target, item.model, value) }}
+        value={searchMultiData(target, item.model)}
         placeholder={item.placeholder || ''}
       />
     )
@@ -304,7 +310,7 @@ const genFormItem = function (h, currItem, type) {
     attrs.push(
       ...attr.map(item => {
         if (key === '__native__') {
-          if (typeOf(currItem[item.model], 'undefined')) return null
+          if (typeOf(searchMultiData(currItem, item.model), 'undefined')) return null
           if (group.includes(config.type)) return
           return (
             <el-form-item label={item.label}>
@@ -373,7 +379,9 @@ const components = {
       switchOptions,
       sliderOptions,
       rateOptions,
-      colorOptions
+      colorOptions,
+      timePickerOptions,
+      timeSelectOptions
     }
     return returnFormItem.call(this, h, store, currItem, select)
   }
@@ -393,7 +401,8 @@ export default {
   name: 'componentAttrs',
   components: {
     draggable,
-    processCascader
+    processCascader,
+    processIcons
   },
   props: {
     conf: Object,

@@ -1,7 +1,9 @@
 // element bug fixed
 .el-scrollbar__wrap {
     overflow-x: hidden !important;
+    margin-bottom: 0 !important;
 }
+
 
 .el-form-item__label-wrap {
     margin-left: 0 !important;

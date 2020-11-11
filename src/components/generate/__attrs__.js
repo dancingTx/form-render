@@ -12,6 +12,9 @@ export const basic = {
     { label: '标题', model: 'label', placeholder: '请输入标题', type: 'input' },
     { label: '是否显示标题', model: 'showLabel', type: 'switch' },
     { label: '表单栅格', model: 'span', type: 'slider' }
+  ],
+  style: [
+    { label: '组件宽度', model: 'width', placeholder: '请输入组件宽度', type: 'input' }
   ]
 }
 
@@ -20,15 +23,15 @@ const button = {
     { label: '按钮文字', model: 'default', placeholder: '请输入按钮文字', type: 'input' }
   ],
   __native__: [
+    { label: '图标类名', model: 'icon', placeholder: '请输入图标类名', type: 'append' },
     { label: '按钮类型', model: 'type', placeholder: '请选择按钮类型', type: 'select', options: ['default', 'primary', 'success', 'info', 'warning', 'danger'] },
+    { label: '原生type属性', model: 'nativeType', placeholder: '请选择原生属性', type: 'select', options: ['button', 'submit', 'reset'] },
     { label: '是否朴素按钮', model: 'plain', type: 'switch' },
     { label: '是否圆角按钮', model: 'round', type: 'switch' },
     { label: '是否圆形按钮', model: 'circle', type: 'switch' },
     { label: '是否加载状态', model: 'loading', type: 'switch' },
     { label: '是否禁用状态', model: 'disabled', type: 'switch' },
-    { label: '图标类名', model: 'icon', placeholder: '请输入图标类名', type: 'input' },
-    { label: '是否默认聚焦', model: 'autofocus', type: 'switch' },
-    { label: '原生type属性', model: 'nativeType', placeholder: '请选择原生属性', type: 'select', options: ['button', 'submit', 'reset'] }
+    { label: '是否默认聚焦', model: 'autofocus', type: 'switch' }
   ]
 }
 
@@ -41,6 +44,9 @@ export const input = {
     { label: '是否显示标题', model: 'showLabel', type: 'switch' },
     { label: '是否必填', model: 'required', type: 'switch' },
     { label: '表单栅格', model: 'span', type: 'slider' }
+  ],
+  style: [
+    { label: '组件宽度', model: 'width', placeholder: '请输入组件宽度', type: 'input' }
   ],
   __native__: [
     { label: '原生name', model: 'name', placeholder: '请输入原生name', type: 'input' },
@@ -116,6 +122,9 @@ export const select = {
     { label: '是否显示标题', model: 'showLabel', type: 'switch' },
     { label: '是否必选', model: 'required', type: 'switch' },
     { label: '表单栅格', model: 'span', type: 'slider' }
+  ],
+  style: [
+    { label: '组件宽度', model: 'width', placeholder: '请输入组件宽度', type: 'input' }
   ],
   __native__: [
     { label: '原生name', model: 'name', placeholder: '请输入原生name', type: 'input' },
@@ -232,6 +241,57 @@ const upload = {
 }
 
 export const uploadOptions = mergeOptions(upload, select)
+
+const timePicker = {
+  __vModel__: { label: '绑定值', model: '__vModel__', type: 'number' },
+  __native__: [
+    { label: '选择器占位符', model: 'placeholder', type: 'input' },
+    { label: '开始占位符', model: 'startPlaceholder', type: 'input' },
+    { label: '结束占位符', model: 'endPlaceholder', type: 'input' },
+    { label: '下拉框类名', model: 'popperClass', type: 'input' },
+    { label: '选择时间段', model: 'pickerOptions.selectableRange', type: 'input' },
+    { label: '日期格式化', model: 'pickerOptions.format', type: 'input' },
+    { label: '头部图标', model: 'prefixIcon', type: 'input' },
+    { label: '清除图标', model: 'clearIcon', type: 'input' },
+    { label: '日期分割符', model: 'rangeSeparator', type: 'input' },
+    { label: '选择器尺寸', model: 'size', type: 'radio', options: ['medium', 'small', 'mini'] },
+    { label: '对齐方式', model: 'align', type: 'radio', options: ['left', 'center', 'right'] },
+    { label: '完全只读', model: 'readonly', type: 'switch' },
+    { label: '文本框可输入', model: 'editable', type: 'switch' },
+    { label: '显示清除按钮', model: 'clearable', type: 'switch' },
+    { label: '时间范围选择', model: 'isRange', type: 'switch' },
+    { label: '使用箭头选择', model: 'arrowControl', type: 'switch' }
+  ]
+}
+
+export const timePickerOptions = mergeOptions(timePicker, select)
+
+const timeSelect = {
+  __vModel__: { label: '绑定值', model: '__vModel__', type: 'input' },
+  __native__: [
+    { label: '选择器占位符', model: 'placeholder', type: 'input' },
+    { label: '开始占位符', model: 'startPlaceholder', type: 'input' },
+    { label: '结束占位符', model: 'endPlaceholder', type: 'input' },
+    { label: '下拉框类名', model: 'popperClass', type: 'input' },
+    { label: '头部图标', model: 'prefixIcon', type: 'input' },
+    { label: '清除图标', model: 'clearIcon', type: 'input' },
+    { label: '日期分割符', model: 'rangeSeparator', type: 'input' },
+    { label: '开始时间', model: 'pickerOptions.start', type: 'input' },
+    { label: '结束时间', model: 'pickerOptions.end', type: 'input' },
+    { label: '间隔时间', model: 'pickerOptions.step', type: 'input' },
+    { label: '最小时间', model: 'pickerOptions.minTime', type: 'input' },
+    { label: '最大时间', model: 'pickerOptions.maxTime', type: 'input' },
+    { label: '选择器尺寸', model: 'size', type: 'radio', options: ['medium', 'small', 'mini'] },
+    { label: '对齐方式', model: 'align', type: 'radio', options: ['left', 'center', 'right'] },
+    { label: '完全只读', model: 'readonly', type: 'switch' },
+    { label: '文本框可输入', model: 'editable', type: 'switch' },
+    { label: '显示清除按钮', model: 'clearable', type: 'switch' },
+    { label: '时间范围选择', model: 'isRange', type: 'switch' },
+    { label: '使用箭头选择', model: 'arrowControl', type: 'switch' }
+  ]
+}
+
+export const timeSelectOptions = mergeOptions(timeSelect, select)
 
 const switchs = {
   __vModel__: { label: '绑定值', model: '__vModel__', type: 'switch' },

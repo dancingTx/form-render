@@ -29,6 +29,9 @@ const baseBasicConf = {
     push: 0, // 栅格向右移动的格数
     pull: 0 // 栅格向左移动的格数
   },
+  style: {
+    width: '20%'
+  },
   disabled: false // 是否禁用
 }
 
@@ -55,6 +58,7 @@ const basicComponents = [
   }
 ]
 export const basicOptions = basicComponents.map(item => mergeOptions(item, baseBasicConf))
+
 // 输入型组件
 const baseInputConf = {
   __config__: {
@@ -154,6 +158,7 @@ const inputComponents = [
   }
 ]
 export const inputOptions = inputComponents.map(item => mergeOptions(item, baseInputConf))
+
 // 选择型组件
 const baseSelectConf = {
   __config__: {
@@ -400,16 +405,60 @@ const selectComponents = [
   {
     __config__: {
       document: 'https://element.eleme.cn/#/zh-CN/component/time-picker',
-      label: '时间选择器',
+      label: '时间(固定)',
       tag: 'el-time-picker',
-      tagIcon: 'time',
-      type: 'time'
+      tagIcon: 'time-picker',
+      type: 'timePicker'
     },
-    __vModel__: '',
-    __slot__: {},
-    __attrs__: {}
+    __vModel__: Date.now(),
+    readonly: false,
+    editable: true,
+    size: 'medium',
+    placeholder: '请输入时间段',
+    startPlaceholder: '请输入开始时间',
+    endPlaceholder: '请输入结束时间',
+    isRange: false,
+    arrowControl: false,
+    align: 'left',
+    popperClass: '',
+    pickerOptions: {
+      selectableRange: '00:00:00-23:59:59',
+      format: 'HH:mm:ss'
+    },
+    rangeSeparator: '-',
+    name: '',
+    prefixIcon: 'el-icon-time',
+    clearIcon: 'el-icon-circle-close'
   },
-  // bug: switch vmodel
+  {
+    __config__: {
+      document: 'https://element.eleme.cn/#/zh-CN/component/time-picker',
+      label: '时间(任意)',
+      tag: 'el-time-select',
+      tagIcon: 'time-select',
+      type: 'timeSelect'
+    },
+    __vModel__: '00:00',
+    readonly: false,
+    editable: true,
+    size: 'medium',
+    placeholder: '请输入时间段',
+    startPlaceholder: '请输入开始时间',
+    endPlaceholder: '请输入结束时间',
+    align: 'left',
+    popperClass: '',
+    pickerOptions: {
+      start: '08:00',
+      end: '18:00',
+      step: '00:30',
+      minTime: '00:00',
+      maxTime: '23:59'
+    },
+    rangeSeparator: '-',
+    name: '',
+    prefixIcon: 'el-icon-time',
+    clearIcon: 'el-icon-circle-close'
+  },
   {
     __config__: {
       document: 'https://element.eleme.cn/#/zh-CN/component/switch',
