@@ -62,9 +62,10 @@ const text = {
     { label: '后置内容', model: 'append', placeholder: '请输入input后置内容', type: 'input' }
   ],
   __native__: [
+    { label: '头部图标', model: 'prefixIcon', placeholder: '请输入input头部图标', type: 'append' },
+    { label: '尾部图标', model: 'suffixIcon', placeholder: '请输入input尾部图标', type: 'append' },
+    { label: '输入框尺寸', model: 'size', type: 'radio', options: ['medium', 'small', 'mini'] },
     { label: '原生类型', model: 'type', placeholder: '请输入原生input类型', type: 'select', options: nativeInputType },
-    { label: '头部图标', model: 'prefixIcon', placeholder: '请输入input头部图标', type: 'input' },
-    { label: '尾部图标', model: 'suffixIcon', placeholder: '请输入input尾部图标', type: 'input' },
     { label: '最大输入长度', model: 'maxLength', placeholder: '请输入最大长度', type: 'number' },
     { label: '最小输入长度', model: 'minLength', placeholder: '请输入最小长度', type: 'number' },
     { label: '是否显示统计', model: 'showWordLimit', type: 'switch' },
@@ -82,7 +83,9 @@ const textarea = {
     { label: '最小输入长度', model: 'minLength', placeholder: '请输入最小长度', type: 'number' },
     { label: '输入框行数', model: 'rows', placeholder: '请输入textarea行数', type: 'number' },
     { label: '自适应高度', model: 'autosize', type: 'switch' },
-    { label: '是否只读', model: 'readonly', type: 'switch' }
+    { label: '是否只读', model: 'readonly', type: 'switch' },
+    { label: '是否显示统计', model: 'showWordLimit', type: 'switch' },
+    { label: '是否显示清空', model: 'clearable', type: 'switch' }
   ]
 }
 
@@ -90,6 +93,9 @@ export const textareaOptions = mergeOptions(textarea, input)
 
 const password = {
   __native__: [
+    { label: '头部图标', model: 'prefixIcon', placeholder: '请输入input头部图标', type: 'append' },
+    { label: '尾部图标', model: 'suffixIcon', placeholder: '请输入input尾部图标', type: 'append' },
+    { label: '输入框尺寸', model: 'size', type: 'radio', options: ['medium', 'small', 'mini'] },
     { label: '最大输入长度', model: 'maxLength', placeholder: '请输入最大长度', type: 'number' },
     { label: '最小输入长度', model: 'minLength', placeholder: '请输入最小长度', type: 'number' },
     { label: '显示密码图标', model: 'showPassword', type: 'switch' },
@@ -103,14 +109,14 @@ export const passwordOptions = mergeOptions(password, input)
 const number = {
   __vModel__: { label: '绑定值', model: '__vModel__', placeholder: '请输入绑定值', type: 'number' },
   __native__: [
+    { label: '计数器尺寸', model: 'size', type: 'radio', options: ['large', 'medium', 'small'] },
+    { label: '控制按钮位置', model: 'controlsPosition', type: 'radio', options: ['left', 'right'] },
     { label: '计数器最小值', model: 'min', type: 'number' },
     { label: '计数器最大值', model: 'max', type: 'number' },
     { label: '计数器步长', model: 'step', type: 'number' },
     { label: '仅step倍数', model: 'stepStrictly', type: 'switch' },
     { label: '显示控制按钮', model: 'controls', type: 'switch' },
-    { label: '控制按钮位置', model: 'controlsPosition', type: 'radio', options: ['left', 'right'] },
-    { label: '数值精度', model: 'precision', type: 'number' },
-    { label: '计数器尺寸', model: 'size', type: 'radio', options: ['large', 'medium', 'small'] }
+    { label: '数值精度', model: 'precision', type: 'number' }
   ]
 }
 
@@ -251,9 +257,9 @@ const timePicker = {
     { label: '下拉框类名', model: 'popperClass', type: 'input' },
     { label: '选择时间段', model: 'pickerOptions.selectableRange', type: 'input' },
     { label: '日期格式化', model: 'pickerOptions.format', type: 'input' },
-    { label: '头部图标', model: 'prefixIcon', type: 'input' },
-    { label: '清除图标', model: 'clearIcon', type: 'input' },
     { label: '日期分割符', model: 'rangeSeparator', type: 'input' },
+    { label: '头部图标', model: 'prefixIcon', type: 'append' },
+    { label: '清除图标', model: 'clearIcon', type: 'append' },
     { label: '选择器尺寸', model: 'size', type: 'radio', options: ['medium', 'small', 'mini'] },
     { label: '对齐方式', model: 'align', type: 'radio', options: ['left', 'center', 'right'] },
     { label: '完全只读', model: 'readonly', type: 'switch' },
@@ -273,14 +279,14 @@ const timeSelect = {
     { label: '开始占位符', model: 'startPlaceholder', type: 'input' },
     { label: '结束占位符', model: 'endPlaceholder', type: 'input' },
     { label: '下拉框类名', model: 'popperClass', type: 'input' },
-    { label: '头部图标', model: 'prefixIcon', type: 'input' },
-    { label: '清除图标', model: 'clearIcon', type: 'input' },
     { label: '日期分割符', model: 'rangeSeparator', type: 'input' },
     { label: '开始时间', model: 'pickerOptions.start', type: 'input' },
     { label: '结束时间', model: 'pickerOptions.end', type: 'input' },
     { label: '间隔时间', model: 'pickerOptions.step', type: 'input' },
     { label: '最小时间', model: 'pickerOptions.minTime', type: 'input' },
     { label: '最大时间', model: 'pickerOptions.maxTime', type: 'input' },
+    { label: '头部图标', model: 'prefixIcon', type: 'append' },
+    { label: '清除图标', model: 'clearIcon', type: 'append' },
     { label: '选择器尺寸', model: 'size', type: 'radio', options: ['medium', 'small', 'mini'] },
     { label: '对齐方式', model: 'align', type: 'radio', options: ['left', 'center', 'right'] },
     { label: '完全只读', model: 'readonly', type: 'switch' },
@@ -296,11 +302,11 @@ export const timeSelectOptions = mergeOptions(timeSelect, select)
 const switchs = {
   __vModel__: { label: '绑定值', model: '__vModel__', type: 'switch' },
   __native__: [
-    { label: '开关尺寸', model: 'width', type: 'number' },
-    { label: '打开图标', model: 'activeIconClass', type: 'input' },
-    { label: '关闭图标', model: 'inactiveIconClass', type: 'input' },
     { label: '打开文字', model: 'activeText', type: 'input' },
     { label: '关闭文字', model: 'inactiveText', type: 'input' },
+    { label: '打开图标', model: 'activeIconClass', type: 'append' },
+    { label: '关闭图标', model: 'inactiveIconClass', type: 'append' },
+    { label: '开关尺寸', model: 'width', type: 'number' },
     { label: '打开背景', model: 'activeColor', type: 'color' },
     { label: '关闭背景', model: 'inactiveColor', type: 'color' }
   ]
@@ -311,6 +317,8 @@ export const switchOptions = mergeOptions(switchs, select)
 const slider = {
   __vModel__: { label: '绑定值', model: '__vModel__', type: 'number' },
   __native__: [
+    { label: '高度', model: 'height', type: 'input', placeholder: '请输入slider高度' },
+    { label: '输入框尺寸', model: 'inputSize', type: 'select', options: ['large', 'medium', 'small', 'mini'] },
     { label: '最大值', model: 'max', type: 'number' },
     { label: '最小值', model: 'min', type: 'number' },
     { label: '步长', model: 'step', type: 'number' },
@@ -329,12 +337,12 @@ export const sliderOptions = mergeOptions(slider, select)
 const rate = {
   __vModel__: { label: '绑定值', model: '__vModel__', type: 'number' },
   __native__: [
+    { label: '文本数组', model: 'texts', type: 'input' },
     { label: '最大分值', model: 'max', type: 'number' },
     { label: '未选中颜色', model: 'voidColor', type: 'color' },
     { label: '只读未选颜色', model: 'disabledVoidColor', type: 'color' },
     { label: 'icon颜色数组', model: 'colors', type: 'color' },
     { label: '文本颜色', model: 'textColor', type: 'color' },
-    { label: '文本数组', model: 'texts', type: 'input' },
     { label: '允许半星', model: 'allowHalf', type: 'switch' },
     { label: '显示文本', model: 'showText', type: 'switch' },
     { label: '显示分数', model: 'showScore', type: 'switch' }

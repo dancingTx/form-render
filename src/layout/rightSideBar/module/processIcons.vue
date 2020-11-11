@@ -1,15 +1,15 @@
 <template>
   <div class="item">
-    <el-input :placeholder="option.placeholder">
+    <el-input :placeholder="option.placeholder" :value="activeIcon">
       <el-button
         slot="append"
         icon="el-icon-thumb"
         @click="dialogVisible = true"
       >
-        选择图标
+        选择
       </el-button>
     </el-input>
-    <icons-dialog :visible.sync="dialogVisible"/>
+    <icons-dialog :visible.sync="dialogVisible" :icon.sync="activeIcon"/>
   </div>
 </template>
 
@@ -24,9 +24,15 @@ export default {
     conf: Object,
     option: Object
   },
+  watch: {
+    activeIcon (icon) {
+      this.conf[this.option.model || 'icon'] = icon
+    }
+  },
   data () {
     return {
-      dialogVisible: false
+      dialogVisible: false,
+      activeIcon: ''
     }
   },
   methods: {

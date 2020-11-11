@@ -106,6 +106,7 @@ const inputComponents = [
     __vModel__: '', // 绑定值
     name: 'text',
     type: 'text', // 类型 default:text
+    size: 'medium',
     prefixIcon: '', // 输入框头部图标
     suffixIcon: '', // 输入框尾部图标
     nativeOn: {}
@@ -487,12 +488,14 @@ const selectComponents = [
     },
     __vModel__: 0,
     name: 'slider',
+    height: '40px',
     min: 0,
     max: 100,
     step: 1,
     debounce: 300,
     showStops: false,
     showInput: false,
+    inputSize: 'small',
     showInputControls: true,
     showTooltip: true,
     range: false,
