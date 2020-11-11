@@ -265,3 +265,31 @@ const slider = {
 }
 
 export const sliderOptions = mergeOptions(slider, select)
+
+const rate = {
+  __vModel__: { label: '绑定值', model: '__vModel__', type: 'number' },
+  __native__: [
+    { label: '最大分值', model: 'max', type: 'number' },
+    { label: '未选中颜色', model: 'voidColor', type: 'color' },
+    { label: '只读未选颜色', model: 'disabledVoidColor', type: 'color' },
+    { label: 'icon颜色数组', model: 'colors', type: 'color' },
+    { label: '文本颜色', model: 'textColor', type: 'color' },
+    { label: '文本数组', model: 'texts', type: 'input' },
+    { label: '允许半星', model: 'allowHalf', type: 'switch' },
+    { label: '显示文本', model: 'showText', type: 'switch' },
+    { label: '显示分数', model: 'showScore', type: 'switch' }
+  ]
+}
+
+export const rateOptions = mergeOptions(rate, select)
+
+const color = {
+  __vModel__: { label: '绑定值', model: '__vModel__', type: 'color' },
+  __native__: [
+    { label: '下拉框类名', model: 'poperClass', type: 'input' },
+    { label: '颜色格式', model: 'colorFormat', type: 'select', options: ['hsl', 'hsv', 'hex', 'rgb'] },
+    { label: '支持透明度', model: 'showAlpha', type: 'switch' }
+  ]
+}
+
+export const colorOptions = mergeOptions(color, select)

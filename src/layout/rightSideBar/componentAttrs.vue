@@ -17,7 +17,9 @@ import {
   cascaderOptions,
   uploadOptions,
   switchOptions,
-  sliderOptions
+  sliderOptions,
+  rateOptions,
+  colorOptions
 } from '@/components/generate/__attrs__'
 import { template } from '../../components/Preview/testTemplate'
 const formItem = {
@@ -140,6 +142,17 @@ const formItem = {
   },
   color (h, item, key, currItem) {
     const target = key ? currItem[key] : currItem
+    if (typeOf(target[item.model], 'array')) {
+      return target[item.model].map((value, i) => {
+        return (
+          <el-color-picker
+            onInput={value => { this.$set(target[item.model], i, value) }}
+            value={value}
+            style={{ marginRight: '20px' }}
+          />
+        )
+      })
+    }
     return (
       <el-color-picker
         onInput={value => { searchMultiData(target, item.model, value || '#ffffff') }}
@@ -233,6 +246,17 @@ const formItem = {
   },
   input (h, item, key, currItem) {
     const target = key ? currItem[key] : currItem
+    if (typeOf(target[item.model], 'array')) {
+      return target[item.model].map((value, i) => (
+        <el-input
+          class="item"
+          onInput={value => { this.$set(target[item.model], i, value) }}
+          value={value}
+          placeholder='请输入'
+          style={{ width: '100px', margin: '10px' }}
+        />
+      ))
+    }
     return (
       <el-input
         class="item"
@@ -347,7 +371,9 @@ const components = {
       cascaderOptions,
       uploadOptions,
       switchOptions,
-      sliderOptions
+      sliderOptions,
+      rateOptions,
+      colorOptions
     }
     return returnFormItem.call(this, h, store, currItem, select)
   }

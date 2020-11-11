@@ -397,6 +397,18 @@ const selectComponents = [
     leftDefaultChecked: [],
     rightDefaultChecked: []
   },
+  {
+    __config__: {
+      document: 'https://element.eleme.cn/#/zh-CN/component/time-picker',
+      label: '时间选择器',
+      tag: 'el-time-picker',
+      tagIcon: 'time',
+      type: 'time'
+    },
+    __vModel__: '',
+    __slot__: {},
+    __attrs__: {}
+  },
   // bug: switch vmodel
   {
     __config__: {
@@ -442,7 +454,8 @@ const selectComponents = [
       document: 'https://element.eleme.cn/#/zh-CN/component/rate',
       label: '评分',
       tag: 'el-rate',
-      tagIcon: 'rate'
+      tagIcon: 'rate',
+      type: 'rate'
     },
     __vModel__: 0,
     name: 'rate',
@@ -461,13 +474,13 @@ const selectComponents = [
       document: 'https://element.eleme.cn/#/zh-CN/component/color-picker',
       label: '颜色选择器',
       tag: 'el-color-picker',
-      tagIcon: 'color'
+      tagIcon: 'color',
+      type: 'color'
     },
-    __vModel__: '',
+    __vModel__: '#409EFF',
     showAlpha: false,
     colorFormat: 'hex',
-    poperClass: '',
-    predefine: []
+    poperClass: ''
   }
 ]
 
