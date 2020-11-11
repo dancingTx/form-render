@@ -15,7 +15,9 @@ import {
   radioOptions,
   checkboxOptions,
   cascaderOptions,
-  uploadOptions
+  uploadOptions,
+  switchOptions,
+  sliderOptions
 } from '@/components/generate/__attrs__'
 import { template } from '../../components/Preview/testTemplate'
 const formItem = {
@@ -320,6 +322,7 @@ const returnFormItem = function (h, store, currItem, defaultOpts) {
     ? genFormItem.call(this, h, currItem, store[`${type}Options`])
     : genFormItem.call(this, h, currItem, defaultOpts)
 }
+
 const components = {
   basicType (h, currItem) {
     const store = {
@@ -342,7 +345,9 @@ const components = {
       radioOptions,
       checkboxOptions,
       cascaderOptions,
-      uploadOptions
+      uploadOptions,
+      switchOptions,
+      sliderOptions
     }
     return returnFormItem.call(this, h, store, currItem, select)
   }

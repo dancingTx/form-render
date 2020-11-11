@@ -232,3 +232,36 @@ const upload = {
 }
 
 export const uploadOptions = mergeOptions(upload, select)
+
+const switchs = {
+  __vModel__: { label: '绑定值', model: '__vModel__', type: 'switch' },
+  __native__: [
+    { label: '开关尺寸', model: 'width', type: 'number' },
+    { label: '打开图标', model: 'activeIconClass', type: 'input' },
+    { label: '关闭图标', model: 'inactiveIconClass', type: 'input' },
+    { label: '打开文字', model: 'activeText', type: 'input' },
+    { label: '关闭文字', model: 'inactiveText', type: 'input' },
+    { label: '打开背景', model: 'activeColor', type: 'color' },
+    { label: '关闭背景', model: 'inactiveColor', type: 'color' }
+  ]
+}
+
+export const switchOptions = mergeOptions(switchs, select)
+
+const slider = {
+  __vModel__: { label: '绑定值', model: '__vModel__', type: 'number' },
+  __native__: [
+    { label: '最大值', model: 'max', type: 'number' },
+    { label: '最小值', model: 'min', type: 'number' },
+    { label: '步长', model: 'step', type: 'number' },
+    { label: '去抖延迟', model: 'debounce', type: 'number' },
+    { label: '显示间断点', model: 'showStops', type: 'switch' },
+    { label: '显示输入框', model: 'showInput', type: 'switch' },
+    { label: '显示控制按钮', model: 'showInputControls', type: 'switch' },
+    { label: '显示tooltip', model: 'showTooltip', type: 'switch' },
+    { label: '范围选择', model: 'range', type: 'switch' },
+    { label: '竖向显示', model: 'vertical', type: 'switch' }
+  ]
+}
+
+export const sliderOptions = mergeOptions(slider, select)

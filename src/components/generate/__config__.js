@@ -397,22 +397,22 @@ const selectComponents = [
     leftDefaultChecked: [],
     rightDefaultChecked: []
   },
+  // bug: switch vmodel
   {
     __config__: {
       document: 'https://element.eleme.cn/#/zh-CN/component/switch',
       label: '开关',
       tag: 'el-switch',
-      tagIcon: 'switch'
+      tagIcon: 'switch',
+      type: 'switch'
     },
-    __vModel__: true,
+    __vModel__: false,
     name: 'switch',
     width: 40,
     activeIconClass: '',
     inactiveIconClass: '',
     activeText: '',
     inactiveText: '',
-    activeValue: true,
-    inactiveValue: false,
     activeColor: '#409EFF',
     inactiveColor: '#C0CCDA'
   },
@@ -421,15 +421,21 @@ const selectComponents = [
       document: 'https://element.eleme.cn/#/zh-CN/component/slider',
       label: '滑块',
       tag: 'el-slider',
-      tagIcon: 'slider'
+      tagIcon: 'slider',
+      type: 'slider'
     },
     __vModel__: 0,
     name: 'slider',
     min: 0,
     max: 100,
     step: 1,
+    debounce: 300,
+    showStops: false,
     showInput: false,
-    range: false
+    showInputControls: true,
+    showTooltip: true,
+    range: false,
+    vertical: false
   },
   {
     __config__: {

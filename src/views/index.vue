@@ -91,6 +91,7 @@
         :is-empty="!displayList.length"
       />
     </div>
+    <!-- drawer -->
     <div class="container__drawer">
       <el-drawer
         class="drawer__wrapper"
@@ -181,6 +182,7 @@ export default {
     },
     createRenderKey (clone) {
       const config = clone.__config__
+      let vModel = clone.__vModel__
       config.formId = ++fid
       config.renderKey = `${fid}_${Date.now()}`
 
@@ -192,7 +194,9 @@ export default {
             config.children ? typeOf(config.children, 'array') ? config.children : [config.children] : []
           break
         default:
-          clone.__vModel__ = clone.__vModel__ === 0 ? 0 : clone.__vModel__ ? clone.__vModel__ : `fields${fid}`
+          if (typeOf(vModel, 'undefined')) {
+            vModel = `fields${fid}`
+          }
           break
       }
       if (typeOf(config.children, 'array')) {
