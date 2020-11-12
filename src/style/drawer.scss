@@ -5,15 +5,8 @@
 }
 
 .preview {
-    display: flex;
-
-    &__editor {
-        flex: 1;
-    }
-
-    &__display {
-        flex: 1;
-    }
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .editor {
@@ -48,5 +41,7 @@
 }
 
 .display__btns {
+    width: 100%;
+    height: 40px;
     background-color: $blue3;
 }

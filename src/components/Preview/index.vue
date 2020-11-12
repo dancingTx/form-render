@@ -57,6 +57,8 @@ export default {
     display,
     monaco
   },
+  props: {
+  },
   watch: {
     editorValue (value) {
       // watch content change via monaco editor

@@ -44,6 +44,7 @@ const button = {
   __native__: [
     { label: '图标类名', model: 'icon', placeholder: '请输入图标类名', type: 'append' },
     { label: '按钮类型', model: 'type', placeholder: '请选择按钮类型', type: 'select', options: ['default', 'primary', 'success', 'info', 'warning', 'danger'] },
+    { label: '按钮尺寸', model: 'size', type: 'radio', options: ['medium', 'small', 'mini'] },
     { label: '原生type属性', model: 'nativeType', placeholder: '请选择原生属性', type: 'select', options: ['button', 'submit', 'reset'] },
     { label: '是否朴素按钮', model: 'plain', type: 'switch' },
     { label: '是否圆角按钮', model: 'round', type: 'switch' },

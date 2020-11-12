@@ -35,7 +35,7 @@ const baseBasicConf = {
     pull: 0 // 栅格向左移动的格数
   },
   style: {
-    width: '20%'
+    width: '10%'
   },
   disabled: false // 是否禁用
 }
@@ -50,7 +50,7 @@ const basicComponents = [
       document: 'https://element.eleme.cn/#/zh-CN/component/button'
     },
     __slot__: {
-      default: 'primary button'
+      default: 'button'
     },
     type: 'primary', // ['primary', 'success', 'warning', 'danger', 'info', 'text'] default: primary
     plain: false,
@@ -59,7 +59,8 @@ const basicComponents = [
     loading: false,
     autofocus: false,
     icon: '',
-    nativeType: 'button'
+    nativeType: 'button',
+    size: 'medium'
   }
 ]
 export const basicOptions = basicComponents.map(item => mergeOptions(item, baseBasicConf))

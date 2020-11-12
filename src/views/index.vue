@@ -42,44 +42,46 @@
     <div class="container__main">
       <btn-group/>
       <el-scrollbar class="scrollbar">
-        <el-row :gutter="formConf.gutter">
-          <el-form
-            :ref="formConf.formRef"
-            :label-width="formConf.labelWidth | labelWidth"
-            :label-position="formConf.labelPosition"
-            :inline="formConf.inline"
-            :hide-required-asterisk="formConf.required"
-            :size="formConf.size"
-            :disabled="formConf.disabled"
+        <el-form
+          :ref="formConf.formRef"
+          :label-width="formConf.labelWidth | labelWidth"
+          :label-position="formConf.labelPosition"
+          :inline="formConf.inline"
+          :hide-required-asterisk="formConf.required"
+          :size="formConf.size"
+          :disabled="formConf.disabled"
+        >
+          <draggable
+            class="canvas__block"
+            :list="displayList"
+            :group="dragGroup.name"
+            :animation="300"
           >
-            <draggable
-              class="canvas__block"
-              :list="displayList"
-              :group="dragGroup.name"
-              :animation="300"
+            <el-row :gutter="formConf.gutter">
+              <el-col :span="formConf.span">
+                <draggable-item
+                  class="draggable__item"
+                  v-for="(item, index) of displayList"
+                  :key="index"
+                  :currentItem="item"
+                  :index="index"
+                  :displayList="displayList"
+                  :formConf="formConf"
+                  :activeId="activeId"
+                  @activeFormItem="activeFormItem"
+                  @copyFormItem="copyFormItem"
+                  @deleteFormItem="deleteFormItem"
+                />
+              </el-col>
+            </el-row>
+          </draggable>
+          <h2
+            class="canvas__empty"
+            v-show="!displayList.length"
             >
-              <draggable-item
-                class="draggable__item"
-                v-for="(item, index) of displayList"
-                :key="index"
-                :currentItem="item"
-                :index="index"
-                :displayList="displayList"
-                :formConf="formConf"
-                :activeId="activeId"
-                @activeFormItem="activeFormItem"
-                @copyFormItem="copyFormItem"
-                @deleteFormItem="deleteFormItem"
-              />
-            </draggable>
-            <h2
-              class="canvas__empty"
-              v-show="!displayList.length"
-              >
-                从左侧拖入或点击组件添加至画布
-            </h2>
-          </el-form>
-        </el-row>
+              从左侧拖入或点击组件添加至画布
+          </h2>
+        </el-form>
       </el-scrollbar>
     </div>
     <!-- right panel -->
@@ -97,11 +99,11 @@
         size="100%"
         :visible.sync="isShowing"
         direction="rtl"
-        @opened="handleDrawerOpened"
         append-to-body
         :withHeader="false"
+        @open="handleDrawerOpen"
         >
-        <preview @exec="executer"/>
+        <preview @exec="executer" />
       </el-drawer>
     </div>
   </div>
@@ -111,9 +113,10 @@
 import draggable from 'vuedraggable'
 import { logo, btnGroup, rightSideBar } from '@/layout'
 import { DraggableItem, Preview } from '@/components'
+import genCodeStr from '@/components/generate'
 import { deepCopy, typeOf, firstUpperCase, labelWidth } from '@/utils'
-let fid = 0
 export const draggableName = 'componentGroup'
+let fid = 0
 export default {
   name: 'index',
   components: { draggable, DraggableItem, Preview, rightSideBar, logo, btnGroup },
@@ -135,7 +138,7 @@ export default {
   },
   data () {
     return {
-      isShowing: false, // for test
+      isShowing: false,
       dragGroup: {
         name: draggableName,
         pull: 'clone',
@@ -226,22 +229,9 @@ export default {
         }
       })
     },
-
     executer (type) {
       type && this[`execute${firstUpperCase(type)}Func`]()
       this.resetDirective()
-    },
-    executeRunFunc () {
-      // display drawer
-      this.isShowing = true
-
-      // run code
-    },
-    executeClosedFunc () {
-      this.isShowing = false
-    },
-    executeClearFunc () {
-      console.log('clearrrrr')
     },
     resetDirective () {
       // reset exec
@@ -250,8 +240,34 @@ export default {
         value: ''
       })
     },
-    handleDrawerOpened () {
-      // generate code
+    executeRunFunc () {
+      // display drawer
+      this.isShowing = true
+      // run code
+    },
+    executeClosedFunc () {
+      this.isShowing = false
+    },
+    executeClearFunc () {
+      this.$confirm('此操作将清空画布, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.displayList = []
+        this.$message({
+          type: 'success',
+          message: '清空成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        })
+      })
+    },
+    handleDrawerOpen () {
+      genCodeStr(this.displayList, this.formConf)
     }
   }
 }
