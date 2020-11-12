@@ -1,6 +1,7 @@
 <script>
-import render from '../render'
 import draggable from 'vuedraggable'
+import render from '../render'
+import { draggableName } from '@/views'
 import { labelWidth, typeOf } from '@/utils'
 const stopPropagation = function (event, fn) {
   fn(...Array.from(arguments).slice(2))
@@ -124,7 +125,8 @@ const layouts = {
         >
           <span class="draggable-row__title">{config.componentName}</span>
           <draggable
-            group="components"
+            class="draggable-row__body"
+            group={draggableName}
             animation={300}
             list={config.children || []}
           >

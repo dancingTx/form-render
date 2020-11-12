@@ -22,7 +22,9 @@ import {
   rateOptions,
   colorOptions,
   timePickerOptions,
-  timeSelectOptions
+  timeSelectOptions,
+  layouts,
+  rowOptions
 } from '@/components/generate/__attrs__'
 import { template } from '../../components/Preview/testTemplate'
 const formItem = {
@@ -384,6 +386,19 @@ const components = {
       timeSelectOptions
     }
     return returnFormItem.call(this, h, store, currItem, select)
+  },
+  layoutType (h, currItem) {
+    const store = {
+      layouts,
+      rowOptions
+    }
+    return returnFormItem.call(this, h, store, currItem, layouts)
+  },
+  formType (h, currItem) {
+    const store = {
+      formOptions: this.formOptions
+    }
+    return returnFormItem.call(this, h, store, currItem, store.formOptions)
   }
 }
 
@@ -406,7 +421,8 @@ export default {
   },
   props: {
     conf: Object,
-    isEmpty: Boolean
+    isEmpty: Boolean,
+    formOptions: Object
   },
   render (h) {
     const hasData = Object.keys(this.conf).length

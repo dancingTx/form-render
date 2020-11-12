@@ -45,7 +45,6 @@
         <el-row :gutter="formConf.gutter">
           <el-form
             :ref="formConf.formRef"
-            :model="formConf.__vModel__"
             :label-width="formConf.labelWidth | labelWidth"
             :label-position="formConf.labelPosition"
             :inline="formConf.inline"
@@ -114,6 +113,7 @@ import { logo, btnGroup, rightSideBar } from '@/layout'
 import { DraggableItem, Preview } from '@/components'
 import { deepCopy, typeOf, firstUpperCase, labelWidth } from '@/utils'
 let fid = 0
+export const draggableName = 'componentGroup'
 export default {
   name: 'index',
   components: { draggable, DraggableItem, Preview, rightSideBar, logo, btnGroup },
@@ -137,7 +137,7 @@ export default {
     return {
       isShowing: false, // for test
       dragGroup: {
-        name: 'componentGroup',
+        name: draggableName,
         pull: 'clone',
         put: false
       },

@@ -25,7 +25,7 @@
         :is-empty="isEmpty"
       />
       <form-attrs
-        class="right_attrs"
+        class="right__attrs"
         v-else-if="activeName === 'form'"
         :conf="formConf"
       />

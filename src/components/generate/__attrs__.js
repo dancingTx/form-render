@@ -1,4 +1,23 @@
 import { mergeOptions } from '@/utils'
+export const formOptions = {
+  __config__: [
+    { label: '表单ref', model: 'formRef', type: 'input', placeholder: '请输入表单ref' },
+    { label: '生成表单按钮', model: 'formBtnGroup', type: 'switch' }
+  ],
+  __vModel__: { label: '表单绑定对象', model: '__vModel__', type: 'input', placeholder: '请输入表单对象' },
+  __native__: [
+    { label: '表单标签宽度', model: 'labelWidth', type: 'input', placeholder: '请输入表单域标签宽度' },
+    { label: '表单标签后缀', model: 'labelSuffix', type: 'input', placeholder: '请输入表单域标签后缀' },
+    { label: '表单标签位置', model: 'labelPosition', type: 'radio', options: ['top', 'left', 'right'] },
+    { label: '表单组件尺寸', model: 'size', type: 'radio', options: ['medium', 'small', 'mini'] },
+    { label: '表单组件占比', model: 'span', type: 'number' },
+    { label: '表单组件间隔', model: 'gutter', type: 'number' },
+    { label: '显示必填星号', model: 'hideRequiredAsterisk', type: 'switch' },
+    { label: '行内表单样式', model: 'inline', type: 'switch' },
+    { label: '是否必须', model: 'required', type: 'switch' },
+    { label: '禁用表单组件', model: 'disabled', type: 'switch' }
+  ]
+}
 /**
  * 原生input 类型
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types
@@ -361,3 +380,18 @@ const color = {
 }
 
 export const colorOptions = mergeOptions(color, select)
+
+export const layouts = {
+}
+
+const row = {
+  __native__: [
+    { label: '自定义元素', model: 'tag', type: 'input' },
+    { label: '水平排列方式', model: 'jsutify', type: 'select', options: ['start', 'center', 'end', 'space-around', 'space-between'] },
+    { label: '垂直排列方式', model: 'align', type: 'select', options: ['top', 'medium', 'bottom'] },
+    { label: '布局模式', model: 'type', type: 'radio', options: ['default', 'flex'] },
+    { label: '栅格间隔', model: 'gutter', type: 'number' }
+  ]
+}
+
+export const rowOptions = mergeOptions(row, layouts)

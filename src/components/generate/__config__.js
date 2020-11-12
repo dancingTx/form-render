@@ -1,17 +1,22 @@
 import { mergeOptions } from '@/utils'
 // 表单配置
 export const formConf = {
-  formRef: 'elForm',
-  __vModel__: {},
+  __config__: {
+    componentType: 'form',
+    formRef: 'elForm',
+    formBtnGroup: true
+  },
+  __vModel__: 'formData',
   labelWidth: 'auto',
   labelPosition: 'right',
-  inline: false,
-  required: false,
   size: 'medium',
-  disabled: false,
+  labelSuffix: '',
   span: 24,
   gutter: 0,
-  formBtnGroup: true
+  hideRequiredAsterisk: false,
+  inline: false,
+  required: false,
+  disabled: false
 }
 
 // 组件配置
@@ -541,11 +546,11 @@ export const selectOptions = selectComponents.map(item => mergeOptions(item, bas
 // 布局型组件
 const baseLayoutConf = {
   __config__: {
-    componentType: 'layout',
-    span: 24, // 栅格占据的列数
-    offset: 0, // 栅格左侧的间隔格数
-    push: 0, // 栅格向右移动的格数
-    pull: 0 // 栅格向左移动的格数
+    componentType: 'layout'
+    // span: 24, // 栅格占据的列数
+    // offset: 0, // 栅格左侧的间隔格数
+    // push: 0, // 栅格向右移动的格数
+    // pull: 0 // 栅格向左移动的格数
   }
 }
 
@@ -555,6 +560,7 @@ const LayoutComponents = [
       label: '行容器',
       tag: 'el-row',
       tagIcon: 'row',
+      type: 'row',
       layout: 'rowFormItem',
       document: 'https://element.eleme.cn/#/zh-CN/component/layout'
     },
