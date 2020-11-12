@@ -1,46 +1,41 @@
 /* eslint-disable no-unused-vars */
 const render = require('json-templater/string')
 const endOfLine = require('os').EOL // 对应操作系统下得换行符
-const { deepCopy, typeOf, isPlainObject } = require('@/utils')
+const { typeOf, isPlainObject, listStoreAttrs } = require('@/utils')
 const genTemplate = function (fields, formConf) {
   const layouts = {
     colFormItem (item) {
-      const field = deepCopy(item)
-      const config = field.__config__
+      const config = item.__config__
+      const store = {}
       // process label and label-width
-      config.label = config.label ? `label="${config.label}"` : ''
-      config.labelWidth = config.labelWidth ? `label-width="${config.labelWidth}"` : ''
+      store.label = config.label ? `label="${config.label}"` : ''
+      store.labelWidth = config.labelWidth ? `label-width="${config.labelWidth}"` : ''
 
       if (
         config.labelWidth &&
         config.labelWidth !== formConf.labelWidth &&
         typeOf(config.label, 'number')
       ) {
-        config.labelWidth = `label-width=${config.labelWidth}px`
+        store.labelWidth = `label-width=${config.labelWidth}px`
       }
 
       if (!config.showLabel) {
-        config.labelWidth = "label-width='0'"
-        config.label = ''
+        store.labelWidth = "label-width='0'"
+        store.label = ''
       }
 
       // process required
-      config.required = config.required ? 'required' : ''
+      store.required = config.required ? 'required' : ''
 
       // process vmodel
-      config.prop = (field.name && formConf.__vModel__)
-        ? `prop="${formConf.__vModel__}.${field.name}"`
+      store.prop = (item.name && formConf.__vModel__)
+        ? `prop="${formConf.__vModel__}.${item.name}"`
         : ''
 
       // process children
-      const children = tags[config.tag] ? tags[config.tag](field) : ''
+      const children = tags[config.tag] ? tags[config.tag](item) : ''
 
-      const template = `
-        <el-form-item {{config.label}} {{config.labelWidth}} {{config.required}} {{config.prop}}>
-          ${children}
-        </el-form-item>
-      `
-      return render(template, { config })
+      return `<el-form-item ${listStoreAttrs(store)}>${children}</el-form-item>`
     },
     rowFormItem (item) {
 
@@ -53,6 +48,7 @@ const genTemplate = function (fields, formConf) {
     const disabled = field.disabled ? 'disabled' : ''
     const clearable = field.clearable ? 'clearable' : ''
     const required = field.required ? 'required' : ''
+    const readonly = field.readonly ? 'readonly' : ''
     const placeholder = field.placeholder ? `placeholder="${field.placeholder}"` : ''
     const style =
       field.style && isPlainObject(field.style)
@@ -61,16 +57,17 @@ const genTemplate = function (fields, formConf) {
         }"`
         : ''
     return {
-      tag, vModel, size, disabled, clearable, required, style, placeholder
+      tag, vModel, size, readonly, disabled, clearable, required, style, placeholder
     }
   }
   const tags = {
     'el-button' (field) {
-      const { tag, disabled } = genFieldAttrs(field)
+      const { tag, disabled, size } = genFieldAttrs(field)
       const store = {
         tag,
         type: field.type ? `type="${field.type}"` : '',
         icon: field.icon ? `icon="${field.icon}"` : '',
+        size,
         disabled,
         plain: field.plain ? 'plain' : '',
         round: field.round ? 'round' : '',
@@ -78,10 +75,14 @@ const genTemplate = function (fields, formConf) {
         autofocus: field.autofocus ? 'autofocus' : '',
         nativeType: field.nativeType ? `native-type="${field.nativeType}"` : ''
       }
-      return `<${Object.keys(store).filter(key => store[key] !== '').map(key => store[key]).join(' ')}`
+      return `<${listStoreAttrs(store)}>1</${store.tag}>`
     },
-    'el-input' () {
-
+    'el-input' (field) {
+      const { tag, size, disabled, clearable, readonly } = genFieldAttrs(field)
+      const store = {
+        tag,
+        type: field.type ? `type=${field.type}` : ''
+      }
     }
   }
 

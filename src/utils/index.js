@@ -183,3 +183,11 @@ export const replaceEle = (template, replaceObj) => {
   const regObj = /{\s*?(\w+)\s*?}/g
   return template.replace(regObj, (_, value) => replaceObj[value] || '')
 }
+/**
+ *
+ * @param {object} store
+ * @description 将store中得属性按顺序排列
+ */
+export const listStoreAttrs = function (store) {
+  return Object.keys(store).filter(key => store[key] !== '').map(key => store[key]).join(' ')
+}
