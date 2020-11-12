@@ -70,6 +70,7 @@ export const input = {
   ],
   __native__: [
     { label: '原生name', model: 'name', placeholder: '请输入原生name', type: 'input' },
+    { label: '输入框占位符', model: 'placeholder', placeholder: '请输入占位符' },
     { label: '是否禁用', model: 'disabled', type: 'switch' }
   ]
 }

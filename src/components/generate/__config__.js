@@ -88,7 +88,7 @@ const baseInputConf = {
   placeholder: '请输入', // 输入框占位文本
   maxLength: Infinity, // 最大输入长度
   minLength: 0, // 最小输入长度
-  showWordLimit: false, // 是否显示字数统计
+  showWordLimit: true, // 是否显示字数统计
   clearable: false, // 是否显示清空
   disabled: false, // 是否禁用
   readonly: false, // 是否只读

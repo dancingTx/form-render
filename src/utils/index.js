@@ -183,6 +183,7 @@ export const replaceEle = (template, replaceObj) => {
   const regObj = /{\s*?(\w+)\s*?}/g
   return template.replace(regObj, (_, value) => replaceObj[value] || '')
 }
+
 /**
  *
  * @param {object} store
@@ -191,3 +192,12 @@ export const replaceEle = (template, replaceObj) => {
 export const listStoreAttrs = function (store) {
   return Object.keys(store).filter(key => store[key] !== '').map(key => store[key]).join(' ')
 }
+
+/**
+ *
+ * @param {string} key
+ * @param {string} value
+ * @param {string} defaultValue
+ * @description 返回 默认值
+ */
+export const setDefaultValue = (key, value, defaultValue = '') => key ? value : defaultValue
