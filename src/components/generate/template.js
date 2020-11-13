@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 const endOfLine = require('os').EOL // 对应操作系统下得换行符
-const { typeOf, isPlainObject, listStoreAttrs, setDefaultValue } = require('@/utils')
+const { typeOf, isPlainObject, listStoreAttrs, setDefaultValue, assetDefaultValue } = require('@/utils')
 const genTemplate = function (fields, formConf) {
   const genFieldAttrs = function (field) {
     const tag = setDefaultValue(field.__config__.tag, field.__config__.tag, 'div')
@@ -322,6 +322,41 @@ const genTemplate = function (fields, formConf) {
         field.__slot__,
         { isGroup, isButton, isBorder, key: 'checkbox' }
       )
+    },
+    'el-cascader' (field) {
+      const processProps = function (props) {
+        const stitchProps = function (prop, key, asset) {
+          const condition = (prop, asset) => asset ? assetDefaultValue(prop, asset) : prop
+          return setDefaultValue(condition(prop, asset), `${key}: "${prop}",`)
+        }
+
+        return (
+          `${endOfLine}:props={
+            ${stitchProps(props.expandTrigger, 'expandTrigger', 'click')}
+            ${stitchProps(props.multiple, 'multiple')}
+            ${stitchProps(props.checkStrictly, 'checkStrictly')}
+            ${stitchProps(props.value, 'value', 'value')}
+            ${stitchProps(props.label, 'label', 'label')}
+            ${stitchProps(props.children, 'children', 'children')}
+            ${stitchProps(props.disabled, 'disabled', 'disabled')}
+            ${stitchProps(props.leaf, 'leaf', 'leaf')}
+          }${endOfLine}`
+        )
+      }
+      const { tag, vModel, placeholder, size, disabled, clearable } = genFieldAttrs(field)
+      const store = {
+        tag,
+        vModel,
+        name: setDefaultValue(field.name, `name="${field.name}"`),
+        size,
+        props: processProps(field.__attrs__.props),
+        placeholder,
+        separator: setDefaultValue(field.separator, `separator="${field.separator}"`),
+        clearable,
+        disabled
+      }
+
+      return genFieldTemplate(store)
     }
   }
 

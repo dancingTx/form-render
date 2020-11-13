@@ -21,3 +21,11 @@ export const typeOf = (el, type) => Object.prototype.toString.call(el).replace(/
  * @description 判断是否为对象
  */
 export const isPlainObject = target => typeof target === 'object' && typeOf(target, 'object')
+
+/**
+ *
+ * @param {object} key
+ * @param {object} value
+ * @description 存在不为默认值得值
+ */
+export const assetDefaultValue = (key, value) => key && key !== value
