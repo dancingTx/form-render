@@ -1,10 +1,18 @@
 /* eslint-disable no-unused-vars */
 const endOfLine = require('os').EOL // 对应操作系统下得换行符
-const { typeOf, isPlainObject, listStoreAttrs, setDefaultValue, assetDefaultValue } = require('@/utils')
+const {
+  typeOf,
+  isPlainObject,
+  listStoreAttrs,
+  setDefaultValue,
+  assetDefaultValue,
+  toString,
+  replaceEle
+} = require('@/utils')
 const genTemplate = function (fields, formConf) {
   const genFieldAttrs = function (field) {
     const tag = setDefaultValue(field.__config__.tag, field.__config__.tag, 'div')
-    const vModel = setDefaultValue((field.__config__.type && formConf?.__vModel__?.key), `v-model="${formConf.__vModel__}.${field.__vModel__.key}"`)
+    const vModel = setDefaultValue((formConf.__vModel__ && field.__vModel__ && field.__vModel__.key), `v-model="${formConf.__vModel__}.${field.__vModel__ && field.__vModel__.key}"`)
     const size = setDefaultValue(field.size, `size="${field.size}"`)
     const disabled = setDefaultValue(field.disabled, 'disabled')
     const clearable = setDefaultValue(field.clearable, 'clearable')
@@ -36,6 +44,7 @@ const genTemplate = function (fields, formConf) {
     colFormItem (item) {
       const config = item.__config__
       const store = {}
+
       // process label and label-width
       store.label = setDefaultValue(config.label, `label="${config.label}"`)
       store.labelWidth = setDefaultValue(config.labelWidth, `label-width="${config.labelWidth}"`)
@@ -57,7 +66,7 @@ const genTemplate = function (fields, formConf) {
       store.required = setDefaultValue(config.required, 'required')
 
       // process vmodel
-      store.prop = setDefaultValue(item?.__vModel__?.key, `prop="${item.__vModel__.key}"`)
+      store.prop = setDefaultValue((item.__vModel__ && item.__vModel__.key), `prop="${item.__vModel__ && item.__vModel__.key}"`)
 
       // process children
       const children = setDefaultValue(tags[config.tag], tags[config.tag](item))
@@ -198,6 +207,26 @@ const genTemplate = function (fields, formConf) {
       }
 
       return children.join(endOfLine)
+    },
+    uploadSlot (slot, { config }) {
+      const children = []
+      if (slot.listType === 'picture-card') {
+        children.push(
+          ('<i class="el-icon-plus"></i>')
+        )
+      } else {
+        children.push(
+          (`<el-button size="${config.btnSize || 'small'}" type="${config.btnType || 'primary'}">${config.btnText || '点击上传'}</el-button>`)
+        )
+      }
+
+      if (slot.tip && config.showTips) {
+        children.push(
+          (`<div slot="tip" class="el-upload__tip">${replaceEle(slot.tip, config)}</div>`)
+        )
+      }
+
+      return children.join(endOfLine)
     }
   }
 
@@ -229,7 +258,7 @@ const genTemplate = function (fields, formConf) {
         name: setDefaultValue(field.name, `name="${field.name}"`),
         placeholder,
         minLength: setDefaultValue(field.minLength, `minLength="${field.minLength}"`),
-        maxLength: setDefaultValue((field.maxLength && field.maxLength !== Infinity), `maxLength="${field.maxLength}"`),
+        maxLength: setDefaultValue(assetDefaultValue(field.maxLength, Infinity), `maxLength="${field.maxLength}"`),
         prefixIcon: setDefaultValue(field.prefixIcon, `prefix-icon="${field.prefixIcon}"`),
         suffixIcon: setDefaultValue(field.suffixIcon, `suffix-icon="${field.suffixIcon}"`),
         showWordLimit: setDefaultValue(field.showWordLimit, 'show-word-limit'),
@@ -253,8 +282,8 @@ const genTemplate = function (fields, formConf) {
         size,
         name: setDefaultValue(field.name, `name="${field.name}"`),
         placeholder,
-        max: setDefaultValue((field.max && field.max !== Infinity), `:max="${field.max}"`),
-        min: setDefaultValue((field.min && field.min !== -Infinity), `:min="${field.min}"`),
+        max: setDefaultValue(assetDefaultValue(field.max, Infinity), `:max="${field.max}"`),
+        min: setDefaultValue(assetDefaultValue(field.min, -Infinity), `:min="${field.min}"`),
         controls: setDefaultValue(field.controls, 'controls'),
         step: setDefaultValue(field.step, `:step="${field.step}"`),
         stepStrictly: setDefaultValue(field.stepStrictly, 'step-strictly'),
@@ -310,8 +339,8 @@ const genTemplate = function (fields, formConf) {
         tag,
         vModel,
         size,
-        min: setDefaultValue((field.min && field.min !== -Infinity), `:min="${field.min}"`),
-        max: setDefaultValue((field.max && field.max !== Infinity), `:max="${field.max}"`),
+        min: setDefaultValue(assetDefaultValue(field.min, -Infinity), `:min="${field.min}"`),
+        max: setDefaultValue(assetDefaultValue(field.max, Infinity), `:max="${field.max}"`),
         textColor: setDefaultValue(field.textColor, `textColor="${field.textColor}"`),
         fill: setDefaultValue(field.fill, `fill="${field.fill}"`),
         disabled
@@ -327,20 +356,21 @@ const genTemplate = function (fields, formConf) {
       const processProps = function (props) {
         const stitchProps = function (prop, key, asset) {
           const condition = (prop, asset) => asset ? assetDefaultValue(prop, asset) : prop
-          return setDefaultValue(condition(prop, asset), `${key}: "${prop}",`)
+          const value = typeOf(prop, 'boolean') ? prop : `"${prop}"`
+          return setDefaultValue(condition(prop, asset), `${key}: ${value}, `)
         }
 
         return (
-          `${endOfLine}:props={
-            ${stitchProps(props.expandTrigger, 'expandTrigger', 'click')}
-            ${stitchProps(props.multiple, 'multiple')}
-            ${stitchProps(props.checkStrictly, 'checkStrictly')}
-            ${stitchProps(props.value, 'value', 'value')}
-            ${stitchProps(props.label, 'label', 'label')}
-            ${stitchProps(props.children, 'children', 'children')}
-            ${stitchProps(props.disabled, 'disabled', 'disabled')}
-            ${stitchProps(props.leaf, 'leaf', 'leaf')}
-          }${endOfLine}`
+          ':props={ ' +
+            stitchProps(props.expandTrigger, 'expandTrigger', 'click') +
+            stitchProps(props.multiple, 'multiple') +
+            stitchProps(props.checkStrictly, 'checkStrictly') +
+            stitchProps(props.value, 'value', 'value') +
+            stitchProps(props.label, 'label', 'label') +
+            stitchProps(props.children, 'children', 'children') +
+            stitchProps(props.disabled, 'disabled', 'disabled') +
+            stitchProps(props.leaf, 'leaf', 'leaf') +
+          ' }'
         )
       }
       const { tag, vModel, placeholder, size, disabled, clearable } = genFieldAttrs(field)
@@ -350,13 +380,36 @@ const genTemplate = function (fields, formConf) {
         name: setDefaultValue(field.name, `name="${field.name}"`),
         size,
         props: processProps(field.__attrs__.props),
+        options: setDefaultValue(field.options, `:options='${toString(field.options, null, ' ')}'`),
         placeholder,
-        separator: setDefaultValue(field.separator, `separator="${field.separator}"`),
+        separator: setDefaultValue(assetDefaultValue(field.separator, '/'), `separator="${field.separator}"`),
         clearable,
         disabled
       }
 
       return genFieldTemplate(store)
+    },
+    'el-upload' (field) {
+      const config = field.__config__
+      const { tag, disabled } = genFieldAttrs(field)
+      const store = {
+        tag,
+        action: setDefaultValue(field.action, `action="${field.action}"`),
+        headers: setDefaultValue(assetDefaultValue(toString(field.headers), toString({})), `:headers="${toString(field.headers, null, ' ')}"`),
+        multiple: setDefaultValue(field.multiple, 'multiple'),
+        data: setDefaultValue(assetDefaultValue(toString(field.data), toString({})), `:data="${toString(field.data, null, ' ')}"`),
+        accept: setDefaultValue(field.accept, `accept="${field.accept}"`),
+        listType: setDefaultValue(assetDefaultValue(field.listType, 'text'), `list-type="${field.listType}"`),
+        fileList: setDefaultValue(assetDefaultValue(toString(field.fileList), toString([])), `:file-list="${toString(field.fileList, null, ' ')}"`),
+        limit: setDefaultValue(field.limit, `:limit="${field.limit}"`),
+        withCredentials: setDefaultValue(field.withCredentials, 'with-credentials'),
+        showFileList: setDefaultValue(assetDefaultValue(field.showFileList, true), 'show-file-list'),
+        drag: setDefaultValue(field.drag, 'drag'),
+        autoUpload: setDefaultValue(assetDefaultValue(field.autoUpload, true), 'auto-upload'),
+        disabled
+      }
+
+      return genFieldTemplate(store, config.type, field.__slot__, { config })
     }
   }
 

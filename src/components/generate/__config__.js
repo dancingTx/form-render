@@ -394,7 +394,7 @@ const selectComponents = [
     withCredentials: false,
     showFileList: true,
     drag: false,
-    accept: 'image/*',
+    accept: '',
     listType: 'text',
     autoUpload: true,
     fileList: [],
