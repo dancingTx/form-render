@@ -66,11 +66,7 @@ const layouts = {
       className += ' draggable__item--blur'
     }
     // 判断 form model中是否存在sub中的model
-    const vModel = currentItem.__vModel__
-      ? this.formConf.__vModel__[currentItem.__vModel__]
-        ? currentItem.__vModel__
-        : null
-      : null
+    const vModel = currentItem.__vModel__ && currentItem.__vModel__.key
     return (
       <el-col
         span={config.span}
@@ -92,7 +88,7 @@ const layouts = {
             key={config.renderKey}
             currItem={currentItem}
             onInput={value => {
-              this.$set(currentItem, '__vModel__', value)
+              this.$set(currentItem.__vModel__, 'value', value)
             }}
           >
             {child}

@@ -254,11 +254,12 @@ const formItem = {
   },
   input (h, item, key, currItem) {
     const target = key ? currItem[key] : currItem
-    if (typeOf(target[item.model], 'array')) {
-      return target[item.model].map((value, i) => (
+    if (typeOf(searchMultiData(target, item.model), 'array')) {
+      console.log(target, item.model, searchMultiData(target, item.model))
+      return searchMultiData(target, item.model).map((value, i) => (
         <el-input
           class="item"
-          onInput={value => { this.$set(target[item.model], i, value) }}
+          onInput={value => { this.$set(searchMultiData(target, item.model), i, value) }}
           value={value}
           placeholder='请输入'
           style={{ width: '100px', margin: '10px' }}

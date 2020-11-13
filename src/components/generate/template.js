@@ -4,7 +4,7 @@ const { typeOf, isPlainObject, listStoreAttrs, setDefaultValue } = require('@/ut
 const genTemplate = function (fields, formConf) {
   const genFieldAttrs = function (field) {
     const tag = setDefaultValue(field.__config__.tag, field.__config__.tag, 'div')
-    const vModel = setDefaultValue((field.name && formConf.__vModel__), `v-model="${formConf.__vModel__}.${field.name}"`)
+    const vModel = setDefaultValue((field.__config__.type && formConf?.__vModel__?.key), `v-model="${formConf.__vModel__}.${field.__vModel__.key}"`)
     const size = setDefaultValue(field.size, `size="${field.size}"`)
     const disabled = setDefaultValue(field.disabled, 'disabled')
     const clearable = setDefaultValue(field.clearable, 'clearable')
@@ -57,7 +57,7 @@ const genTemplate = function (fields, formConf) {
       store.required = setDefaultValue(config.required, 'required')
 
       // process vmodel
-      store.prop = setDefaultValue(item.name, `prop="${item.name}"`)
+      store.prop = setDefaultValue(item?.__vModel__?.key, `prop="${item.__vModel__.key}"`)
 
       // process children
       const children = setDefaultValue(tags[config.tag], tags[config.tag](item))
@@ -168,7 +168,7 @@ const genTemplate = function (fields, formConf) {
 
       return children.join(endOfLine)
     },
-    radioSlot (slot, { isGroup, isBorder, isButton }) {
+    radioAndCheckboxSlot (slot, { isGroup, isBorder, isButton, key = 'radio' }) {
       const children = []
       const genChildOption = function (options, { isBorder, isButton }) {
         return options.map(option => {
@@ -178,10 +178,10 @@ const genTemplate = function (fields, formConf) {
             name: setDefaultValue(option.name, `name="${option.name}"`)
           }
           if (isButton) {
-            template = `<el-radio-button ${listStoreAttrs(store)}>${setDefaultValue(option.label)}</el-radio-button>`
+            template = `<el-${key}-button ${listStoreAttrs(store)}>${setDefaultValue(option.label)}</el-${key}-button>`
           } else {
             store.border = setDefaultValue(isBorder, 'border')
-            template = `<el-radio ${listStoreAttrs(store)}>${setDefaultValue(option.label)}</el-radio>`
+            template = `<el-${key} ${listStoreAttrs(store)}>${setDefaultValue(option.label)}</el-${key}>`
           }
           return template
         }).join(endOfLine)
@@ -295,7 +295,33 @@ const genTemplate = function (fields, formConf) {
         fill: setDefaultValue(field.fill, `fill="${field.fill}"`),
         disabled
       }
-      return genFieldTemplate(store, config.type, field.__slot__, { isGroup, isButton, isBorder })
+      return genFieldTemplate(
+        store,
+        'radioAndCheckbox',
+        field.__slot__,
+        { isGroup, isButton, isBorder, key: 'radio' }
+      )
+    },
+    'el-checkbox-group' (field) {
+      const config = field.__config__
+      const { isGroup, isButton, isBorder } = config
+      const { tag, vModel, size, disabled } = genFieldAttrs(field)
+      const store = {
+        tag,
+        vModel,
+        size,
+        min: setDefaultValue((field.min && field.min !== -Infinity), `:min="${field.min}"`),
+        max: setDefaultValue((field.max && field.max !== Infinity), `:max="${field.max}"`),
+        textColor: setDefaultValue(field.textColor, `textColor="${field.textColor}"`),
+        fill: setDefaultValue(field.fill, `fill="${field.fill}"`),
+        disabled
+      }
+      return genFieldTemplate(
+        store,
+        'radioAndCheckbox',
+        field.__slot__,
+        { isGroup, isButton, isBorder, key: 'checkbox' }
+      )
     }
   }
 

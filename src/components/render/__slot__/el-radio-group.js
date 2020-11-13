@@ -35,12 +35,8 @@ export default {
       : isPlainObject(optionsSlot)
         ? [optionsSlot]
         : []
-    return isGroup
-      ? genChildOption(optionsSlot, {
-        isBorder, isButton
-      })
-      : genChildOption(optionsSlot, {
-        isBorder
-      })
+    const obj = { isBorder }
+    isGroup && (obj.isButton = isButton)
+    return genChildOption(optionsSlot, obj)
   }
 }

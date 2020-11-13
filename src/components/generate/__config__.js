@@ -109,7 +109,10 @@ const inputComponents = [
       append: '' // 输入框后置内容
     },
     __methods__: {},
-    __vModel__: '', // 绑定值
+    __vModel__: {
+      key: 'text',
+      value: ''
+    }, // 绑定值
     name: 'text',
     type: 'text', // 类型 default:text
     size: 'medium',
@@ -124,7 +127,10 @@ const inputComponents = [
       tagIcon: 'textarea',
       type: 'textarea'
     },
-    __vModel__: '', // 绑定值
+    __vModel__: {
+      key: 'textarea',
+      value: ''
+    }, // 绑定值
     name: 'textarea',
     type: 'textarea', // 类型 default:text
     autosize: false,
@@ -137,7 +143,10 @@ const inputComponents = [
       tagIcon: 'password',
       type: 'password'
     },
-    __vModel__: 'password',
+    __vModel__: {
+      key: 'password',
+      value: ''
+    },
     name: 'password',
     type: 'password',
     prefixIcon: '', // 输入框头部图标
@@ -151,7 +160,10 @@ const inputComponents = [
       type: 'number',
       document: 'https://element.eleme.cn/#/zh-CN/component/input-number'
     },
-    __vModel__: 0,
+    __vModel__: {
+      key: 'number',
+      value: 0
+    },
     name: 'number',
     type: 'number',
     controls: true,
@@ -239,7 +251,10 @@ const selectComponents = [
       //   }]
       // }]
     },
-    __vModel__: '1',
+    __vModel__: {
+      key: 'select',
+      value: '1'
+    },
     name: 'select',
     // multiple: false,
     // multipleLimit: 0,
@@ -265,7 +280,10 @@ const selectComponents = [
         { label: '备选项', value: '2' }
       ]
     },
-    __vModel__: '1',
+    __vModel__: {
+      key: 'radio',
+      value: '1'
+    },
     textColor: '#ffffff',
     fill: '#409EFF',
     size: 'medium'
@@ -288,7 +306,10 @@ const selectComponents = [
         { label: '选项三', value: 3 }
       ]
     },
-    __vModel__: [1, 3],
+    __vModel__: {
+      key: 'checkbox',
+      value: [1, 3]
+    },
     textColor: '#ffffff',
     fill: '#409EFF',
     size: 'medium',
@@ -304,7 +325,10 @@ const selectComponents = [
       type: 'cascader',
       isPanel: false // 是否展开为panel
     },
-    __vModel__: [],
+    __vModel__: {
+      key: 'cascader',
+      value: []
+    },
     __methods__: {},
     __attrs__: {
       props: {
@@ -383,7 +407,10 @@ const selectComponents = [
       tag: 'el-transfer',
       tagIcon: 'transfer'
     },
-    __vModel__: [],
+    __vModel__: {
+      key: 'transfer',
+      value: []
+    },
     __slot__: {},
     __attrs__: {
       data () {
@@ -417,7 +444,10 @@ const selectComponents = [
       tagIcon: 'time-picker',
       type: 'timePicker'
     },
-    __vModel__: Date.now(),
+    __vModel__: {
+      key: 'timepicker',
+      value: Date.now()
+    },
     readonly: false,
     editable: true,
     size: 'medium',
@@ -445,7 +475,10 @@ const selectComponents = [
       tagIcon: 'time-select',
       type: 'timeSelect'
     },
-    __vModel__: '00:00',
+    __vModel__: {
+      key: 'timeselect',
+      value: '00:00'
+    },
     readonly: false,
     editable: true,
     size: 'medium',
@@ -474,7 +507,10 @@ const selectComponents = [
       tagIcon: 'switch',
       type: 'switch'
     },
-    __vModel__: false,
+    __vModel__: {
+      key: 'switch',
+      value: false
+    },
     name: 'switch',
     width: 40,
     activeIconClass: '',
@@ -492,7 +528,10 @@ const selectComponents = [
       tagIcon: 'slider',
       type: 'slider'
     },
-    __vModel__: 0,
+    __vModel__: {
+      key: 'slider',
+      value: 0
+    },
     name: 'slider',
     height: '40px',
     min: 0,
@@ -515,7 +554,10 @@ const selectComponents = [
       tagIcon: 'rate',
       type: 'rate'
     },
-    __vModel__: 0,
+    __vModel__: {
+      key: 'rate',
+      value: 0
+    },
     name: 'rate',
     max: 5,
     allowHalf: false,
@@ -535,7 +577,10 @@ const selectComponents = [
       tagIcon: 'color',
       type: 'color'
     },
-    __vModel__: '#409EFF',
+    __vModel__: {
+      key: 'color',
+      value: '#409EFF'
+    },
     showAlpha: false,
     colorFormat: 'hex',
     poperClass: ''

@@ -58,7 +58,7 @@ const button = {
 export const buttonOptions = mergeOptions(button, basic)
 
 export const input = {
-  __vModel__: { label: '绑定值', model: '__vModel__', placeholder: '请输入绑定值', type: 'input' },
+  __vModel__: { label: '绑定值', model: '__vModel__.value', placeholder: '请输入绑定值', type: 'input' },
   __config__: [
     { label: '标题', model: 'label', placeholder: '请输入标题', type: 'input' },
     { label: '是否显示标题', model: 'showLabel', type: 'switch' },
@@ -128,16 +128,17 @@ const password = {
 export const passwordOptions = mergeOptions(password, input)
 
 const number = {
-  __vModel__: { label: '绑定值', model: '__vModel__', placeholder: '请输入绑定值', type: 'number' },
+  __vModel__: { label: '绑定值', model: '__vModel__.value', placeholder: '请输入绑定值', type: 'number' },
   __native__: [
     { label: '计数器尺寸', model: 'size', type: 'radio', options: ['large', 'medium', 'small'] },
     { label: '控制按钮位置', model: 'controlsPosition', type: 'radio', options: ['left', 'right'] },
     { label: '计数器最小值', model: 'min', type: 'number' },
     { label: '计数器最大值', model: 'max', type: 'number' },
     { label: '计数器步长', model: 'step', type: 'number' },
+    { label: '数值精度', model: 'precision', type: 'number' },
     { label: '仅step倍数', model: 'stepStrictly', type: 'switch' },
-    { label: '显示控制按钮', model: 'controls', type: 'switch' },
-    { label: '数值精度', model: 'precision', type: 'number' }
+    { label: '显示控制按钮', model: 'controls', type: 'switch' }
+
   ]
 }
 
@@ -146,21 +147,21 @@ export const numberOptions = mergeOptions(number, input)
 export const select = {
   __config__: [
     { label: '标题', model: 'label', placeholder: '请输入标题', type: 'input' },
+    { label: '表单栅格', model: 'span', type: 'slider' },
     { label: '是否显示标题', model: 'showLabel', type: 'switch' },
-    { label: '是否必选', model: 'required', type: 'switch' },
-    { label: '表单栅格', model: 'span', type: 'slider' }
+    { label: '是否必选', model: 'required', type: 'switch' }
+
   ],
   style: [
     { label: '组件宽度', model: 'width', placeholder: '请输入组件宽度', type: 'input' }
   ],
   __native__: [
-    { label: '原生name', model: 'name', placeholder: '请输入原生name', type: 'input' },
     { label: '是否禁用', model: 'disabled', type: 'switch' }
   ]
 }
 
 const singleSelect = {
-  __vModel__: { label: '绑定值', model: '__vModel__', placeholder: '请输入绑定值', type: 'input' },
+  __vModel__: { label: '绑定值', model: '__vModel__.value', placeholder: '请输入绑定值', type: 'input' },
   __config__: [
     // TODO: 暂不支持分组
     // { label: '是否分组', model: 'isGroup', type: 'switch' }
@@ -176,18 +177,19 @@ const singleSelect = {
     // TODO: 暂不支持多选
     // { label: '是否多选', model: 'multiple', type: 'switch' },
     // { label: '多选限制', model: 'multipleLimit', type: 'number' },
+    { label: '原生name', model: 'name', placeholder: '请输入原生name', type: 'input' },
+    { label: '输入框占位符', model: 'placeholder', type: 'input' },
+    { label: '输入框尺寸', model: 'size', type: 'radio', options: ['medium', 'small', 'mini'] },
     { label: '是否清空选项', model: 'clearable', type: 'switch' },
     { label: '是否可搜索', model: 'filterable', type: 'switch' },
-    { label: '允许创建条目', model: 'allowCreate', type: 'switch' },
-    { label: '输入框尺寸', model: 'size', type: 'radio', options: ['medium', 'small', 'mini'] },
-    { label: '输入框占位符', model: 'placeholder', type: 'input' }
+    { label: '允许创建条目', model: 'allowCreate', type: 'switch' }
   ]
 }
 
 export const selectOptions = mergeOptions(singleSelect, select)
 
 const radio = {
-  __vModel__: { label: '绑定值', model: '__vModel__', placeholder: '请输入绑定值', type: 'input' },
+  __vModel__: { label: '绑定值', model: '__vModel__.value', placeholder: '请输入绑定值', type: 'input' },
   __native__: [
     { label: '单选框尺寸', model: 'size', type: 'radio', options: ['medium', 'small', 'mini'] },
     { label: '文本颜色', model: 'textColor', type: 'color' },
@@ -216,12 +218,13 @@ const checkbox = {
 export const checkboxOptions = mergeOptions(checkbox, select)
 
 const cascader = {
+  __vModel__: { label: '绑定值', model: '__vModel__.value', placeholder: '请输入绑定值', type: 'input' },
   __native__: [
     { label: '选择器占位符', model: 'placeholder', type: 'input' },
+    { label: '选项分割符', model: 'separator', type: 'input' },
     { label: '显示完整路径', model: 'showAllLevels', type: 'switch' },
     { label: '是否折叠Tag', model: 'collapseTags', type: 'switch' },
-    { label: '是否可搜索', model: 'filterable', type: 'switch' },
-    { label: '选项分割符', model: 'separator', type: 'input' }
+    { label: '是否可搜索', model: 'filterable', type: 'switch' }
   ],
   __attrs__: [
     { label: '菜单展开方式', model: 'props.expandTrigger', type: 'radio', options: ['click', 'hover'] },
@@ -236,20 +239,14 @@ export const cascaderOptions = mergeOptions(cascader, select)
 const upload = {
   __config__: [
     { label: '按钮文字', model: 'btnText', type: 'input', placeholder: '请输入按钮文字' },
-    { label: '按钮尺寸', model: 'btnSize', type: 'radio', options: ['medium', 'small', 'mini'] },
+    { label: '文件大小', model: 'fileSize', type: 'append', placeholder: '请输入文件大小', children: { model: 'sizeUnit', type: 'select', options: ['KB', 'MB', 'GB'] } },
     { label: '按钮类型', model: 'btnType', type: 'select', options: ['default', 'primary', 'success', 'info', 'warning', 'danger'] },
-    { label: '显示tip', model: 'showTips', type: 'switch' },
-    { label: '文件大小', model: 'fileSize', type: 'append', placeholder: '请输入文件大小', children: { model: 'sizeUnit', type: 'select', options: ['KB', 'MB', 'GB'] } }
+    { label: '按钮尺寸', model: 'btnSize', type: 'radio', options: ['medium', 'small', 'mini'] },
+    { label: '显示tip', model: 'showTips', type: 'switch' }
   ],
   __native__: [
+    { label: '原生name', model: 'name', placeholder: '请输入原生name', type: 'input' },
     { label: '上传地址', model: 'action', type: 'input', placeholder: '请输入上传地址' },
-    { label: '是否多选文件', model: 'multiple', type: 'switch' },
-    { label: '是否携带Cookie', model: 'withCredentials', type: 'switch' },
-    { label: '显示上传列表', model: 'showFileList', type: 'switch' },
-    { label: '允许拖拽上传', model: 'drag', type: 'switch' },
-    { label: '自动上传', model: 'autoUpload', type: 'switch' },
-    { label: '文件列表类型', model: 'listType', type: 'radio', options: ['text', 'picture', 'picture-card'] },
-    { label: '最大上传数', model: 'limit', type: 'number' },
     {
       label: '上传类型',
       model: 'accept',
@@ -263,15 +260,23 @@ const upload = {
         { label: 'ppt', value: '.ppt,.pptx' },
         { label: 'pdf', value: '.pdf,.odf' }
       ]
-    }
+    },
+    { label: '最大上传数', model: 'limit', type: 'number' },
+    { label: '文件列表类型', model: 'listType', type: 'radio', options: ['text', 'picture', 'picture-card'] },
+    { label: '是否多选文件', model: 'multiple', type: 'switch' },
+    { label: '是否携带Cookie', model: 'withCredentials', type: 'switch' },
+    { label: '显示上传列表', model: 'showFileList', type: 'switch' },
+    { label: '允许拖拽上传', model: 'drag', type: 'switch' },
+    { label: '自动上传', model: 'autoUpload', type: 'switch' }
   ]
 }
 
 export const uploadOptions = mergeOptions(upload, select)
 
 const timePicker = {
-  __vModel__: { label: '绑定值', model: '__vModel__', type: 'number' },
+  __vModel__: { label: '绑定值', model: '__vModel__.value', type: 'number' },
   __native__: [
+    { label: '原生name', model: 'name', placeholder: '请输入原生name', type: 'input' },
     { label: '选择器占位符', model: 'placeholder', type: 'input' },
     { label: '开始占位符', model: 'startPlaceholder', type: 'input' },
     { label: '结束占位符', model: 'endPlaceholder', type: 'input' },
@@ -294,8 +299,9 @@ const timePicker = {
 export const timePickerOptions = mergeOptions(timePicker, select)
 
 const timeSelect = {
-  __vModel__: { label: '绑定值', model: '__vModel__', type: 'input' },
+  __vModel__: { label: '绑定值', model: '__vModel__.value', type: 'input' },
   __native__: [
+    { label: '原生name', model: 'name', placeholder: '请输入原生name', type: 'input' },
     { label: '选择器占位符', model: 'placeholder', type: 'input' },
     { label: '开始占位符', model: 'startPlaceholder', type: 'input' },
     { label: '结束占位符', model: 'endPlaceholder', type: 'input' },
@@ -321,8 +327,9 @@ const timeSelect = {
 export const timeSelectOptions = mergeOptions(timeSelect, select)
 
 const switchs = {
-  __vModel__: { label: '绑定值', model: '__vModel__', type: 'switch' },
+  __vModel__: { label: '绑定值', model: '__vModel__.value', type: 'switch' },
   __native__: [
+    { label: '原生name', model: 'name', placeholder: '请输入原生name', type: 'input' },
     { label: '打开文字', model: 'activeText', type: 'input' },
     { label: '关闭文字', model: 'inactiveText', type: 'input' },
     { label: '打开图标', model: 'activeIconClass', type: 'append' },
@@ -336,7 +343,7 @@ const switchs = {
 export const switchOptions = mergeOptions(switchs, select)
 
 const slider = {
-  __vModel__: { label: '绑定值', model: '__vModel__', type: 'number' },
+  __vModel__: { label: '绑定值', model: '__vModel__.value', type: 'number' },
   __native__: [
     { label: '高度', model: 'height', type: 'input', placeholder: '请输入slider高度' },
     { label: '输入框尺寸', model: 'inputSize', type: 'select', options: ['large', 'medium', 'small', 'mini'] },
@@ -356,7 +363,7 @@ const slider = {
 export const sliderOptions = mergeOptions(slider, select)
 
 const rate = {
-  __vModel__: { label: '绑定值', model: '__vModel__', type: 'number' },
+  __vModel__: { label: '绑定值', model: '__vModel__.value', type: 'number' },
   __native__: [
     { label: '文本数组', model: 'texts', type: 'input' },
     { label: '最大分值', model: 'max', type: 'number' },
@@ -373,7 +380,7 @@ const rate = {
 export const rateOptions = mergeOptions(rate, select)
 
 const color = {
-  __vModel__: { label: '绑定值', model: '__vModel__', type: 'color' },
+  __vModel__: { label: '绑定值', model: '__vModel__.value', type: 'color' },
   __native__: [
     { label: '下拉框类名', model: 'poperClass', type: 'input' },
     { label: '颜色格式', model: 'colorFormat', type: 'select', options: ['hsl', 'hsv', 'hex', 'rgb'] },
