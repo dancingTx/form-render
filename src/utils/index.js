@@ -200,4 +200,4 @@ export const listStoreAttrs = function (store) {
  * @param {string} defaultValue
  * @description 返回 默认值
  */
-export const setDefaultValue = (key, value, defaultValue = '') => key ? value : defaultValue
+export const setDefaultValue = (key, value, defaultValue = '') => key ? (value || key) : defaultValue

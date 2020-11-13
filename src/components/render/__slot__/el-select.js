@@ -26,7 +26,7 @@ export default {
         ? optionsSlot
         : isPlainObject(optionsSlot)
           ? [optionsSlot]
-          : null
+          : []
     if (isGroup) {
       return optionsSlot.map(group => {
         return (

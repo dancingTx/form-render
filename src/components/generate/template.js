@@ -2,9 +2,6 @@
 const endOfLine = require('os').EOL // 对应操作系统下得换行符
 const { typeOf, isPlainObject, listStoreAttrs, setDefaultValue } = require('@/utils')
 const genTemplate = function (fields, formConf) {
-  const genFieldTemplate = function (store, slot) {
-    return `<${listStoreAttrs(store)}>${setDefaultValue(slot, slot)}</${store.tag}>`
-  }
   const genFieldAttrs = function (field) {
     const tag = setDefaultValue(field.__config__.tag, field.__config__.tag, 'div')
     const vModel = setDefaultValue((field.name && formConf.__vModel__), `v-model="${formConf.__vModel__}.${field.name}"`)
@@ -21,6 +18,18 @@ const genTemplate = function (fields, formConf) {
     return {
       tag, vModel, size, readonly, disabled, clearable, required, style, placeholder
     }
+  }
+  const genChildrenTemplate = function (type, slot, options) {
+    if (!type || !slot) return ''
+    return endOfLine + slots[`${type}Slot`](slot, options) + endOfLine
+  }
+
+  const genFieldTemplate = function (store, type, slot, options) {
+    return `${endOfLine}<${listStoreAttrs(store)}>${setDefaultValue((slot && type), genChildrenTemplate(type, slot, options))}</${store.tag}>${endOfLine}`
+  }
+
+  const genSlotTemplate = function (name, content) {
+    return `<template slot="${name}">${content}</template>`
   }
 
   const layouts = {
@@ -67,6 +76,128 @@ const genTemplate = function (fields, formConf) {
         children.push(slot.default)
       }
       return children.join(endOfLine)
+    },
+    textSlot (slot) {
+      const children = []
+      const processFix = function (fixSlot, key) {
+        let template = ''
+        if (isPlainObject(fixSlot)) {
+          template = (
+            `<i
+              slot="${key}"
+              class="${setDefaultValue(fixSlot.className, fixSlot.className + ' ')}el-input__icon"
+              ${setDefaultValue(fixSlot.on?.click, "@click='" + fixSlot.on.click + "'")}
+            />
+            `
+          )
+        } else if (typeOf(fixSlot, 'string')) {
+          if (fixSlot.indexOf('el-icon-') !== -1) {
+            template = (
+              `<i slot="${key}" class="${setDefaultValue(fixSlot)}" />`
+            )
+          } else {
+            template = (`<span slot="${key}">${setDefaultValue(fixSlot)}</span>`)
+          }
+        }
+
+        return template
+      }
+
+      if (slot.prefix) {
+        children.push(processFix(slot.prefix, 'prefix'))
+      }
+
+      if (slot.suffix) {
+        children.push(processFix(slot.suffix, 'suffix'))
+      }
+
+      if (slot.prepend) {
+        children.push(genSlotTemplate('prepend', setDefaultValue(slot.prepend)))
+      }
+
+      if (slot.append) {
+        children.push(genSlotTemplate('append', setDefaultValue(slot.append)))
+      }
+
+      return children.join(endOfLine)
+    },
+    selectSlot (slot, { isGroup }) {
+      const children = []
+      const genChildOption = function (options) {
+        return options.map(option => {
+          const store = {
+            label: setDefaultValue(option.label, `label="${option.label}"`),
+            value: setDefaultValue(option.value, `value="${option.value}"`),
+            disabled: setDefaultValue(option.disabled)
+          }
+          return `<el-option ${listStoreAttrs(store)} />`
+        }).join(endOfLine)
+      }
+
+      if (slot.prefix) {
+        children.push(genSlotTemplate('prefix', setDefaultValue(slot.prefix)))
+      }
+
+      if (slot.empty) {
+        children.push(genSlotTemplate('empty', setDefaultValue(slot.empty)))
+      }
+
+      if (slot.options) {
+        let template = ''
+        slot.options =
+          typeOf(slot.options, 'array')
+            ? slot.options
+            : isPlainObject(slot.options)
+              ? [slot.options]
+              : []
+        if (isGroup) {
+          template = slot.options.map(group => (
+            `<el-option-group
+              ${setDefaultValue(group.label)}
+              ${setDefaultValue(group.disabled)}
+              >
+              ${genChildOption(group.options)}
+            </el-option-group>`
+          )).join(endOfLine)
+        } else {
+          template = genChildOption(slot.options)
+        }
+
+        children.push(template)
+      }
+
+      return children.join(endOfLine)
+    },
+    radioSlot (slot, { isGroup, isBorder, isButton }) {
+      const children = []
+      const genChildOption = function (options, { isBorder, isButton }) {
+        return options.map(option => {
+          let template = ''
+          const store = {
+            label: setDefaultValue(option.value, `value="${option.value}"`),
+            name: setDefaultValue(option.name, `name="${option.name}"`)
+          }
+          if (isButton) {
+            template = `<el-radio-button ${listStoreAttrs(store)}>${setDefaultValue(option.label)}</el-radio-button>`
+          } else {
+            store.border = setDefaultValue(isBorder, 'border')
+            template = `<el-radio ${listStoreAttrs(store)}>${setDefaultValue(option.label)}</el-radio>`
+          }
+          return template
+        }).join(endOfLine)
+      }
+      if (slot.options) {
+        slot.options = typeOf(slot.options, 'array')
+          ? slot.options
+          : isPlainObject(slot.options)
+            ? [slot.options]
+            : []
+        const obj = { isBorder }
+        if (isGroup) obj.isButton = isButton
+        children.push(genChildOption(slot.options, obj))
+      }
+
+      return children.join(endOfLine)
     }
   }
 
@@ -86,11 +217,7 @@ const genTemplate = function (fields, formConf) {
         nativeType: setDefaultValue(field.nativeType, `native-type="${field.nativeType}"`),
         style
       }
-      let children = ''
-      if (field.__config__.type && field.__slot__) {
-        children = slots[`${field.__config__.type}Slot`](field.__slot__)
-      }
-      return genFieldTemplate(store, children)
+      return genFieldTemplate(store, field.__config__.type, field.__slot__)
     },
     'el-input' (field) {
       const { tag, vModel, size, disabled, clearable, readonly, placeholder, style } = genFieldAttrs(field)
@@ -115,7 +242,7 @@ const genTemplate = function (fields, formConf) {
         style
       }
 
-      return genFieldTemplate(store, '....')
+      return genFieldTemplate(store, field.__config__.type, field.__slot__)
     },
     'el-input-number' (field) {
       const { tag, vModel, size, placeholder, disabled, style } = genFieldAttrs(field)
@@ -137,6 +264,38 @@ const genTemplate = function (fields, formConf) {
       }
 
       return genFieldTemplate(store)
+    },
+    'el-select' (field) {
+      const isGroup = field.__config__.isGroup
+      const { tag, vModel, style, clearable, disabled } = genFieldAttrs(field)
+      const store = {
+        tag,
+        vModel,
+        name: setDefaultValue(field.name, `name="${field.name}"`),
+        size: setDefaultValue(field.size, `size="${field.size}"`),
+        placeholder: setDefaultValue(field.placeholder, `placeholder="${field.placeholder}"`),
+        style,
+        filterable: setDefaultValue(field.filterable, 'filterable'),
+        allowCreate: setDefaultValue(field.allowCreate, 'allow-create'),
+        clearable,
+        disabled
+      }
+
+      return genFieldTemplate(store, field.__config__.type, field.__slot__, { isGroup })
+    },
+    'el-radio-group' (field) {
+      const config = field.__config__
+      const { isGroup, isButton, isBorder } = config
+      const { tag, vModel, size, disabled } = genFieldAttrs(field)
+      const store = {
+        tag,
+        vModel,
+        size,
+        textColor: setDefaultValue(field.textColor, `text-color="${field.textColor}"`),
+        fill: setDefaultValue(field.fill, `fill="${field.fill}"`),
+        disabled
+      }
+      return genFieldTemplate(store, config.type, field.__slot__, { isGroup, isButton, isBorder })
     }
   }
 

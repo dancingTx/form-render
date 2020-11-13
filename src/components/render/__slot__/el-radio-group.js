@@ -1,7 +1,7 @@
 import { typeOf, isPlainObject } from '@/utils'
 export default {
   options (h, currItem, key) {
-    const genOptionsChildren = function (options, defaultOpts) {
+    const genChildOption = function (options, defaultOpts) {
       const { isBorder, isButton } = defaultOpts
       return options.map(option => {
         if (isButton) {
@@ -36,10 +36,10 @@ export default {
         ? [optionsSlot]
         : []
     return isGroup
-      ? genOptionsChildren(optionsSlot, {
+      ? genChildOption(optionsSlot, {
         isBorder, isButton
       })
-      : genOptionsChildren(optionsSlot, {
+      : genChildOption(optionsSlot, {
         isBorder
       })
   }

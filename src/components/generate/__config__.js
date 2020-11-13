@@ -205,11 +205,11 @@ const selectComponents = [
       options: [
         {
           label: '选项一',
-          value: 1
+          value: '1'
         },
         {
           label: '选项二',
-          value: 2
+          value: '2'
         }
       ]
       // options: [{
@@ -239,7 +239,7 @@ const selectComponents = [
       //   }]
       // }]
     },
-    __vModel__: 1,
+    __vModel__: '1',
     name: 'select',
     // multiple: false,
     // multipleLimit: 0,
