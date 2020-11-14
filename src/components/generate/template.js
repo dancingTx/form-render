@@ -227,6 +227,22 @@ const genTemplate = function (fields, formConf) {
       }
 
       return children.join(endOfLine)
+    },
+    transferSlot (slot) {
+      const children = []
+      if (slot.leftFooter) {
+        children.push(
+          genSlotTemplate('left-footer', typeOf(slot.leftFooter, 'function') ? toString(slot.leftFooter()) : slot.leftFooter)
+        )
+      }
+
+      if (slot.rightFooter) {
+        children.push(
+          genSlotTemplate('right-footer', typeOf(slot.rightFooter, 'function') ? toString(slot.rightFooter()) : slot.rightFooter)
+        )
+      }
+
+      return children.join(endOfLine)
     }
   }
 
@@ -410,6 +426,64 @@ const genTemplate = function (fields, formConf) {
       }
 
       return genFieldTemplate(store, config.type, field.__slot__, { config })
+    },
+    'el-transfer' (field) {
+      const processData = function (data) {
+        data = typeOf(data, 'function') ? data() : data
+        data = typeOf(data, 'array') ? data : [data]
+        return setDefaultValue(data, `:data="${data}"`)
+      }
+      const { tag, vModel } = genFieldAttrs(field)
+      const store = {
+        tag,
+        vModel,
+        data: processData(field.__attrs__.data),
+        filterable: setDefaultValue(field.filterable, 'filterable'),
+        filterablePlaceholder: setDefaultValue(field.filterablePlaceholder, `filter-placeholder="${field.filterablePlaceholder}"`),
+        titles: setDefaultValue(assetDefaultValue(toString(field.titles), toString(['列表一', '列表二'])), `:titles="${field.titles}"`),
+        buttonTexts: setDefaultValue(assetDefaultValue(toString(field.buttonTexts, toString([]))), `:button-texts="${field.buttonTexts}"`),
+        targetOrder: setDefaultValue(assetDefaultValue(field.targetOrder, 'original'), `target-order="${field.targetOrder}"`)
+      }
+
+      return genFieldTemplate(store, field.__config__.type, field.__slot__)
+    },
+    'el-time-picker' (field) {
+      const processPickerOptions = function (options) {
+        const stitchOptions = function (option, key, asset) {
+          const condition = (option, asset) => asset ? assetDefaultValue(option, asset) : option
+          return setDefaultValue(condition(option, asset), `${key}: "${option}", `)
+        }
+        return (
+          ':picker-options={ ' +
+            stitchOptions(options.selectableRange, 'selectableRange') +
+            stitchOptions(options.format, 'format', 'HH:mm:ss') +
+          ' }'
+        )
+      }
+      const { tag, vModel, size, readonly, disabled, placeholder, clearable } = genFieldAttrs(field)
+      const store = {
+        tag,
+        vModel,
+        name: setDefaultValue(field.name, `name="${field.name}"`),
+        size,
+        placeholder,
+        startPlaceholder: setDefaultValue(field.startPlaceholder, `start-placeholder="${field.startPlaceholder}"`),
+        endPlaceholder: setDefaultValue(field.endPlaceholder, `end-placeholder="${field.endPlaceholder}"`),
+        align: setDefaultValue(assetDefaultValue(field.align, 'left'), `align="${field.align}"`),
+        rangeSeparator: setDefaultValue(assetDefaultValue(field.rangeSeparator, '-'), `range-separator="${field.rangeSeparator}"`),
+        prefixIcon: setDefaultValue(assetDefaultValue(field.prefixIcon, 'el-icon-time'), `prefix-icon="${field.prefixIcon}"`),
+        clearIcon: setDefaultValue(assetDefaultValue(field.clearIcon, 'el-icon-circle-close'), `clear-icon="${field.clearIcon}"`),
+        popperClass: setDefaultValue(field.popperClass, `popper-class="${field.popperClass}"`),
+        isRange: setDefaultValue(field.isRange, 'is-range'),
+        arrowControl: setDefaultValue(field.arrowControl, 'arrow-control'),
+        pickerOptions: processPickerOptions(field.pickerOptions),
+        readonly,
+        disabled,
+        editable: setDefaultValue(field.editable, 'editable'),
+        clearable
+      }
+
+      return genFieldTemplate(store)
     }
   }
 
