@@ -11,21 +11,21 @@ const {
 } = require('@/utils')
 const genTemplate = function (fields, formConf) {
   const genFieldAttrs = function (field) {
-    const tag = setDefaultValue(field.__config__.tag, field.__config__.tag, 'div')
-    const vModel = setDefaultValue((formConf.__vModel__ && field.__vModel__ && field.__vModel__.key), `v-model="${formConf.__vModel__}.${field.__vModel__ && field.__vModel__.key}"`)
-    const size = setDefaultValue(field.size, `size="${field.size}"`)
-    const disabled = setDefaultValue(field.disabled, 'disabled')
-    const clearable = setDefaultValue(field.clearable, 'clearable')
-    const required = setDefaultValue(field.required, 'required')
-    const readonly = setDefaultValue(field.readonly, 'readonly')
-    const placeholder = setDefaultValue(field.placeholder, `placeholder="${field.placeholder}"`)
-    const style = setDefaultValue(
-      field.style && isPlainObject(field.style),
-      `:style="{${Object.keys(field.style).map(key => key + ':' + field.style[key]).join(',')}}"`
-    )
-    return {
-      tag, vModel, size, readonly, disabled, clearable, required, style, placeholder
+    const store = {
+      tag: setDefaultValue(field.__config__.tag, field.__config__.tag, 'div'),
+      vModel: setDefaultValue((formConf.__vModel__ && field.__vModel__ && field.__vModel__.key), `v-model="${formConf.__vModel__}.${field.__vModel__ && field.__vModel__.key}"`),
+      size: setDefaultValue(field.size, `size="${field.size}"`),
+      disabled: setDefaultValue(field.disabled, 'disabled'),
+      clearable: setDefaultValue(field.clearable, 'clearable'),
+      required: setDefaultValue(field.required, 'required'),
+      readonly: setDefaultValue(field.readonly, 'readonly'),
+      placeholder: setDefaultValue(field.placeholder, `placeholder="${field.placeholder}"`),
+      style: setDefaultValue(
+        field.style && isPlainObject(field.style),
+        `:style="{${Object.keys(field.style).map(key => key + ':' + field.style[key]).join(',')}}"`
+      )
     }
+    return store
   }
   const genChildrenTemplate = function (type, slot, options) {
     if (!type || !slot) return ''
