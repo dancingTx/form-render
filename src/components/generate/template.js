@@ -40,6 +40,12 @@ const genTemplate = function (fields, formConf) {
     return `<template slot="${name}">${content}</template>`
   }
 
+  const stitchProps = function (prop, key, asset) {
+    const condition = (prop, asset) => asset ? assetDefaultValue(prop, asset) : prop
+    const value = typeOf(prop, 'boolean') ? prop : `"${prop}"`
+    return setDefaultValue(condition(prop, asset), `${key}: ${value}, `)
+  }
+
   const layouts = {
     colFormItem (item) {
       const config = item.__config__
@@ -370,12 +376,6 @@ const genTemplate = function (fields, formConf) {
     },
     'el-cascader' (field) {
       const processProps = function (props) {
-        const stitchProps = function (prop, key, asset) {
-          const condition = (prop, asset) => asset ? assetDefaultValue(prop, asset) : prop
-          const value = typeOf(prop, 'boolean') ? prop : `"${prop}"`
-          return setDefaultValue(condition(prop, asset), `${key}: ${value}, `)
-        }
-
         return (
           ':props={ ' +
             stitchProps(props.expandTrigger, 'expandTrigger', 'click') +
@@ -447,19 +447,7 @@ const genTemplate = function (fields, formConf) {
 
       return genFieldTemplate(store, field.__config__.type, field.__slot__)
     },
-    'el-time-picker' (field) {
-      const processPickerOptions = function (options) {
-        const stitchOptions = function (option, key, asset) {
-          const condition = (option, asset) => asset ? assetDefaultValue(option, asset) : option
-          return setDefaultValue(condition(option, asset), `${key}: "${option}", `)
-        }
-        return (
-          ':picker-options={ ' +
-            stitchOptions(options.selectableRange, 'selectableRange') +
-            stitchOptions(options.format, 'format', 'HH:mm:ss') +
-          ' }'
-        )
-      }
+    'el-time' (field, pickerOptions) {
       const { tag, vModel, size, readonly, disabled, placeholder, clearable } = genFieldAttrs(field)
       const store = {
         tag,
@@ -476,12 +464,42 @@ const genTemplate = function (fields, formConf) {
         popperClass: setDefaultValue(field.popperClass, `popper-class="${field.popperClass}"`),
         isRange: setDefaultValue(field.isRange, 'is-range'),
         arrowControl: setDefaultValue(field.arrowControl, 'arrow-control'),
-        pickerOptions: processPickerOptions(field.pickerOptions),
+        pickerOptions: setDefaultValue(assetDefaultValue(pickerOptions, ':picker-options={  }'), pickerOptions),
         readonly,
         disabled,
         editable: setDefaultValue(field.editable, 'editable'),
         clearable
       }
+
+      return store
+    },
+    'el-time-picker' (field) {
+      const processPickerOptions = function (options) {
+        return (
+          ':picker-options={ ' +
+            stitchProps(options.selectableRange, 'selectableRange') +
+            stitchProps(options.format, 'format', 'HH:mm:ss') +
+          ' }'
+        )
+      }
+
+      const store = tags['el-time'](field, processPickerOptions(field.pickerOptions))
+
+      return genFieldTemplate(store)
+    },
+    'el-time-select' (field) {
+      const processPickerOptions = function (options) {
+        return (
+          ':picker-options={ ' +
+            stitchProps(options.start, 'start', '08:00') +
+            stitchProps(options.end, 'end', '18:00') +
+            stitchProps(options.step, 'step', '00:30') +
+            stitchProps(options.minTime, 'minTime', '00:00') +
+            stitchProps(options.maxTime, 'maxTime', '23:59') +
+          ' }'
+        )
+      }
+      const store = tags['el-time'](field, processPickerOptions(field.pickerOptions))
 
       return genFieldTemplate(store)
     }
