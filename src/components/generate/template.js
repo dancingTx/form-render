@@ -15,6 +15,7 @@ const genTemplate = function (fields, formConf) {
       tag: setDefaultValue(field.__config__.tag, field.__config__.tag, 'div'),
       vModel: setDefaultValue((formConf.__vModel__ && field.__vModel__ && field.__vModel__.key), `v-model="${formConf.__vModel__}.${field.__vModel__ && field.__vModel__.key}"`),
       size: setDefaultValue(field.size, `size="${field.size}"`),
+      name: setDefaultValue(field.name, `name="${field.name}"`),
       disabled: setDefaultValue(field.disabled, 'disabled'),
       clearable: setDefaultValue(field.clearable, 'clearable'),
       required: setDefaultValue(field.required, 'required'),
@@ -271,13 +272,13 @@ const genTemplate = function (fields, formConf) {
       return genFieldTemplate(store, field.__config__.type, field.__slot__)
     },
     'el-input' (field) {
-      const { tag, vModel, size, disabled, clearable, readonly, placeholder, style } = genFieldAttrs(field)
+      const { tag, vModel, size, name, disabled, clearable, readonly, placeholder, style } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
         type: setDefaultValue(field.type, `type="${field.type}"`),
         size,
-        name: setDefaultValue(field.name, `name="${field.name}"`),
+        name,
         placeholder,
         minLength: setDefaultValue(field.minLength, `minLength="${field.minLength}"`),
         maxLength: setDefaultValue(assetDefaultValue(field.maxLength, Infinity), `maxLength="${field.maxLength}"`),
@@ -296,13 +297,13 @@ const genTemplate = function (fields, formConf) {
       return genFieldTemplate(store, field.__config__.type, field.__slot__)
     },
     'el-input-number' (field) {
-      const { tag, vModel, size, placeholder, disabled, style } = genFieldAttrs(field)
+      const { tag, vModel, size, name, placeholder, disabled, style } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
         type: setDefaultValue(field.type, `type="${field.type}"`),
         size,
-        name: setDefaultValue(field.name, `name="${field.name}"`),
+        name,
         placeholder,
         max: setDefaultValue(assetDefaultValue(field.max, Infinity), `:max="${field.max}"`),
         min: setDefaultValue(assetDefaultValue(field.min, -Infinity), `:min="${field.min}"`),
@@ -318,13 +319,13 @@ const genTemplate = function (fields, formConf) {
     },
     'el-select' (field) {
       const isGroup = field.__config__.isGroup
-      const { tag, vModel, style, clearable, disabled } = genFieldAttrs(field)
+      const { tag, vModel, name, size, style, placeholder, clearable, disabled } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
-        name: setDefaultValue(field.name, `name="${field.name}"`),
-        size: setDefaultValue(field.size, `size="${field.size}"`),
-        placeholder: setDefaultValue(field.placeholder, `placeholder="${field.placeholder}"`),
+        name,
+        size,
+        placeholder,
         style,
         filterable: setDefaultValue(field.filterable, 'filterable'),
         allowCreate: setDefaultValue(field.allowCreate, 'allow-create'),
@@ -337,14 +338,15 @@ const genTemplate = function (fields, formConf) {
     'el-radio-group' (field) {
       const config = field.__config__
       const { isGroup, isButton, isBorder } = config
-      const { tag, vModel, size, disabled } = genFieldAttrs(field)
+      const { tag, vModel, size, disabled, style } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
         size,
         textColor: setDefaultValue(field.textColor, `text-color="${field.textColor}"`),
         fill: setDefaultValue(field.fill, `fill="${field.fill}"`),
-        disabled
+        disabled,
+        style
       }
       return genFieldTemplate(
         store,
@@ -356,7 +358,7 @@ const genTemplate = function (fields, formConf) {
     'el-checkbox-group' (field) {
       const config = field.__config__
       const { isGroup, isButton, isBorder } = config
-      const { tag, vModel, size, disabled } = genFieldAttrs(field)
+      const { tag, vModel, size, disabled, style } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
@@ -365,7 +367,8 @@ const genTemplate = function (fields, formConf) {
         max: setDefaultValue(assetDefaultValue(field.max, Infinity), `:max="${field.max}"`),
         textColor: setDefaultValue(field.textColor, `textColor="${field.textColor}"`),
         fill: setDefaultValue(field.fill, `fill="${field.fill}"`),
-        disabled
+        disabled,
+        style
       }
       return genFieldTemplate(
         store,
@@ -389,25 +392,26 @@ const genTemplate = function (fields, formConf) {
           ' }'
         )
       }
-      const { tag, vModel, placeholder, size, disabled, clearable } = genFieldAttrs(field)
+      const { tag, vModel, placeholder, size, name, disabled, clearable, style } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
-        name: setDefaultValue(field.name, `name="${field.name}"`),
+        name,
         size,
         props: processProps(field.__attrs__.props),
         options: setDefaultValue(field.options, `:options='${toString(field.options, null, ' ')}'`),
         placeholder,
         separator: setDefaultValue(assetDefaultValue(field.separator, '/'), `separator="${field.separator}"`),
         clearable,
-        disabled
+        disabled,
+        style
       }
 
       return genFieldTemplate(store)
     },
     'el-upload' (field) {
       const config = field.__config__
-      const { tag, disabled } = genFieldAttrs(field)
+      const { tag, disabled, style } = genFieldAttrs(field)
       const store = {
         tag,
         action: setDefaultValue(field.action, `action="${field.action}"`),
@@ -422,7 +426,8 @@ const genTemplate = function (fields, formConf) {
         showFileList: setDefaultValue(assetDefaultValue(field.showFileList, true), 'show-file-list'),
         drag: setDefaultValue(field.drag, 'drag'),
         autoUpload: setDefaultValue(assetDefaultValue(field.autoUpload, true), 'auto-upload'),
-        disabled
+        disabled,
+        style
       }
 
       return genFieldTemplate(store, config.type, field.__slot__, { config })
@@ -433,7 +438,7 @@ const genTemplate = function (fields, formConf) {
         data = typeOf(data, 'array') ? data : [data]
         return setDefaultValue(data, `:data="${data}"`)
       }
-      const { tag, vModel } = genFieldAttrs(field)
+      const { tag, vModel, style } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
@@ -442,18 +447,19 @@ const genTemplate = function (fields, formConf) {
         filterablePlaceholder: setDefaultValue(field.filterablePlaceholder, `filter-placeholder="${field.filterablePlaceholder}"`),
         titles: setDefaultValue(assetDefaultValue(toString(field.titles), toString(['列表一', '列表二'])), `:titles="${field.titles}"`),
         buttonTexts: setDefaultValue(assetDefaultValue(toString(field.buttonTexts, toString([]))), `:button-texts="${field.buttonTexts}"`),
-        targetOrder: setDefaultValue(assetDefaultValue(field.targetOrder, 'original'), `target-order="${field.targetOrder}"`)
+        targetOrder: setDefaultValue(assetDefaultValue(field.targetOrder, 'original'), `target-order="${field.targetOrder}"`),
+        style
       }
 
       return genFieldTemplate(store, field.__config__.type, field.__slot__)
     },
     'el-time' (field, pickerOptions) {
-      const { tag, vModel, size, readonly, disabled, placeholder, clearable } = genFieldAttrs(field)
+      const { tag, vModel, size, name, readonly, disabled, placeholder, clearable, style } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
-        name: setDefaultValue(field.name, `name="${field.name}"`),
         size,
+        name,
         placeholder,
         startPlaceholder: setDefaultValue(field.startPlaceholder, `start-placeholder="${field.startPlaceholder}"`),
         endPlaceholder: setDefaultValue(field.endPlaceholder, `end-placeholder="${field.endPlaceholder}"`),
@@ -468,7 +474,8 @@ const genTemplate = function (fields, formConf) {
         readonly,
         disabled,
         editable: setDefaultValue(field.editable, 'editable'),
-        clearable
+        clearable,
+        style
       }
 
       return store
@@ -500,6 +507,21 @@ const genTemplate = function (fields, formConf) {
         )
       }
       const store = tags['el-time'](field, processPickerOptions(field.pickerOptions))
+
+      return genFieldTemplate(store)
+    },
+    'el-switch' (field) {
+      const { tag, vModel, name, disabled, style } = genFieldAttrs(field)
+      const store = {
+        tag,
+        vModel,
+        name,
+        width: setDefaultValue(assetDefaultValue(field.width, 40), `:width="${field.width}"`),
+        activeIconClass: setDefaultValue(field.activeIconClass, `active-icon-class="${field.activeIconClass}"`),
+        inactiveIconClass: setDefaultValue(field.inactiveIconClass, `inactive-icon-class="${field.inactiveIconClass}"`),
+        activeColor: setDefaultValue(assetDefaultValue(field.activeColor, '#409EFF'), `active-color="${field.activeColor}"`),
+        inactiveColor: setDefaultValue(assetDefaultValue(field.inactiveColor, '#C0CCDA'), `inactive-color="${field.inactiveColor}"`)
+      }
 
       return genFieldTemplate(store)
     }
