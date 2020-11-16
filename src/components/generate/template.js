@@ -549,6 +549,28 @@ const genTemplate = function (fields, formConf) {
       }
 
       return genFieldTemplate(store)
+    },
+    'el-rate' (field) {
+      const { tag, vModel, name, style, disabled } = genFieldAttrs(field)
+
+      const store = {
+        tag,
+        vModel,
+        name,
+        max: setDefaultValue(assetDefaultValue(field.max, 5), `:max="${field.max}"`),
+        colors: setDefaultValue(assetDefaultValue(toString(field.colors), toString(['#F7BA2A', '#F7BA2A', '#F7BA2A'])), `:colors="${toString(field.colors)}"`),
+        voidColor: setDefaultValue(assetDefaultValue(field.voidColor, '#C6D1DE'), `void-color="${field.voidColor}"`),
+        disabledVoidColor: setDefaultValue(assetDefaultValue(field.disabledVoidColor, '#EFF2F7'), `disabled-void-color="${field.disabledVoidColor}"`),
+        textColor: setDefaultValue(assetDefaultValue(field.textColor, '#1F2D3D'), `text-color="${field.textColor}"`),
+        texts: setDefaultValue(assetDefaultValue(toString(field.texts), toString(['极差', '失望', '一般', '满意', '惊喜'])), `:texts="${toString(field.texts)}"`),
+        allowHalf: setDefaultValue(field.allowHalf, 'allow-half'),
+        showText: setDefaultValue(field.showText, 'show-text'),
+        showScore: setDefaultValue(field.showScore, 'show-score'),
+        style,
+        disabled
+      }
+
+      return genFieldTemplate(store)
     }
   }
 
