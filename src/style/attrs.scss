@@ -26,6 +26,7 @@
     width: 100%;
     text-align: left;
 }
+
 .drag {
     &__option {
         font-size: 20px;
@@ -78,6 +79,7 @@
         border-top-left-radius: 0;
         color: $white;
     }
+
     &__attrs {
         margin: 10px 5px;
         padding: 10px;
@@ -99,6 +101,7 @@
     font-size: 0;
     list-style: none;
     text-align: center;
+
     &__item {
         display: inline-block;
         border: 1px solid $gray1;

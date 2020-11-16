@@ -615,7 +615,7 @@ const LayoutComponents = [
     gutter: 0,
     jsutify: 'start',
     align: 'top',
-    tag: 'div'
+    tag: ''
   }
 ]
 

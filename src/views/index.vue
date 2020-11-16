@@ -42,46 +42,47 @@
     <div class="container__main">
       <btn-group/>
       <el-scrollbar class="scrollbar">
-        <el-form
-          :ref="formConf.formRef"
-          :label-width="formConf.labelWidth | labelWidth"
-          :label-position="formConf.labelPosition"
-          :inline="formConf.inline"
-          :hide-required-asterisk="formConf.required"
-          :size="formConf.size"
-          :disabled="formConf.disabled"
-        >
-          <draggable
-            class="canvas__block"
-            :list="displayList"
-            :group="dragGroup.name"
-            :animation="300"
-          >
-            <el-row :gutter="formConf.gutter">
-              <el-col :span="formConf.span">
-                <draggable-item
-                  class="draggable__item"
-                  v-for="(item, index) of displayList"
-                  :key="index"
-                  :currentItem="item"
-                  :index="index"
-                  :displayList="displayList"
-                  :formConf="formConf"
-                  :activeId="activeId"
-                  @activeFormItem="activeFormItem"
-                  @copyFormItem="copyFormItem"
-                  @deleteFormItem="deleteFormItem"
-                />
-              </el-col>
-            </el-row>
-          </draggable>
-          <h2
-            class="canvas__empty"
-            v-show="!displayList.length"
+        <el-row :gutter="formConf.gutter">
+          <el-col :span="formConf.span">
+            <el-form
+              :ref="formConf.formRef"
+              :label-width="formConf.labelWidth | labelWidth"
+              :label-position="formConf.labelPosition"
+              :inline="formConf.inline"
+              :hide-required-asterisk="formConf.required"
+              :size="formConf.size"
+              :disabled="formConf.disabled"
             >
-              从左侧拖入或点击组件添加至画布
-          </h2>
-        </el-form>
+              <draggable
+                class="canvas__block"
+                :list="displayList"
+                :group="dragGroup.name"
+                :animation="300"
+              >
+                    <draggable-item
+                      class="draggable__item"
+                      v-for="(item, index) of displayList"
+                      :key="index"
+                      :currentItem="item"
+                      :index="index"
+                      :displayList="displayList"
+                      :formConf="formConf"
+                      :activeId="activeId"
+                      @activeFormItem="activeFormItem"
+                      @copyFormItem="copyFormItem"
+                      @deleteFormItem="deleteFormItem"
+                    />
+
+              </draggable>
+              <h2
+                class="canvas__empty"
+                v-show="!displayList.length"
+                >
+                  从左侧拖入或点击组件添加至画布
+              </h2>
+            </el-form>
+            </el-col>
+          </el-row>
       </el-scrollbar>
     </div>
     <!-- right panel -->

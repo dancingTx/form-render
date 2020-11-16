@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-const endOfLine = require('os').EOL // 对应操作系统下得换行符
+export const endOfLine = require('os').EOL // 对应操作系统下得换行符
 const {
   typeOf,
   isPlainObject,
@@ -28,13 +27,45 @@ const genTemplate = function (fields, formConf) {
     }
     return store
   }
+  const genFormTemplate = function (template, formConf) {
+    const store = {
+      model: setDefaultValue(formConf.__vModel__, `:mode="${formConf.__vModel__}"`),
+      formRef: setDefaultValue(formConf.__config__.formRef, `ref="${formConf.__config__.formRef}"`),
+      labelPosition: setDefaultValue(assetDefaultValue(formConf.labelPosition, 'right'), `label-position="${formConf.labelPosition}"`),
+      labelWidth: setDefaultValue(assetDefaultValue(formConf.labelWidth, 'auto'), `label-width="${formConf.labelWidth}"`),
+      labelSuffix: setDefaultValue(formConf.labelSuffix, `label-suffix="${formConf.labelSuffix}"`),
+      size: setDefaultValue(assetDefaultValue(formConf.size, 'medium'), `size="${formConf.size}"`),
+      hideRequiredAsterisk: setDefaultValue(formConf.hideRequiredAsterisk, 'hide-required-asterisk'),
+      inline: setDefaultValue(formConf.inline, 'inline'),
+      required: setDefaultValue(formConf.required, 'required'),
+      disabled: setDefaultValue(formConf.disabled, 'disabled')
+    }
+
+    return (
+      '<el-form ' + listStoreAttrs(store) + '>' + endOfLine +
+        template +
+        setDefaultValue(formConf.__config__.formBtnGroup, genFormBtns(formConf)) + endOfLine +
+      '</el-form>'
+    )
+  }
+  const genFormBtns = function (formConf) {
+    const template = (endOfLine +
+      '<el-form-item>' + endOfLine +
+          '<el-button type="primary" @click="submitForm(' + formConf.__config__.formRef + ')">提交</el-button>' + endOfLine +
+          '<el-button @click="resetForm(' + formConf.__config__.formRef + ')">重置</el-button>' + endOfLine +
+      '</el-form-item>'
+    )
+
+    return template
+  }
   const genChildrenTemplate = function (type, slot, options) {
     if (!type || !slot) return ''
-    return endOfLine + slots[`${type}Slot`](slot, options) + endOfLine
+    return Object.values(slot).join('') === ''
+      ? slots[`${type}Slot`](slot, options)
+      : endOfLine + slots[`${type}Slot`](slot, options) + endOfLine
   }
-
   const genFieldTemplate = function (store, type, slot, options) {
-    return `${endOfLine}<${listStoreAttrs(store)}>${setDefaultValue((slot && type), genChildrenTemplate(type, slot, options))}</${store.tag}>${endOfLine}`
+    return `${endOfLine}<${listStoreAttrs(store)}>${genChildrenTemplate(type, slot, options)}</${store.tag}>${endOfLine}`
   }
 
   const genSlotTemplate = function (name, content) {
@@ -81,7 +112,14 @@ const genTemplate = function (fields, formConf) {
       return `<el-form-item ${listStoreAttrs(store)}>${children}</el-form-item>`
     },
     rowFormItem (item) {
-      console.log(item)
+      const store = {
+        type: setDefaultValue(assetDefaultValue(item.type, 'default'), `type="${item.type}"`),
+        gutter: setDefaultValue(item.gutter, `:gutter="${item.gutter}"`),
+        jsutify: setDefaultValue(assetDefaultValue(item.jsutify, 'start'), `jsutify="${item.jsutify}"`),
+        align: setDefaultValue(assetDefaultValue(item.align, 'top'), `align="${item.align}"`)
+      }
+      const children = (item.__config__.children || []).map(child => layouts[child.__config__.layout || 'colFormItem'](child)).join(endOfLine)
+      return `<el-row ${listStoreAttrs(store)}>${children}</el-row>`
     }
   }
 
@@ -266,7 +304,7 @@ const genTemplate = function (fields, formConf) {
         round: setDefaultValue(field.round, 'round'),
         circle: setDefaultValue(field.circle, 'circle'),
         autofocus: setDefaultValue(field.autofocus, 'autofocus'),
-        nativeType: setDefaultValue(field.nativeType, `native-type="${field.nativeType}"`),
+        nativeType: setDefaultValue(assetDefaultValue(field.nativeType, 'button'), `native-type="${field.nativeType}"`),
         style
       }
       return genFieldTemplate(store, field.__config__.type, field.__slot__)
@@ -591,7 +629,7 @@ const genTemplate = function (fields, formConf) {
   return (function () {
     let template = ''
     template = (fields || []).map(item => layouts[item.__config__.layout](item)).join(endOfLine)
-    console.log(template)
+    return genFormTemplate(template, formConf)
   }())
 }
 export default genTemplate
