@@ -255,7 +255,6 @@ const formItem = {
   input (h, item, key, currItem) {
     const target = key ? currItem[key] : currItem
     if (typeOf(searchMultiData(target, item.model), 'array')) {
-      console.log(target, item.model, searchMultiData(target, item.model))
       return searchMultiData(target, item.model).map((value, i) => (
         <el-input
           class="item"

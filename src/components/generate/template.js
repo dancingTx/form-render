@@ -340,7 +340,7 @@ const genTemplate = function (fields, formConf) {
             ${stitchProps(props.children, 'children', 'children')}
             ${stitchProps(props.disabled, 'disabled', 'disabled')}
             ${stitchProps(props.leaf, 'leaf', 'leaf')}
-          }${endOfLine}`
+          }${endOfLine}`.split('').filter(item => item !== ' ').join('')
         )
       }
       const { tag, vModel, placeholder, size, disabled, clearable } = genFieldAttrs(field)
