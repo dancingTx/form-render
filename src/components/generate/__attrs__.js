@@ -381,7 +381,7 @@ export const rateOptions = mergeOptions(rate, select)
 const color = {
   __vModel__: { label: '绑定值', model: '__vModel__.value', type: 'color' },
   __native__: [
-    { label: '下拉框类名', model: 'poperClass', type: 'input' },
+    { label: '下拉框类名', model: 'popperClass', type: 'input' },
     { label: '颜色格式', model: 'colorFormat', type: 'select', options: ['hsl', 'hsv', 'hex', 'rgb'] },
     { label: '支持透明度', model: 'showAlpha', type: 'switch' }
   ]

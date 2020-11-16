@@ -81,7 +81,7 @@ const genTemplate = function (fields, formConf) {
       return `<el-form-item ${listStoreAttrs(store)}>${children}</el-form-item>`
     },
     rowFormItem (item) {
-
+      console.log(item)
     }
   }
 
@@ -567,6 +567,20 @@ const genTemplate = function (fields, formConf) {
         showText: setDefaultValue(field.showText, 'show-text'),
         showScore: setDefaultValue(field.showScore, 'show-score'),
         style,
+        disabled
+      }
+
+      return genFieldTemplate(store)
+    },
+    'el-color-picker' (field) {
+      const { tag, vModel, size, disabled } = genFieldAttrs(field)
+      const store = {
+        tag,
+        vModel,
+        size,
+        colorFormat: setDefaultValue(assetDefaultValue(field.colorFormat, 'hex'), `color-format="${field.colorFormat}"`),
+        popperClass: setDefaultValue(field.popperClass, `popper-class="${field.popperClass}"`),
+        showAlpha: setDefaultValue(field.showAlpha, 'show-alpha'),
         disabled
       }
 

@@ -584,7 +584,7 @@ const selectComponents = [
     },
     showAlpha: false,
     colorFormat: 'hex',
-    poperClass: ''
+    popperClass: ''
   }
 ]
 
