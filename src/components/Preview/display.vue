@@ -2,6 +2,7 @@
 /* eslint-disable no-new-func */
 import Vue from 'vue'
 import { randomStr } from '@/utils'
+import { exportDefault } from '../generate'
 const splitCodeByType = function (code, type) {
   code = code.trim()
   if (!code) return
@@ -18,9 +19,9 @@ const genCode = function (code) {
   let template = ''
   let style = ''
   let script = ''
-  template = `<div id='app'>${splitCodeByType(code, 'template')}</div>`
+  template = splitCodeByType(code, 'template')
   style = splitCodeByType(code, 'style')
-  script = splitCodeByType(code, 'script').replace(/export default/, 'return ')
+  script = splitCodeByType(code, 'script').replace(exportDefault, 'return ')
   return {
     template,
     style,
@@ -32,9 +33,9 @@ const renderCode = function (code) {
   const { template, style, script } = genCode(code)
   let component = null
   if (template && script) {
-    const strParse2fn = (new Function(script))()
-    strParse2fn.template = template
-    const Ctor = Vue.extend(strParse2fn)
+    const strParse2Fn = (new Function(script))()
+    strParse2Fn.template = template
+    const Ctor = Vue.extend(strParse2Fn)
     component = (new Ctor()).$mount(this.$refs.display)
   }
 

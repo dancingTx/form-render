@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <el-input :placeholder="option.placeholder" :value="activeIcon">
+    <el-input :placeholder="option.placeholder" v-model="activeIcon">
       <el-button
         slot="append"
         icon="el-icon-thumb"
@@ -32,7 +32,7 @@ export default {
   data () {
     return {
       dialogVisible: false,
-      activeIcon: ''
+      activeIcon: this.conf[this.option.model || 'icon']
     }
   },
   methods: {

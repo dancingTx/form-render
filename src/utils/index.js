@@ -201,3 +201,26 @@ export const listStoreAttrs = function (store) {
  * @description 返回 默认值
  */
 export const setDefaultValue = (key, value, defaultValue = '') => key ? (value || key) : defaultValue
+
+/**
+ *
+ * @param {object} target
+ * @param {function} replacer
+ * @param {string} space
+ */
+export const toString = (target, replacer, space) => {
+  const types = [null, undefined, NaN, Infinity, -Infinity]
+  // types 中的类型，转化成 字符串
+  if (types.includes(target)) {
+    return (target + '').toLowerCase()
+  }
+  // symbol 类型 转换成 symbol 字符串
+  if (typeOf(target, 'symbol')) {
+    return target.toString().toLowerCase()
+  }
+  // 如果是函数，执行后序列化， 若为嵌套， 则递归执行
+  if (typeOf(target, 'function')) {
+    return toString(target())
+  }
+  return JSON.stringify(target, replacer, space)
+}

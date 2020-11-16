@@ -218,7 +218,6 @@ const checkbox = {
 export const checkboxOptions = mergeOptions(checkbox, select)
 
 const cascader = {
-  __vModel__: { label: '绑定值', model: '__vModel__.value', placeholder: '请输入绑定值', type: 'input' },
   __native__: [
     { label: '选择器占位符', model: 'placeholder', type: 'input' },
     { label: '选项分割符', model: 'separator', type: 'input' },
