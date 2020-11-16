@@ -520,7 +520,32 @@ const genTemplate = function (fields, formConf) {
         activeIconClass: setDefaultValue(field.activeIconClass, `active-icon-class="${field.activeIconClass}"`),
         inactiveIconClass: setDefaultValue(field.inactiveIconClass, `inactive-icon-class="${field.inactiveIconClass}"`),
         activeColor: setDefaultValue(assetDefaultValue(field.activeColor, '#409EFF'), `active-color="${field.activeColor}"`),
-        inactiveColor: setDefaultValue(assetDefaultValue(field.inactiveColor, '#C0CCDA'), `inactive-color="${field.inactiveColor}"`)
+        inactiveColor: setDefaultValue(assetDefaultValue(field.inactiveColor, '#C0CCDA'), `inactive-color="${field.inactiveColor}"`),
+        disabled,
+        style
+      }
+
+      return genFieldTemplate(store)
+    },
+    'el-slider' (field) {
+      const { tag, vModel, name, disabled, style } = genFieldAttrs(field)
+
+      const store = {
+        tag,
+        vModel,
+        name,
+        min: setDefaultValue(field.min, `:min="${field.min}"`),
+        max: setDefaultValue(assetDefaultValue(field.max, 100), `:max="${field.max}"`),
+        step: setDefaultValue(assetDefaultValue(field.step, 1), `:step="${field.step}"`),
+        debounce: setDefaultValue(assetDefaultValue(field.debounce, 300), `:debounce="${field.debounce}"`),
+        inputSize: setDefaultValue(assetDefaultValue(field.inputSize, 'small'), `input-size="${field.inputSize}"`),
+        showInputControls: setDefaultValue(assetDefaultValue(field.showInputControls, true), 'show-input-controls'),
+        showTooltip: setDefaultValue(assetDefaultValue(field.showTooltip, true), 'show-tooltip'),
+        showStops: setDefaultValue(field.showStops, 'show-stops'),
+        range: setDefaultValue(field.range, 'range'),
+        vertical: setDefaultValue(field.vertical, 'vertical'),
+        disabled,
+        style
       }
 
       return genFieldTemplate(store)
