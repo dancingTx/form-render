@@ -1,4 +1,6 @@
-export const endOfLine = require('os').EOL // 对应操作系统下得换行符
+// export const endOfLine = require('os').EOL // 对应操作系统下得换行符
+import { endOfLine } from '@/utils'
+import methodsName from './__methods__'
 const {
   typeOf,
   isPlainObject,
@@ -51,8 +53,8 @@ const genTemplate = function (fields, formConf) {
   const genFormBtns = function (formConf) {
     const template = (endOfLine +
       '<el-form-item>' + endOfLine +
-          '<el-button type="primary" @click="submitForm(' + formConf.__config__.formRef + ')">提交</el-button>' + endOfLine +
-          '<el-button @click="resetForm(' + formConf.__config__.formRef + ')">重置</el-button>' + endOfLine +
+      '<el-button type="primary" @click="' + methodsName.submitForm + '(' + formConf.__config__.formRef + ')">提交</el-button>' + endOfLine +
+          '<el-button @click="' + methodsName.resetForm + '(' + formConf.__config__.formRef + ')">重置</el-button>' + endOfLine +
       '</el-form-item>'
     )
 
@@ -129,6 +131,7 @@ const genTemplate = function (fields, formConf) {
       if (slot.default) {
         children.push(slot.default)
       }
+
       return children.join(endOfLine)
     },
     textSlot (slot) {
@@ -261,7 +264,7 @@ const genTemplate = function (fields, formConf) {
         )
       } else {
         children.push(
-          (`<el-button size="${config.btnSize || 'small'}" type="${config.btnType || 'primary'}">${config.btnText || '点击上传'}</el-button>`)
+          (`<el-button size="${config.btnSize || 'small'}" type="${config.btnType || 'primary'}" @click="${methodsName.submitUpload}">${config.btnText || '点击上传'}</el-button>`)
         )
       }
 
@@ -461,11 +464,13 @@ const genTemplate = function (fields, formConf) {
         fileList: setDefaultValue(assetDefaultValue(toString(field.fileList), toString([])), `:file-list="${toString(field.fileList, null, ' ')}"`),
         limit: setDefaultValue(field.limit, `:limit="${field.limit}"`),
         withCredentials: setDefaultValue(field.withCredentials, 'with-credentials'),
-        showFileList: setDefaultValue(assetDefaultValue(field.showFileList, true), 'show-file-list'),
+        showFileList: setDefaultValue(assetDefaultValue(field.showFileList, true), ':show-file-list="false"'),
         drag: setDefaultValue(field.drag, 'drag'),
-        autoUpload: setDefaultValue(assetDefaultValue(field.autoUpload, true), 'auto-upload'),
+        autoUpload: setDefaultValue(assetDefaultValue(field.autoUpload, true), ':auto-upload="false"'),
         disabled,
-        style
+        style,
+        ref: `ref="${config.type}"`,
+        handleBeforeUpload: `:before-upload="${methodsName.beforeUpload}"`
       }
 
       return genFieldTemplate(store, config.type, field.__slot__, { config })
@@ -629,6 +634,7 @@ const genTemplate = function (fields, formConf) {
   return (function () {
     let template = ''
     template = (fields || []).map(item => layouts[item.__config__.layout](item)).join(endOfLine)
+    console.log(template)
     return genFormTemplate(template, formConf)
   }())
 }
