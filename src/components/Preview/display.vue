@@ -1,8 +1,8 @@
 <script>
 /* eslint-disable no-new-func */
 import Vue from 'vue'
-import { randomStr } from '@/utils'
-import { exportDefault } from '../generate'
+import { randomStr, exportDefault } from '@/utils'
+
 const splitCodeByType = function (code, type) {
   code = code.trim()
   if (!code) return

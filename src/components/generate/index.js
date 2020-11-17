@@ -1,11 +1,11 @@
+import { endOfLine } from '@/utils'
 import genTemplate from './template'
 import genScript from './script'
 import genStyle from './style'
-export const exportDefault = 'export default'
 const genCodeStr = function (fields, formConf) {
-  const genTemplateViaVue = `<template><div>${genTemplate(fields, formConf)}</div></template>`
-  const genScriptViaVue = `<script>${genScript(fields, formConf)}</script>`
-  const genStyleViaVue = `<style>${genStyle(fields, formConf)}</style>`
+  const genTemplateViaVue = `<template><div>${endOfLine + genTemplate(fields, formConf) + endOfLine}</div>${endOfLine}</template>${endOfLine}`
+  const genScriptViaVue = `<script>${endOfLine + genScript(fields, formConf) + endOfLine}</script>${endOfLine}`
+  const genStyleViaVue = `<style>${endOfLine + genStyle(fields, formConf) + endOfLine}</style>${endOfLine}`
   return {
     template: genTemplateViaVue,
     script: genScriptViaVue,

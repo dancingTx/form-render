@@ -1,5 +1,6 @@
 import { typeOf, isPlainObject } from './validate'
 export * from './validate'
+export * from './var'
 
 /**
  *
@@ -224,12 +225,3 @@ export const toString = (target, replacer, space) => {
   }
   return JSON.stringify(target, replacer, space)
 }
-
-/**
- * 对应系统下得换行符
- */
-export const endOfLine = require('os').EOL
-/**
- * 符号
- */
-export const symbol = Symbol('')

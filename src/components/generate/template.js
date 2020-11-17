@@ -1,4 +1,3 @@
-// export const endOfLine = require('os').EOL // 对应操作系统下得换行符
 import { endOfLine } from '@/utils'
 import methodsName from './__methods__'
 const {
@@ -50,13 +49,12 @@ const genTemplate = function (fields, formConf) {
       '</el-form>'
     )
   }
-  const genFormBtns = function (formConf) {
-    const template = (endOfLine +
-      '<el-form-item>' + endOfLine +
-      '<el-button type="primary" @click="' + methodsName.submitForm + '(' + formConf.__config__.formRef + ')">提交</el-button>' + endOfLine +
-          '<el-button @click="' + methodsName.resetForm + '(' + formConf.__config__.formRef + ')">重置</el-button>' + endOfLine +
-      '</el-form-item>'
-    )
+  const genFormBtns = function () {
+    const template = `
+    <el-form-item>
+      <el-button type="primary" @click="${methodsName.submitForm}">提交</el-button>
+      <el-button @click="${methodsName.resetForm}">重置</el-button>
+    </el-form-item>`
 
     return template
   }
@@ -634,7 +632,6 @@ const genTemplate = function (fields, formConf) {
   return (function () {
     let template = ''
     template = (fields || []).map(item => layouts[item.__config__.layout](item)).join(endOfLine)
-    console.log(template)
     return genFormTemplate(template, formConf)
   }())
 }
