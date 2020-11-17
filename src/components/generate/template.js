@@ -20,11 +20,7 @@ const genTemplate = function (fields, formConf) {
       clearable: setDefaultValue(field.clearable, 'clearable'),
       required: setDefaultValue(field.required, 'required'),
       readonly: setDefaultValue(field.readonly, 'readonly'),
-      placeholder: setDefaultValue(field.placeholder, `placeholder="${field.placeholder}"`),
-      style: setDefaultValue(
-        field.style && isPlainObject(field.style),
-        `:style="{${Object.keys(field.style).map(key => key + ':' + field.style[key]).join(',')}}"`
-      )
+      placeholder: setDefaultValue(field.placeholder, `placeholder="${field.placeholder}"`)
     }
     return store
   }
@@ -43,10 +39,9 @@ const genTemplate = function (fields, formConf) {
     }
 
     return (
-      '<el-form ' + listStoreAttrs(store) + '>' + endOfLine +
-        template +
-        setDefaultValue(formConf.__config__.formBtnGroup, genFormBtns(formConf)) + endOfLine +
-      '</el-form>'
+      `<el-form ${listStoreAttrs(store)}>
+      ${template + setDefaultValue(formConf.__config__.formBtnGroup, genFormBtns(formConf))}
+      </el-form>`
     )
   }
   const genFormBtns = function () {
@@ -60,9 +55,7 @@ const genTemplate = function (fields, formConf) {
   }
   const genChildrenTemplate = function (type, slot, options) {
     if (!type || !slot) return ''
-    return Object.values(slot).join('') === ''
-      ? slots[`${type}Slot`](slot, options)
-      : endOfLine + slots[`${type}Slot`](slot, options) + endOfLine
+    return endOfLine + slots[`${type}Slot`](slot, options) + endOfLine
   }
   const genFieldTemplate = function (store, type, slot, options) {
     return `${endOfLine}<${listStoreAttrs(store)}>${genChildrenTemplate(type, slot, options)}</${store.tag}>${endOfLine}`
@@ -294,7 +287,7 @@ const genTemplate = function (fields, formConf) {
 
   const tags = {
     'el-button' (field) {
-      const { tag, disabled, size, style } = genFieldAttrs(field)
+      const { tag, disabled, size } = genFieldAttrs(field)
       const store = {
         tag,
         type: setDefaultValue(field.type, `type="${field.type}"`),
@@ -305,13 +298,12 @@ const genTemplate = function (fields, formConf) {
         round: setDefaultValue(field.round, 'round'),
         circle: setDefaultValue(field.circle, 'circle'),
         autofocus: setDefaultValue(field.autofocus, 'autofocus'),
-        nativeType: setDefaultValue(assetDefaultValue(field.nativeType, 'button'), `native-type="${field.nativeType}"`),
-        style
+        nativeType: setDefaultValue(assetDefaultValue(field.nativeType, 'button'), `native-type="${field.nativeType}"`)
       }
       return genFieldTemplate(store, field.__config__.type, field.__slot__)
     },
     'el-input' (field) {
-      const { tag, vModel, size, name, disabled, clearable, readonly, placeholder, style } = genFieldAttrs(field)
+      const { tag, vModel, size, name, disabled, clearable, readonly, placeholder } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
@@ -329,14 +321,13 @@ const genTemplate = function (fields, formConf) {
         autosize: setDefaultValue(field.autosize, 'autosize'),
         clearable,
         readonly,
-        disabled,
-        style
+        disabled
       }
 
       return genFieldTemplate(store, field.__config__.type, field.__slot__)
     },
     'el-input-number' (field) {
-      const { tag, vModel, size, name, placeholder, disabled, style } = genFieldAttrs(field)
+      const { tag, vModel, size, name, placeholder, disabled } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
@@ -350,22 +341,20 @@ const genTemplate = function (fields, formConf) {
         step: setDefaultValue(field.step, `:step="${field.step}"`),
         stepStrictly: setDefaultValue(field.stepStrictly, 'step-strictly'),
         precision: setDefaultValue(field.precision, `:precision="${field.precision}"`),
-        disabled,
-        style
+        disabled
       }
 
       return genFieldTemplate(store)
     },
     'el-select' (field) {
       const isGroup = field.__config__.isGroup
-      const { tag, vModel, name, size, style, placeholder, clearable, disabled } = genFieldAttrs(field)
+      const { tag, vModel, name, size, placeholder, clearable, disabled } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
         name,
         size,
         placeholder,
-        style,
         filterable: setDefaultValue(field.filterable, 'filterable'),
         allowCreate: setDefaultValue(field.allowCreate, 'allow-create'),
         clearable,
@@ -377,15 +366,14 @@ const genTemplate = function (fields, formConf) {
     'el-radio-group' (field) {
       const config = field.__config__
       const { isGroup, isButton, isBorder } = config
-      const { tag, vModel, size, disabled, style } = genFieldAttrs(field)
+      const { tag, vModel, size, disabled } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
         size,
         textColor: setDefaultValue(field.textColor, `text-color="${field.textColor}"`),
         fill: setDefaultValue(field.fill, `fill="${field.fill}"`),
-        disabled,
-        style
+        disabled
       }
       return genFieldTemplate(
         store,
@@ -397,7 +385,7 @@ const genTemplate = function (fields, formConf) {
     'el-checkbox-group' (field) {
       const config = field.__config__
       const { isGroup, isButton, isBorder } = config
-      const { tag, vModel, size, disabled, style } = genFieldAttrs(field)
+      const { tag, vModel, size, disabled } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
@@ -406,8 +394,7 @@ const genTemplate = function (fields, formConf) {
         max: setDefaultValue(assetDefaultValue(field.max, Infinity), `:max="${field.max}"`),
         textColor: setDefaultValue(field.textColor, `textColor="${field.textColor}"`),
         fill: setDefaultValue(field.fill, `fill="${field.fill}"`),
-        disabled,
-        style
+        disabled
       }
       return genFieldTemplate(
         store,
@@ -431,7 +418,7 @@ const genTemplate = function (fields, formConf) {
           ' }'
         )
       }
-      const { tag, vModel, placeholder, size, name, disabled, clearable, style } = genFieldAttrs(field)
+      const { tag, vModel, placeholder, size, name, disabled, clearable } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
@@ -442,15 +429,14 @@ const genTemplate = function (fields, formConf) {
         placeholder,
         separator: setDefaultValue(assetDefaultValue(field.separator, '/'), `separator="${field.separator}"`),
         clearable,
-        disabled,
-        style
+        disabled
       }
 
       return genFieldTemplate(store)
     },
     'el-upload' (field) {
       const config = field.__config__
-      const { tag, disabled, style } = genFieldAttrs(field)
+      const { tag, disabled } = genFieldAttrs(field)
       const store = {
         tag,
         action: setDefaultValue(field.action, `action="${field.action}"`),
@@ -466,7 +452,6 @@ const genTemplate = function (fields, formConf) {
         drag: setDefaultValue(field.drag, 'drag'),
         autoUpload: setDefaultValue(assetDefaultValue(field.autoUpload, true), ':auto-upload="false"'),
         disabled,
-        style,
         ref: `ref="${config.type}"`,
         handleBeforeUpload: `:before-upload="${methodsName.beforeUpload}"`
       }
@@ -479,7 +464,7 @@ const genTemplate = function (fields, formConf) {
         data = typeOf(data, 'array') ? data : [data]
         return setDefaultValue(data, `:data="${data}"`)
       }
-      const { tag, vModel, style } = genFieldAttrs(field)
+      const { tag, vModel } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
@@ -488,14 +473,13 @@ const genTemplate = function (fields, formConf) {
         filterablePlaceholder: setDefaultValue(field.filterablePlaceholder, `filter-placeholder="${field.filterablePlaceholder}"`),
         titles: setDefaultValue(assetDefaultValue(toString(field.titles), toString(['列表一', '列表二'])), `:titles="${field.titles}"`),
         buttonTexts: setDefaultValue(assetDefaultValue(toString(field.buttonTexts, toString([]))), `:button-texts="${field.buttonTexts}"`),
-        targetOrder: setDefaultValue(assetDefaultValue(field.targetOrder, 'original'), `target-order="${field.targetOrder}"`),
-        style
+        targetOrder: setDefaultValue(assetDefaultValue(field.targetOrder, 'original'), `target-order="${field.targetOrder}"`)
       }
 
       return genFieldTemplate(store, field.__config__.type, field.__slot__)
     },
     'el-time' (field, pickerOptions) {
-      const { tag, vModel, size, name, readonly, disabled, placeholder, clearable, style } = genFieldAttrs(field)
+      const { tag, vModel, size, name, readonly, disabled, placeholder, clearable } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
@@ -515,8 +499,7 @@ const genTemplate = function (fields, formConf) {
         readonly,
         disabled,
         editable: setDefaultValue(field.editable, 'editable'),
-        clearable,
-        style
+        clearable
       }
 
       return store
@@ -552,7 +535,7 @@ const genTemplate = function (fields, formConf) {
       return genFieldTemplate(store)
     },
     'el-switch' (field) {
-      const { tag, vModel, name, disabled, style } = genFieldAttrs(field)
+      const { tag, vModel, name, disabled } = genFieldAttrs(field)
       const store = {
         tag,
         vModel,
@@ -562,14 +545,13 @@ const genTemplate = function (fields, formConf) {
         inactiveIconClass: setDefaultValue(field.inactiveIconClass, `inactive-icon-class="${field.inactiveIconClass}"`),
         activeColor: setDefaultValue(assetDefaultValue(field.activeColor, '#409EFF'), `active-color="${field.activeColor}"`),
         inactiveColor: setDefaultValue(assetDefaultValue(field.inactiveColor, '#C0CCDA'), `inactive-color="${field.inactiveColor}"`),
-        disabled,
-        style
+        disabled
       }
 
       return genFieldTemplate(store)
     },
     'el-slider' (field) {
-      const { tag, vModel, name, disabled, style } = genFieldAttrs(field)
+      const { tag, vModel, name, disabled } = genFieldAttrs(field)
 
       const store = {
         tag,
@@ -585,14 +567,13 @@ const genTemplate = function (fields, formConf) {
         showStops: setDefaultValue(field.showStops, 'show-stops'),
         range: setDefaultValue(field.range, 'range'),
         vertical: setDefaultValue(field.vertical, 'vertical'),
-        disabled,
-        style
+        disabled
       }
 
       return genFieldTemplate(store)
     },
     'el-rate' (field) {
-      const { tag, vModel, name, style, disabled } = genFieldAttrs(field)
+      const { tag, vModel, name, disabled } = genFieldAttrs(field)
 
       const store = {
         tag,
@@ -607,7 +588,6 @@ const genTemplate = function (fields, formConf) {
         allowHalf: setDefaultValue(field.allowHalf, 'allow-half'),
         showText: setDefaultValue(field.showText, 'show-text'),
         showScore: setDefaultValue(field.showScore, 'show-score'),
-        style,
         disabled
       }
 

@@ -1,6 +1,7 @@
 import { typeOf, isPlainObject } from './validate'
 export * from './validate'
 export * from './var'
+export * from './rules'
 
 /**
  *

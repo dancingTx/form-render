@@ -3,13 +3,19 @@ import genTemplate from './template'
 import genScript from './script'
 import genStyle from './style'
 const genCodeStr = function (fields, formConf) {
-  const genTemplateViaVue = `<template><div>${endOfLine + genTemplate(fields, formConf) + endOfLine}</div>${endOfLine}</template>${endOfLine}`
-  const genScriptViaVue = `<script>${endOfLine + genScript(fields, formConf) + endOfLine}</script>${endOfLine}`
-  const genStyleViaVue = `<style>${endOfLine + genStyle(fields, formConf) + endOfLine}</style>${endOfLine}`
+  const template = genTemplate(fields, formConf)
+  const script = genScript(fields, formConf)
+  const style = genStyle(fields, formConf)
+  const genTemplateViaVue = templateStr => `<template>${endOfLine}<div>${endOfLine + templateStr + endOfLine}</div>${endOfLine}</template>${endOfLine}`
+  const genScriptViaVue = scriptStr => `<script>${endOfLine + scriptStr + endOfLine}</script>${endOfLine}`
+  const genStyleViaVue = styleStr => `<style>${endOfLine + styleStr + endOfLine}</style>${endOfLine}`
   return {
-    template: genTemplateViaVue,
-    script: genScriptViaVue,
-    style: genStyleViaVue
+    template,
+    script,
+    style,
+    vueTemplate: genTemplateViaVue(template),
+    vueScript: genScriptViaVue(script),
+    vueStyle: genStyleViaVue(style)
   }
 }
 
