@@ -222,7 +222,7 @@ const genTemplate = function (fields, formConf) {
         return options.map(option => {
           let template = ''
           const store = {
-            label: setDefaultValue(option.value, `value="${option.value}"`),
+            label: setDefaultValue(option.value, `label="${option.value}"`),
             name: setDefaultValue(option.name, `name="${option.name}"`)
           }
           if (isButton) {
@@ -247,7 +247,7 @@ const genTemplate = function (fields, formConf) {
 
       return children.join(endOfLine)
     },
-    uploadSlot (slot, { config }) {
+    uploadSlot (slot, { autoUpload, config }) {
       const children = []
       if (slot.listType === 'picture-card') {
         children.push(
@@ -255,7 +255,9 @@ const genTemplate = function (fields, formConf) {
         )
       } else {
         children.push(
-          (`<el-button size="${config.btnSize || 'small'}" type="${config.btnType || 'primary'}" @click="${methodsName.submitUpload}">${config.btnText || '点击上传'}</el-button>`)
+          (`<el-button size="${config.btnSize || 'small'}" type="${config.btnType || 'primary'}" ${setDefaultValue(!autoUpload, `@click="${methodsName.submitUpload}"`)}>
+          ${config.btnText || '点击上传'}
+          </el-button>`)
         )
       }
 
@@ -456,7 +458,7 @@ const genTemplate = function (fields, formConf) {
         handleBeforeUpload: `:before-upload="${methodsName.beforeUpload}"`
       }
 
-      return genFieldTemplate(store, config.type, field.__slot__, { config })
+      return genFieldTemplate(store, config.type, field.__slot__, { autoUpload: field.autoUpload, config })
     },
     'el-transfer' (field) {
       const processData = function (data) {

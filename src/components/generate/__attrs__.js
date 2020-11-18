@@ -149,9 +149,6 @@ export const select = {
     { label: '是否必选', model: 'required', type: 'switch' }
 
   ],
-  style: [
-    { label: '组件宽度', model: 'width', placeholder: '请输入组件宽度', type: 'input' }
-  ],
   __native__: [
     { label: '是否禁用', model: 'disabled', type: 'switch' }
   ]

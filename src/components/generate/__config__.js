@@ -7,7 +7,7 @@ export const formConf = {
     formBtnGroup: true
   },
   __vModel__: 'formData',
-  labelWidth: '80px',
+  labelWidth: '100px',
   labelPosition: 'right',
   size: 'medium',
   labelSuffix: '',
@@ -191,9 +191,6 @@ const baseSelectConf = {
     // 表单校验规则
     rules: []
   },
-  style: {
-    width: '100%'
-  },
   clearable: false, // 是否显示清空
   disabled: false // 是否禁用
 }
@@ -298,14 +295,14 @@ const selectComponents = [
     },
     __slot__: {
       options: [
-        { label: '选项一', value: 1 },
-        { label: '选项二', value: 2 },
-        { label: '选项三', value: 3 }
+        { label: '选项一', value: '1' },
+        { label: '选项二', value: '2' },
+        { label: '选项三', value: '3' }
       ]
     },
     __vModel__: {
       key: 'checkbox',
-      value: [1, 3]
+      value: ['1', '3']
     },
     textColor: '#ffffff',
     fill: '#409EFF',
