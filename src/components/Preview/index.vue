@@ -40,7 +40,7 @@
           <span class='btngroup__content'>{{btn.label}}</span>
         </div>
       </div>
-      <display :code="displayCode"/>
+      <display :code="displayCode(codeObj)"/>
     </div>
   </div>
 </template>
@@ -61,24 +61,13 @@ export default {
   watch: {
     editorValue (value) {
       // watch content change via monaco editor
+      console.log('value->', value)
     },
     activeName: {
       handler (type) {
-        const { template, script, style } = this.codeObj
-        const codes = {
-          html: template,
-          css: style,
-          javascript: script
-        }
-        this.code = codes[type || 'html']
+        this.editCode(this.codeObj, type)
       },
       immediate: true
-    }
-  },
-  computed: {
-    displayCode () {
-      const { vueTemplate, vueScript, vueStyle } = this.codeObj
-      return vueTemplate + vueScript + vueStyle
     }
   },
   data () {
@@ -100,8 +89,21 @@ export default {
   methods: {
     handleClick (directive) {
       this.$emit('exec', directive)
+    },
+    editCode (codeObj, type) {
+      const { template, script, style } = codeObj
+      const codes = {
+        html: template,
+        css: style,
+        javascript: script
+      }
+      this.code = codes[type || 'html']
+    },
+    displayCode (codeObj) {
+      const { vueTemplate, vueScript, vueStyle } = codeObj
+      this.editCode(this.codeObj)
+      return vueTemplate + vueScript + vueStyle
     }
-
   }
 }
 </script>

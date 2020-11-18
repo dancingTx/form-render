@@ -7,7 +7,7 @@ export const formConf = {
     formBtnGroup: true
   },
   __vModel__: 'formData',
-  labelWidth: 'auto',
+  labelWidth: '80px',
   labelPosition: 'right',
   size: 'medium',
   labelSuffix: '',

@@ -55,6 +55,11 @@ export default {
   },
   mixins: [resize],
   watch: {
+    code (code) {
+      createAndUpdateEditorValue.call(this, code, {
+        type: this.activeName
+      })
+    },
     activeName (type) {
       createAndUpdateEditorValue.call(this, this.code, {
         type
