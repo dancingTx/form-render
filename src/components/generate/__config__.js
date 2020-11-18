@@ -34,9 +34,6 @@ const baseBasicConf = {
     push: 0, // 栅格向右移动的格数
     pull: 0 // 栅格向左移动的格数
   },
-  style: {
-    width: '10%'
-  },
   disabled: false // 是否禁用
 }
 

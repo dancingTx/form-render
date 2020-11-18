@@ -8,3 +8,5 @@ export const endOfLine = require('os').EOL
 export const symbol = Symbol('')
 
 export const exportDefault = 'export default'
+
+export const draggableName = 'componentGroup'

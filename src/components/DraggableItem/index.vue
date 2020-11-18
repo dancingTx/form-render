@@ -1,8 +1,7 @@
 <script>
 import draggable from 'vuedraggable'
 import render from '../render'
-import { draggableName } from '@/views'
-import { labelWidth, typeOf } from '@/utils'
+import { labelWidth, typeOf, draggableName } from '@/utils'
 const stopPropagation = function (event, fn) {
   fn(...Array.from(arguments).slice(2))
   event.stopPropagation()

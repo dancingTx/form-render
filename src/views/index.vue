@@ -114,8 +114,8 @@ import draggable from 'vuedraggable'
 import { logo, btnGroup, rightSideBar } from '@/layout'
 import { DraggableItem, Preview } from '@/components'
 import genCodeStr from '@/components/generate'
-import { deepCopy, typeOf, firstUpperCase, labelWidth } from '@/utils'
-export const draggableName = 'componentGroup'
+import { deepCopy, typeOf, firstUpperCase, labelWidth, draggableName } from '@/utils'
+
 let fid = 0
 export default {
   name: 'index',

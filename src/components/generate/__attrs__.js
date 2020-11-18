@@ -31,9 +31,6 @@ export const basic = {
     { label: '标题', model: 'label', placeholder: '请输入标题', type: 'input' },
     { label: '是否显示标题', model: 'showLabel', type: 'switch' },
     { label: '表单栅格', model: 'span', type: 'slider' }
-  ],
-  style: [
-    { label: '组件宽度', model: 'width', placeholder: '请输入组件宽度', type: 'input' }
   ]
 }
 
