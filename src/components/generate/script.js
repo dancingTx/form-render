@@ -124,7 +124,7 @@ const genScript = function (fields, formConf) {
     mixinMethods(options.methods, formConf)
     const { datas, props, methods } = options
     const template = `${exportDefault} {
-      name: 'form',
+      name: 'formComp',
       data () {
         return {
           ${formConf.__vModel__}: {

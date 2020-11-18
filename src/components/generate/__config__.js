@@ -24,7 +24,7 @@ export const formConf = {
 const baseBasicConf = {
   __config__: {
     componentType: 'basic',
-    labelWidth: 'auto',
+    labelWidth: '',
     required: false,
     showLabel: true,
     changeTag: true,
@@ -69,7 +69,7 @@ export const basicOptions = basicComponents.map(item => mergeOptions(item, baseB
 const baseInputConf = {
   __config__: {
     componentType: 'input',
-    labelWidth: 'auto',
+    labelWidth: '',
     required: true,
     showLabel: true,
     changeTag: true,
@@ -182,7 +182,7 @@ export const inputOptions = inputComponents.map(item => mergeOptions(item, baseI
 const baseSelectConf = {
   __config__: {
     componentType: 'select',
-    labelWidth: 'auto',
+    labelWidth: '',
     required: true,
     showLabel: true,
     changeTag: true,

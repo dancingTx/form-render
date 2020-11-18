@@ -40,7 +40,7 @@
           <span class='btngroup__content'>{{btn.label}}</span>
         </div>
       </div>
-      <display :code="code" />
+      <display :code="displayCode"/>
     </div>
   </div>
 </template>
@@ -49,22 +49,41 @@
 
 import display from './display'
 import monaco from './monaco'
-import { template } from './testTemplate'
-
 export default {
   name: 'Preview',
   components: {
     display,
     monaco
   },
+  props: {
+    codeObj: Object
+  },
   watch: {
     editorValue (value) {
       // watch content change via monaco editor
+    },
+    activeName: {
+      handler (type) {
+        const { template, script, style } = this.codeObj
+        const codes = {
+          html: template,
+          css: style,
+          javascript: script
+        }
+        this.code = codes[type || 'html']
+      },
+      immediate: true
+    }
+  },
+  computed: {
+    displayCode () {
+      const { vueTemplate, vueScript, vueStyle } = this.codeObj
+      return vueTemplate + vueScript + vueStyle
     }
   },
   data () {
     return {
-      code: template,
+      code: '',
       activeName: 'html',
       tabs: [
         { label: 'template', name: 'html' },
@@ -82,6 +101,7 @@ export default {
     handleClick (directive) {
       this.$emit('exec', directive)
     }
+
   }
 }
 </script>

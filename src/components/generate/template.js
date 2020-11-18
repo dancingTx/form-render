@@ -26,10 +26,10 @@ const genTemplate = function (fields, formConf) {
   }
   const genFormTemplate = function (template, formConf) {
     const store = {
-      model: setDefaultValue(formConf.__vModel__, `:mode="${formConf.__vModel__}"`),
+      model: setDefaultValue(formConf.__vModel__, `:model="${formConf.__vModel__}"`),
       formRef: setDefaultValue(formConf.__config__.formRef, `ref="${formConf.__config__.formRef}"`),
       labelPosition: setDefaultValue(assetDefaultValue(formConf.labelPosition, 'right'), `label-position="${formConf.labelPosition}"`),
-      labelWidth: setDefaultValue(assetDefaultValue(formConf.labelWidth, 'auto'), `label-width="${formConf.labelWidth}"`),
+      labelWidth: setDefaultValue(formConf.labelWidth, `label-width="${formConf.labelWidth}"`),
       labelSuffix: setDefaultValue(formConf.labelSuffix, `label-suffix="${formConf.labelSuffix}"`),
       size: setDefaultValue(assetDefaultValue(formConf.size, 'medium'), `size="${formConf.size}"`),
       hideRequiredAsterisk: setDefaultValue(formConf.hideRequiredAsterisk, 'hide-required-asterisk'),

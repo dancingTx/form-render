@@ -2,15 +2,24 @@
     &__item {
         position: relative;
         margin-bottom: 10px;
-        padding: 10px 5px;
+        padding: 0 20px;
         box-sizing: border-box;
         border-radius: 10px;
+        line-height: 60px;
         cursor: move;
         &--active, &:hover {
             background-color: $blue3;
             .btns {
                 display: block;
             }
+        }
+        
+        .el-form-item__content,
+        .el-form-item__label {
+            line-height: 60px;
+        }
+        >.el-form-item {
+            margin: 0;
         }
     }
 

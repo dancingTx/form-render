@@ -1,18 +1,24 @@
 <script>
 import { editor } from 'monaco-editor'
+import beautify from 'js-beautify'
 import resize from '@/mixins/resize'
+import { beautifyRules } from '@/utils'
 let globalEditorInstance = editor
 export let edit = null
-const map = {
-  html: '<div>111</div>',
-  css: 'div {color: #ff0}',
-  javascript: 'console.log(1)'
+const marks = {
+  html: 'html',
+  css: 'css',
+  javascript: 'js'
+}
+const beautifyCodeStr = function (code, type) {
+  return beautify[marks[(type || 'html')]](code, beautifyRules)
 }
 const setMonacoLanguage = function (language) {
   const [model] = globalEditorInstance.getModels()
   globalEditorInstance.setModelLanguage(model, language)
 }
 const createAndUpdateEditorValue = function (code, options = {}) {
+  code = beautifyCodeStr(code, options.type)
   if (edit) {
     edit.setValue(code)
     setMonacoLanguage(options.type)
@@ -50,7 +56,7 @@ export default {
   mixins: [resize],
   watch: {
     activeName (type) {
-      createAndUpdateEditorValue.call(this, map[type], {
+      createAndUpdateEditorValue.call(this, this.code, {
         type
       })
     },
@@ -64,7 +70,7 @@ export default {
     }
   },
   mounted () {
-    createAndUpdateEditorValue.call(this, map[this.activeName], {
+    createAndUpdateEditorValue.call(this, this.code, {
       type: this.activeName
     })
   },

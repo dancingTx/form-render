@@ -40,8 +40,13 @@
     }
 }
 
-.display__btns {
-    width: 100%;
-    height: 40px;
-    background-color: $blue3;
+.display {
+    &__btns {
+        width: 100%;
+        height: 40px;
+        background-color: $blue3;
+    }
+    &__block {
+        padding: 20px;
+    }
 }

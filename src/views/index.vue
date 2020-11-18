@@ -59,20 +59,19 @@
                 :group="dragGroup.name"
                 :animation="300"
               >
-                    <draggable-item
-                      class="draggable__item"
-                      v-for="(item, index) of displayList"
-                      :key="index"
-                      :currentItem="item"
-                      :index="index"
-                      :displayList="displayList"
-                      :formConf="formConf"
-                      :activeId="activeId"
-                      @activeFormItem="activeFormItem"
-                      @copyFormItem="copyFormItem"
-                      @deleteFormItem="deleteFormItem"
-                    />
-
+                <draggable-item
+                  class="draggable__item"
+                  v-for="(item, index) of displayList"
+                  :key="index"
+                  :currentItem="item"
+                  :index="index"
+                  :displayList="displayList"
+                  :formConf="formConf"
+                  :activeId="activeId"
+                  @activeFormItem="activeFormItem"
+                  @copyFormItem="copyFormItem"
+                  @deleteFormItem="deleteFormItem"
+                />
               </draggable>
               <h2
                 class="canvas__empty"
@@ -104,7 +103,7 @@
         :withHeader="false"
         @open="handleDrawerOpen"
         >
-        <preview @exec="executer" />
+        <preview @exec="executer" :codeObj="codeObj" />
       </el-drawer>
     </div>
   </div>
@@ -148,7 +147,8 @@ export default {
       displayList: [],
       tempData: {},
       activeData: {},
-      activeId: 0
+      activeId: 0,
+      codeObj: {}
     }
   },
   filters: {
@@ -268,7 +268,7 @@ export default {
       })
     },
     handleDrawerOpen () {
-      genCodeStr(this.displayList, this.formConf)
+      this.codeObj = genCodeStr(this.displayList, this.formConf)
     }
   }
 }
