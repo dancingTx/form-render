@@ -1,6 +1,8 @@
 const path = require('path')
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 const resolve = url => path.resolve(__dirname, url)
 module.exports = {
+  runtimeCompiler: true,
   publicPath: process.env.NODE_ENV === 'production'
     ? '/form-render/' : '',
   chainWebpack (config) {
@@ -22,5 +24,10 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
       .end()
+  },
+  configureWebpack: {
+    plugins: [
+      new MonacoWebpackPlugin()
+    ]
   }
 }

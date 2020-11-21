@@ -1,0 +1,125 @@
+.item {
+    width: 90%;
+    .el-scrollbar {
+        height: 60vh;
+    }
+    .el-dialog {
+        width: 80%;
+    }
+}
+.append {
+    &.el-input-group {
+        width: 90%;
+    }
+    .item {
+        width: 80px;
+    }
+}
+.el-upload-dragger {
+    line-height: 200px;
+    i {
+        font-size: 40px;
+    }
+}
+
+.custom-tree-node {
+    width: 100%;
+    text-align: left;
+}
+
+.drag {
+    &__option {
+        font-size: 20px;
+        cursor: move;
+    }
+    
+    &__item {
+        &.sortable-chosen {
+            border: 1px dashed $brand;
+        }
+    }
+
+    &__remove {
+        font-size: 20px;
+        color: $red;
+        cursor: pointer;
+    }
+
+    &__btns {
+        font-size: 18px;
+        float: right;
+        &> i:first-child {
+            margin-right: 10px;
+            color: $green;
+            &:hover {
+                color: $green1;
+            }
+        }
+        &> i:last-child {
+            color: $red;
+            &:hover {
+                color: $red1;
+            }
+        }
+    }
+}
+
+.right {
+    &__link {
+        position: absolute;
+        z-index: 1;
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background-color: $brand;
+        font-size: 24px;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 5px;
+        border-top-left-radius: 0;
+        color: $white;
+    }
+
+    &__attrs {
+        margin: 10px 5px;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+}
+
+.cascader {
+    &__block {
+        text-align: center;
+    }
+}
+
+.icons {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    list-style: none;
+    text-align: center;
+
+    &__item {
+        display: inline-block;
+        border: 1px solid $gray1;
+        font-size: 14px;
+        cursor: pointer;
+        &:hover {
+            color: $brand;
+        }
+        >i {
+            padding: 20px;
+            font-size: 30px;
+        }
+        >div {
+            padding: 0 10px 10px 10px;
+            line-height: 20px;
+        }
+        &--active {
+            background-color: $blue3;
+        }
+    }
+}

@@ -1,0 +1,49 @@
+.components {
+    &__title {
+        margin: 0 10px;
+    }
+
+    &__body {
+        display: flex;
+    }
+
+    &__btns {
+        flex: 1;
+        float: left;
+        margin: 5px 10px;
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        border: 1px solid $brand;
+        border-radius: 5px;
+        background-color: $blue1;
+        cursor: move;
+
+        &:hover {
+            border: 1px dashed $brand;
+            box-shadow: 2px 2px 2px $gray2;
+            background-color: $blue2;
+        }
+
+        & .sortable-ghost {
+            width: calc(100% - 10px);
+            height: 60px;
+            border: none;
+            background-color: $blue1;
+            
+        }
+
+    }
+}
+
+.title {
+    &__icon {
+        margin-right: 10px;
+    }
+
+    &__content {
+        display: inline-block;
+        color: $gray
+    }
+}

@@ -1,1 +1,1 @@
-export const SET_COMP_INFO = 'setComponentsInfo'
+export const SET_INFO = 'setInfo'

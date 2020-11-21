@@ -1,76 +1,73 @@
-// custom
-.layout {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+$headerHeight: 40px;
+$bodyHeight: calc(100vh - 40px);
 
-  &__app_header {
-    flex: 1;
-    background: $gradient-blue;
+.container {
+  display: grid;
+  grid-template-columns: 18% auto 24%;
+  .scrollbar {
+    height: $bodyHeight;
   }
 
-  &__app_main {
-    flex: 12;
+  &__right {
+    .el-tabs--top {
+      height: 40px;
+    }
   }
 
-  &__app_footer {
-    flex: 1;
-    background: $gradient-light-blue;
-  }
 }
 
 .logo {
+  height: $headerHeight;
+  line-height: $headerHeight;
   text-align: center;
-
+  white-space: nowrap;
+  padding: 5px;
+  box-sizing: border-box;
   &__avatar {
     width: 30px;
     height: 30px;
     margin: 0 12px;
-    vertical-align: text-bottom;
+    vertical-align: sub; ;
   }
 
   &__title {
-    display: inline-block;
-    margin: 0;
-    line-height: 58px;
+    font-size: 18px;
+    font-weight: 600;
     color: $brand;
   }
 }
 
-.header {
-  display: flex;
-
-  &__logo {
-    flex: 1;
-  }
-
-  &__btn_group {
-    flex: 3;
-    text-align: right;
-  }
-
-  &__external_links {
-    flex: 1;
-  }
-}
-
-.container {
-  display: flex;
-
-  &__left {
-    flex: 1;
-  }
-
-  &__main {
-    flex: 3;
-    border: 1px dashed $gray;
-  }
-  
-  &__board {
+.canvas {
+  &__block {
     position: relative;
-    overflow: hidden;
-    min-height: 86vh;
+    min-height: $bodyHeight;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px dashed $gray;
     background-color: $gray1;
+
+    .sortable-ghost {
+      display: block;
+      position: relative;
+      overflow: hidden;
+      &::before {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 2;
+          content: ' ';
+          height: 3px;
+          background-color: $brand;
+      }
+  }
+
+  & .sortable-ghost {
+    width: calc(100% - 10px);
+    height: 60px;
+    border: none;
+    background-color: $blue1;
+    }
   }
 
   &__empty {
@@ -80,31 +77,28 @@
     transform: translate(-50%, -50%);
     color: $brand;
   }
-
-  &__right {
-    flex: 1;
-  }
 }
 
-.btngroup {
-  &__item {
-    display: inline-block;
-    margin: 20px;
-    cursor: pointer;
-    color: $red1;
 
+.btngroup {
+  height: $headerHeight;
+  border-right: 1px dashed $gray;
+  &__inner {
+    float: right;
+  }
+  &__item {
+    float: left;
+    padding: 0 10px;
+    cursor: pointer;
+    line-height: $headerHeight;
+    color: $red;
     &:hover {
-      color: $red;
+      color: $red1;
     }
   }
 
   &__icon {
-    margin-right: 10px;
+    margin-right: 5px;
   }
-  
-}
 
-.scrollbar {
-  height: 86vh;
-  overflow: hidden;
 }
