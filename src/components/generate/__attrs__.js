@@ -255,7 +255,7 @@ const upload = {
       ]
     },
     { label: '最大上传数', model: 'limit', type: 'number' },
-    { label: '文件列表类型', model: 'listType', type: 'radio', options: ['text', 'picture', 'picture-card'] },
+    { label: '文件列表类型', model: 'listType', type: 'radio', options: ['text', 'picture', 'card'] },
     { label: '是否多选文件', model: 'multiple', type: 'switch' },
     { label: '是否携带Cookie', model: 'withCredentials', type: 'switch' },
     { label: '显示上传列表', model: 'showFileList', type: 'switch' },

@@ -73,13 +73,9 @@ export default {
   },
   watch: {
     code (code) {
-      console.log('cdoe', code)
       destoryCode.call(this)
       renderCode.call(this, code)
     }
-  },
-  mounted () {
-    renderCode.call(this, this.code)
   },
   render (h) {
     return h('div', {

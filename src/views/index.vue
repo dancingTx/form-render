@@ -145,6 +145,7 @@ export default {
         put: false
       },
       displayList: [],
+      doList: [],
       tempData: {},
       activeData: {},
       activeId: 0,
@@ -240,6 +241,9 @@ export default {
         key: 'directive',
         value: ''
       })
+    },
+    executeDoFunc () {},
+    executeUndoFunc () {
     },
     executeRunFunc () {
       // display drawer

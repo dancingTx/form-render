@@ -40,7 +40,7 @@
           <span class='btngroup__content'>{{btn.label}}</span>
         </div>
       </div>
-      <display :code="displayCode(codeObj)"/>
+      <display :code="preview"/>
     </div>
   </div>
 </template>
@@ -64,23 +64,26 @@ export default {
   watch: {
     editorValue (value) {
       // watch content change via monaco editor
-      // console.log('value->', value, this.activeName)
       this.displayCode(this.codeObj, value)
     },
     activeName (type) {
       this.editCode(this.codeObj, type)
+    },
+    codeObj (value) {
+      this.displayCode(value)
     }
   },
   data () {
     return {
-      code: '',
+      code: '', // 编辑区字符串
+      preview: '', // 视图区字符串
+      editorValue: '', // 编辑editor 返回值
       activeName: 'html',
       tabs: [
         { label: 'template', name: 'html' },
         { label: 'style', name: 'css' },
         { label: 'script', name: 'javascript' }
       ],
-      editorValue: '',
       btns: [
         { label: '运行', icon: 'el-icon-video-play', directive: 'run' },
         { label: '关闭', icon: 'el-icon-close', directive: 'closed' }
@@ -93,7 +96,6 @@ export default {
         this.$emit('exec', directive)
         return
       }
-
       //
       directive && this[`execute${firstUpperCase(directive)}Func`]()
     },
@@ -106,13 +108,16 @@ export default {
       if (editorValue) {
         switch (this.activeName) {
           case 'html':
+            codeObj.template = editorValue
             template = genTemplateViaVue(editorValue) + vueScript + vueStyle
             break
           case 'css':
-            template = vueTemplate + genScriptViaVue(editorValue) + vueStyle
+            codeObj.style = editorValue
+            template = vueTemplate + vueScript + genStyleViaVue(editorValue)
             break
           case 'javascript':
-            template = vueTemplate + vueScript + genStyleViaVue(editorValue)
+            codeObj.script = editorValue
+            template = vueTemplate + genScriptViaVue(editorValue) + vueStyle
             break
           default:
             break
@@ -121,7 +126,7 @@ export default {
         this.editCode(codeObj, this.activeName)
         template = vueTemplate + vueScript + vueStyle
       }
-      return template
+      this.preview = template
     },
     editCode (codeObj, type) {
       const { template, script, style } = codeObj
@@ -132,6 +137,9 @@ export default {
       }
       this.code = codes[type || 'html']
     }
+  },
+  mounted () {
+    this.displayCode(this.codeObj)
   }
 }
 </script>

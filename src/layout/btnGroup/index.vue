@@ -3,6 +3,8 @@ export default {
   name: 'btnGroup',
   render () {
     const btnGroup = [
+      { icon: 'el-icon-right', directive: 'do', content: '前进' },
+      { icon: 'el-icon-back', directive: 'undo', content: '撤销' },
       { icon: 'el-icon-video-play', directive: 'run', content: '运行' },
       { icon: 'el-icon-delete', directive: 'clear', content: '清空' }
     ]
