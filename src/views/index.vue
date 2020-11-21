@@ -244,7 +244,6 @@ export default {
     executeRunFunc () {
       // display drawer
       this.isShowing = true
-      // run code
     },
     executeClosedFunc () {
       this.isShowing = false

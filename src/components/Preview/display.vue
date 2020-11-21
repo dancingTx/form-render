@@ -73,6 +73,7 @@ export default {
   },
   watch: {
     code (code) {
+      console.log('cdoe', code)
       destoryCode.call(this)
       renderCode.call(this, code)
     }

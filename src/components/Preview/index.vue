@@ -40,15 +40,18 @@
           <span class='btngroup__content'>{{btn.label}}</span>
         </div>
       </div>
-      <display :code="displayCode"/>
+      <display :code="displayCode(codeObj)"/>
     </div>
   </div>
 </template>
 
 <script>
-
+/* eslint-disable no-unused-vars */
 import display from './display'
 import monaco from './monaco'
+import { firstUpperCase, isPlainObject } from '@/utils'
+import { genTemplateViaVue, genScriptViaVue, genStyleViaVue } from '../generate/index'
+import genStyle from '../generate/style'
 export default {
   name: 'Preview',
   components: {
@@ -62,19 +65,10 @@ export default {
     editorValue (value) {
       // watch content change via monaco editor
       // console.log('value->', value, this.activeName)
+      this.displayCode(this.codeObj, value)
     },
-    activeName: {
-      handler (type) {
-        this.editCode(this.codeObj, type)
-      },
-      immediate: true
-    }
-  },
-  computed: {
-    displayCode () {
-      const { vueTemplate, vueScript, vueStyle } = this.codeObj
-      this.editCode(this.codeObj)
-      return vueTemplate + vueScript + vueStyle
+    activeName (type) {
+      this.editCode(this.codeObj, type)
     }
   },
   data () {
@@ -95,7 +89,39 @@ export default {
   },
   methods: {
     handleClick (directive) {
-      this.$emit('exec', directive)
+      if (directive === 'closed') {
+        this.$emit('exec', directive)
+        return
+      }
+
+      //
+      directive && this[`execute${firstUpperCase(directive)}Func`]()
+    },
+    executeRunFunc () {
+
+    },
+    displayCode (codeObj, editorValue) {
+      let template = ''
+      const { vueTemplate, vueScript, vueStyle } = codeObj
+      if (editorValue) {
+        switch (this.activeName) {
+          case 'html':
+            template = genTemplateViaVue(editorValue) + vueScript + vueStyle
+            break
+          case 'css':
+            template = vueTemplate + genScriptViaVue(editorValue) + vueStyle
+            break
+          case 'javascript':
+            template = vueTemplate + vueScript + genStyleViaVue(editorValue)
+            break
+          default:
+            break
+        }
+      } else {
+        this.editCode(codeObj, this.activeName)
+        template = vueTemplate + vueScript + vueStyle
+      }
+      return template
     },
     editCode (codeObj, type) {
       const { template, script, style } = codeObj
