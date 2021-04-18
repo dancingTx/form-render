@@ -1,22 +1,22 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Layout from '@/layout/index.vue';
+// import Layout from '@/layout/index.vue';
 
-const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    redirect: '/index',
-  },
-  {
-    path: '/index',
-    component: Layout,
-    children: [
-      {
-        path: '/',
-        name: 'index',
-        component: () => import('@/views/index.vue'),
-      },
-    ],
-  },
+export const routes: Array<RouteRecordRaw> = [
+  // {
+  //   path: '/',
+  //   redirect: '/index',
+  // },
+  // {
+  //   path: '/index',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: '/',
+  //       name: 'index',
+  //       component: () => import('@/views/index.vue'),
+  //     },
+  //   ],
+  // },
 ];
 
 const router = createRouter({

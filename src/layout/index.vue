@@ -1,5 +1,5 @@
 <template>
-  <div class="layout" style="width: 100%;height:100%">
+  <div class="layout">
     <tools-bar class="header"/>
     <div class="container">
       <extension-bar class="extension"/>

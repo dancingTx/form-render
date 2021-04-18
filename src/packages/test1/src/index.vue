@@ -1,12 +1,9 @@
 <template>
-  <main>
-      <router-view/>
-  </main>
+  <div>test1</div>
 </template>
 
 <script>
 export default {
-  name: 'mainCanvas',
 };
 </script>
 
