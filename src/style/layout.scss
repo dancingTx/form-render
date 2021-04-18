@@ -1,0 +1,21 @@
+.layout {
+    display: grid;
+    grid-template-rows: 40px auto;
+    width: 100%;
+    height: 100%;
+    .header {
+        background-color: #00f;
+    }
+    .container {
+        display: flex;
+        flex-direction: row;
+        .extension {
+            flex: 0 1 60px;
+            background-color: #f0f;
+        }
+        .canvas {
+            flex: 1;
+            background-color: #ff0;
+        }
+    }
+}

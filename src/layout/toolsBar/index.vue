@@ -1,10 +1,10 @@
 <template>
-  <div>1</div>
+  <header>toolsBar</header>
 </template>
 
 <script>
 export default {
-
+  name: 'toolsBar',
 };
 </script>
 

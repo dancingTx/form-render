@@ -1,10 +1,12 @@
 <template>
-  <div>1</div>
+  <main>
+      mainCanvas
+  </main>
 </template>
 
 <script>
 export default {
-
+  name: 'mainCanvas',
 };
 </script>
 
