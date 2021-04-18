@@ -1,11 +1,11 @@
 <template>
-  <div>111</div>
+  <div>index</div>
 </template>
 
 <script>
 export default {
 
-}
+};
 </script>
 
 <style>

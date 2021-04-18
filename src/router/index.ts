@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Index from '@/views/index.vue'
+import Index from '@/views/index.vue';
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/index',
     name: 'index',
     component: Index,
-  }
+  },
 ];
 
 const router = createRouter({
