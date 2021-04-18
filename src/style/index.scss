@@ -1,9 +1,6 @@
-@import './variable.scss';
-@import './layout.scss';
-@import './element.scss';
-@import './element-variables.scss';
-@import './mixin.scss';
-@import './components.scss';
-@import './draggable.scss';
-@import './drawer.scss';
-@import './attrs.scss';
+@import url('./layout.scss');
+
+html, body, #app {
+    width: 100%;
+    height: 100%;
+}

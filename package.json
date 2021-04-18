@@ -1,57 +1,54 @@
 {
   "name": "form-render",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "commit": "git add . && git cz && git push origin v2"
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "element-ui": "^2.13.2",
-    "js-beautify": "^1.13.0",
-    "json-templater": "^1.2.0",
-    "vue": "^2.6.11",
-    "vue-router": "^3.2.0",
-    "vuedraggable": "^2.24.3",
-    "vuex": "^3.4.0"
+    "element-plus": "^1.0.2-beta.40",
+    "normalize.css": "^8.0.1",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.0-0"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.19",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-plugin-unit-jest": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "@vue/eslint-config-standard": "^5.1.2",
-    "@vue/test-utils": "^1.0.3",
+    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/eslint-config-airbnb": "^5.0.2",
+    "@vue/eslint-config-typescript": "^7.0.0",
+    "@vue/test-utils": "^2.0.0-0",
     "babel-eslint": "^10.1.0",
     "cz-conventional-changelog": "^3.3.0",
-    "element-ui": "^2.13.2",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^6.2.2",
-    "husky": "^4.3.0",
+    "eslint-plugin-vue": "^7.0.0",
+    "html-webpack-externals-plugin": "^3.8.0",
     "lint-staged": "^9.5.0",
-    "monaco-editor": "^0.21.2",
-    "monaco-editor-webpack-plugin": "^2.0.0",
-    "node-sass": "^4.12.0",
-    "normalize.css": "^8.0.1",
+    "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
-    "svg-sprite-loader": "^5.0.0",
-    "validate-commit-msg": "^2.14.0",
-    "vue-template-compiler": "^2.6.11"
+    "typescript": "~4.1.5",
+    "vue-jest": "^5.0.0-0"
   },
   "gitHooks": {
-    "pre-commit": "lint-staged validate-commit-msg"
+    "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,jsx,vue}": [
+    "*.{js,jsx,vue,ts,tsx}": [
       "vue-cli-service lint",
       "git add"
     ]
@@ -59,11 +56,6 @@
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "validate-commit-msg"
     }
   }
 }

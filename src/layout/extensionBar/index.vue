@@ -1,10 +1,10 @@
 <template>
-  <div>1</div>
+  <aside>extend</aside>
 </template>
 
 <script>
 export default {
-
+  name: 'extensionBar',
 };
 </script>
 
